@@ -7,15 +7,9 @@ from Bio import SeqIO
 
 bindir = os.path.dirname(os.path.realpath(__file__))
 DB = {
-	'gydb' : bindir + '/database/GyDB2-HMM3.1b2.hmm',
-	'rexdb': bindir + '/database/REXDB_protein_database_viridiplantae_v3.0.hmm',
+	'gydb' : bindir + '/database/GyDB2.hmm',
+	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
 	}
-#DB = {
-#    'gydb' : '/share/home/nature/database/GyDB/GyDB_collection/GyDB2-HMM3.1b2.hmm',
-#    'rexdb': '/share/home/app/bin/repex_tarean/re_databases/protein_database_viridiplantae_v3.0.hmm',
-#    'pfam' : '/share/home/nature/database/Pfam/Pfam-A.hmm',
-#    'pfam-rvt': '/share/home/nature/database/Pfam/Pfam-A.RVT.hmm'
-#}
 
 class IntactRecord():
 	def __init__(self, title, temp):
@@ -29,9 +23,6 @@ class IntactRecord():
 		
 class CandidateRecord():
 	def __init__(self, title, temp, mu=1.3e-8):
-#		if not len(title) == len(temp):
-#			self.dict = dict([(key, None) for key in title])
-#		else:
 		if len(temp) < len(title):
 			temp += [None] * (len(title)-len(temp))
 		self.dict = dict([(key, value) for key, value in zip(title, temp)])
@@ -133,10 +124,10 @@ class Retriever():
 			elif line.startswith('#'):
 				continue
 			yield CandidateRecord(title, temp)
-	def re_classify(self, seqtype='dna'):
+	def re_classify(self, seqtype='dna', db='rexdb'):
 		ltrlib = self.ltrlib
-		#gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype)
-		gff = ltrlib + '.gff3'
+		gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype, db=db)
+		gff = ltrlib + '.' + db + '.gff3'
 		annout = '{}.anno'.format(gff)
 		newlib = '{}.reclassified'.format(ltrlib)
 		fann = open(annout, 'w')
@@ -250,20 +241,22 @@ class Classifier():
 			yield self
 	def identify_rexdb(self, genes, clades):
 		perfect_structure = {
-            ('LTR', 'Copia')         : ['GAG', 'PROT', 'INT', 'RT', 'RH'],
-            ('LTR', 'Gypsy')         : ['GAG', 'PROT', 'RT', 'RH', 'INT'],
+            ('LTR', 'Copia'): ['GAG', 'PROT', 'INT', 'RT', 'RH'],
+            ('LTR', 'Gypsy'): ['GAG', 'PROT', 'RT', 'RH', 'INT'],
 			}
 		clade_count = Counter(clades)
 		max_clade = max(clade_count, key=lambda x: clade_count[x])
-		if max_clade.startswith('Class_I/LTR/Ty1_copia'):
-			order, superfamily = 'LTR', 'Copia'
-		elif max_clade.startswith('Class_I/LTR/Ty3_gypsy'):
-			order, superfamily = 'LTR', 'Gypsy'
-		elif max_clade.startswith('Class_I/'): # LINE, pararetrovirus, Penelope, DIRS
-			order, superfamily = max_clade.split('/')[1], 'unknown'
-		elif max_clade.startswith('Class_II/'):
-			try: order, superfamily = max_clade.split('/')[2:4]
-			except ValueError: order, superfamily = max_clade.split('/')[2], 'unknown'
+		order, superfamily = self._parse_rexdb(max_clade)
+		if len(clade_count) == 1:
+			max_clade = max_clade.split('/')[-1]
+		elif len(clade_count) > 1:
+			max_clade = 'mixture'
+			superfamlies = [self._parse_rexdb(clade)[1] for clade in clades]
+			if len(Counter(superfamlies)) > 1:
+				superfamily = 'mixture'
+				orders = [self._parse_rexdb(clade)[0] for clade in clades]
+				if len(Counter(orders)) > 1:
+					order = 'mixture'
 		try:
 			if genes == perfect_structure[(order, superfamily)]:
 				coding = 'cmpl' # completed gene structure
@@ -271,8 +264,18 @@ class Classifier():
 				coding = 'lost'
 		except KeyError:
 			coding = 'unknown'
-		max_clade = max_clade.split('/')[-1]
 		return order, superfamily, max_clade, coding
+	def _parse_rexdb(self, clade): # full clade name
+		if clade.startswith('Class_I/LTR/Ty1_copia'):
+			order, superfamily = 'LTR', 'Copia'
+		elif clade.startswith('Class_I/LTR/Ty3_gypsy'):
+			order, superfamily = 'LTR', 'Gypsy'
+		elif clade.startswith('Class_I/'): # LINE, pararetrovirus, Penelope, DIRS
+			order, superfamily = clade.split('/')[1], 'unknown'
+		elif clade.startswith('Class_II/'):
+			try: order, superfamily = clade.split('/')[2:4]
+			except ValueError: order, superfamily = clade.split('/')[2], 'unknown'
+		return order, superfamily
 	def identify(self, genes, clades):
 		perfect_structure = {
 			('LTR', 'Copia')         : ['GAG', 'AP', 'INT', 'RT', 'RNaseH'],
@@ -427,14 +430,16 @@ def parse_hmmname(hmmname, db='gydb'):
 		temp = hmmname.split('_')
 		gene, clade = temp[0], '_'.join(temp[1:])
 	elif db == 'rexdb':	# Class_I/LTR/Ty3_gypsy/chromovirus/Tekay:Ty3-RT
-		gene = hmmname.split(':')[1].split('-')[1]
+		gene = hmmname.split(':')[1] #.split('-')[1]
 		clade = hmmname.split(':')[0].split('/')[-1]
 	elif db.startswith('pfam'):
 		gene = hmmname
 		clade = hmmname
 	return gene, clade
 
-def hmm2best(inSeq, inHmmouts, prefix, db='rexdb', seqtype='dna', mincov=20, maxeval=1e-3):
+def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20, maxeval=1e-3):
+	if prefix is None:
+		prefix = inSeq
 	d_besthit = {}
 	for inHmmout in inHmmouts:
 		for rc in HmmScan(inHmmout):
@@ -502,32 +507,39 @@ def hmm2best(inSeq, inHmmouts, prefix, db='rexdb', seqtype='dna', mincov=20, max
 	fgff.close()
 	fseq.close()
 	return gff, seq
-def translate(inSeq):
+def translate(inSeq, prefix=None):
+	if prefix is None:
+		prefix = inSeq
 	prog = 'perl {}/bin/Six-frame_translate.pl'.format(bindir)
-	outSeq = inSeq + '.aa'
+	outSeq = prefix + '.aa'
 	cmd = '{} {} > {}'.format(prog, inSeq, outSeq)
 	os.system(cmd)
 	return outSeq
-def hmmscan(inSeq, hmmdb='rexdb'):
-	outDomtbl = inSeq + '.domtbl'
+def hmmscan(inSeq, hmmdb='rexdb', prefix=None):
+	if prefix is None:
+		prefix = inSeq
+	outDomtbl = prefix + '.domtbl'
 	cmd = 'hmmscan --notextw -E 0.05 --domE 0.05 --noali --domtblout {} {} {} > /dev/null'.format(outDomtbl, hmmdb, inSeq)
 	os.system(cmd)
 	return outDomtbl
-def LTRlibAnn(ltrlib, seqtype='dna', hmmdb='rexdb'):
+def LTRlibAnn(ltrlib, seqtype='dna', hmmdb='rexdb', prefix=None):
 #	ltrlib = Retriever(genome).ltrlib
+	if prefix is None:
+		prefix = '{}.{}'.format(ltrlib, hmmdb)
 	if seqtype == 'dna':
 		print >>sys.stderr, 'translating {} in six frames'.format(ltrlib)
 		aaSeq = translate(ltrlib)
 	elif seqtype == 'prot':
 		aaSeq = ltrlib
 	print >>sys.stderr, 'HMM scanning against {}'.format(DB[hmmdb])
-	domtbl = hmmscan(aaSeq, hmmdb=DB[hmmdb])
+	domtbl = hmmscan(aaSeq, hmmdb=DB[hmmdb], prefix=prefix)
 	print >>sys.stderr, 'generating gene anntations'
-	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=ltrlib, seqtype=seqtype)
+	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=prefix, seqtype=seqtype)
 	return gff, geneSeq, aaSeq
-def replaceCls(ltrlib, seqtype='dna'):
-	gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype)
-#	gff = ltrlib + '.gff3'
+def replaceCls(ltrlib, seqtype='dna', db='rexdb'):
+	gff = ltrlib + '.' + db + '.gff3'
+	if not os.path.exists(gff):
+		gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype, db=db)
 	annout = '{}.anno'.format(gff)
 	newlib = '{}.reclassified'.format(ltrlib)
 	fann = open(annout, 'w')
