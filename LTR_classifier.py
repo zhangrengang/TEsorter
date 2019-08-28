@@ -215,9 +215,9 @@ class Classifier():
 		line = ['#TE', 'Superfamily', 'Family', 'Clade', 'Code', 'Strand', 'hmmmatchs']
 		print >> self.fout, '\t'.join(line)
 		for rc in self.parse():
-			rc_flt = [line for line in rc if line.gene in self.markers]
-			if len(rc_flt) == 0:
-				rc_flt = [line for line in rc]
+			rc_flt = rc #[line for line in rc if line.gene in self.markers]
+			#if len(rc_flt) == 0:
+			#	rc_flt = [line for line in rc]
 			strands = [line.strand for line in rc_flt]
 			if len(set(strands)) >1 :
 				strand = '?'
@@ -241,8 +241,8 @@ class Classifier():
 			yield self
 	def identify_rexdb(self, genes, clades):
 		perfect_structure = {
-            ('LTR', 'Copia'): ['GAG', 'PROT', 'INT', 'RT', 'RH'],
-            ('LTR', 'Gypsy'): ['GAG', 'PROT', 'RT', 'RH', 'INT'],
+            ('LTR', 'Copia'): ['Ty1-GAG', 'Ty1-PROT', 'Ty1-INT', 'Ty1-RT', 'Ty1-RH'],
+            ('LTR', 'Gypsy'): ['Ty3-GAG', 'Ty3-PROT', 'Ty3-RT', 'Ty3-RH', 'Ty3-INT'],
 			}
 		clade_count = Counter(clades)
 		max_clade = max(clade_count, key=lambda x: clade_count[x])
@@ -258,7 +258,9 @@ class Classifier():
 				if len(Counter(orders)) > 1:
 					order = 'mixture'
 		try:
-			if genes == perfect_structure[(order, superfamily)]:
+			ordered_genes = perfect_structure[(order, superfamily)]
+			my_genes = [gene for gene in genes if gene in set(ordered_genes)]
+			if ordered_genes == my_genes:
 				coding = 'cmpl' # completed gene structure
 			else:
 				coding = 'lost'
@@ -292,7 +294,9 @@ class Classifier():
 			(order, superfamily) = ('Unknown', 'unknown')
 			print >>sys.stderr, 'unknown clade: {}'.format(max_clade)
 		try:
-			if genes == perfect_structure[(order, superfamily)]:
+			ordered_genes = perfect_structure[(order, superfamily)]
+			my_genes = [gene for gene in genes if gene in set(ordered_genes)]
+			if ordered_genes == my_genes:
 				coding = 'cmpl' # completed gene structure
 			else:
 				coding = 'lost'
@@ -449,12 +453,29 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20
 			else:
 				qid = rc.qname
 			domain,clade = parse_hmmname(rc.tname, db=db)
-			key = (qid, domain)
-			if key in d_besthit:
-				if rc.score > d_besthit[key].score:
+			if db == 'rexdb':
+				cdomain = domain.split('-')[1]
+				if cdomain == 'aRH':
+					cdomain = 'RH'
+				key = (qid, cdomain)
+				if key in d_besthit:
+					best_rc = d_besthit[key]
+					if rc.score > best_rc.score:
+						best_domain, _ = parse_hmmname(best_rc.tname, db=db)
+						if domain == best_domain:
+							d_besthit[key] = rc
+						elif rc.envstart <= best_rc.envend and rc.envend >= best_rc.envstart: # overlap
+							d_besthit[key] = rc
+				else:
 					d_besthit[key] = rc
 			else:
-				d_besthit[key] = rc
+				key = (qid, domain)
+				if key in d_besthit:
+					if rc.score > d_besthit[key].score:
+						d_besthit[key] = rc
+				else:
+					d_besthit[key] = rc
+#	print d_besthit
 	d_seqs = seq2dict(inSeq)
 	lines = []
 	for (qid, domain), rc in d_besthit.items():
@@ -464,6 +485,8 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20
 		rawid = qid
 #		clade = '_'.join(rc.tname.split('_')[1:])
 		gene,clade = parse_hmmname(rc.tname, db=db)
+		if db == 'rexdb':
+			domain = gene
 		gid = '{}|{}'.format(qid, rc.tname)
 		gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
 		if seqtype == 'dna':
@@ -519,7 +542,7 @@ def hmmscan(inSeq, hmmdb='rexdb', prefix=None):
 	if prefix is None:
 		prefix = inSeq
 	outDomtbl = prefix + '.domtbl'
-	cmd = 'hmmscan --notextw -E 0.05 --domE 0.05 --noali --domtblout {} {} {} > /dev/null'.format(outDomtbl, hmmdb, inSeq)
+	cmd = 'hmmscan --notextw -E 0.01 --domE 0.01 --noali --cpu 4 --domtblout {} {} {} > /dev/null'.format(outDomtbl, hmmdb, inSeq)
 	os.system(cmd)
 	return outDomtbl
 def LTRlibAnn(ltrlib, seqtype='dna', hmmdb='rexdb', prefix=None):
@@ -529,10 +552,12 @@ def LTRlibAnn(ltrlib, seqtype='dna', hmmdb='rexdb', prefix=None):
 	if seqtype == 'dna':
 		print >>sys.stderr, 'translating {} in six frames'.format(ltrlib)
 		aaSeq = translate(ltrlib)
+#		aaSeq = ltrlib + '.aa'
 	elif seqtype == 'prot':
 		aaSeq = ltrlib
 	print >>sys.stderr, 'HMM scanning against {}'.format(DB[hmmdb])
 	domtbl = hmmscan(aaSeq, hmmdb=DB[hmmdb], prefix=prefix)
+#	domtbl = prefix + '.domtbl'
 	print >>sys.stderr, 'generating gene anntations'
 	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=prefix, seqtype=seqtype)
 	return gff, geneSeq, aaSeq

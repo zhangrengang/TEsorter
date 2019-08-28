@@ -79,6 +79,7 @@ Os0088_INT#LTR/Gypsy	ltrapl	CDS	1652	2005	144.6	+	1	ID=Os0088_INT#LTR/Gypsy|GAG_
 Os0088_INT#LTR/Gypsy	ltrapl	CDS	2574	2828	81.8	+	2	ID=Os0088_INT#LTR/Gypsy|AP_del;gene=AP;clade=del;evalue=6.6e-25;coverage=98.9;probability=0.95
 Os0088_INT#LTR/Gypsy	ltrapl	CDS	3296	3565	168.8	+	1	ID=Os0088_INT#LTR/Gypsy|RT_del;gene=RT;clade=del;evalue=2.1e-51;coverage=39.1;probability=0.99
 Os0088_INT#LTR/Gypsy	ltrapl	CDS	3702	4052	278.7	+	2	ID=Os0088_INT#LTR/Gypsy|RNaseH_del;gene=RNaseH;clade=del;evalue=4e-85;coverage=100.0;probability=0.99
+Os0088_INT#LTR/Gypsy	ltrapl	CDS	4385	5368	749.5	+	1	ID=Os0088_INT#LTR/Gypsy|INT_del;gene=INT;clade=del;evalue=5.2e-227;coverage=94.5;probability=0.99
 Os0088_INT#LTR/Gypsy	ltrapl	CDS	5419	5565	35.2	+	0	ID=Os0088_INT#LTR/Gypsy|CHR_retroelement;gene=CHR;clade=retroelement;evalue=1.7e-10;coverage=83.3;probability=0.9
 Os0097_INT#LTR/Copia	ltrapl	CDS	188	970	182.6	+	1	ID=Os0097_INT#LTR/Copia|GAG_oryco;gene=GAG;clade=oryco;evalue=1.2e-55;coverage=99.4;probability=0.91
 Os0097_INT#LTR/Copia	ltrapl	CDS	1190	1438	147.0	+	1	ID=Os0097_INT#LTR/Copia|AP_oryco;gene=AP;clade=oryco;evalue=5.4e-45;coverage=96.4;probability=0.99
@@ -438,7 +439,7 @@ Os0350_INT#LTR/Copia	ltrapl	CDS	3864	4268	263.1	+	2	ID=Os0350_INT#LTR/Copia|RNas
 Os0351_INT#LTR/Copia	ltrapl	CDS	73	939	357.9	+	0	ID=Os0351_INT#LTR/Copia|GAG_retrofit;gene=GAG;clade=retrofit;evalue=1.3e-108;coverage=99.7;probability=0.89
 Os0351_INT#LTR/Copia	ltrapl	CDS	1027	1272	156.6	+	0	ID=Os0351_INT#LTR/Copia|AP_retrofit;gene=AP;clade=retrofit;evalue=7.5e-48;coverage=98.9;probability=0.98
 Os0351_INT#LTR/Copia	ltrapl	CDS	1435	2073	493.0	+	0	ID=Os0351_INT#LTR/Copia|INT_retrofit;gene=INT;clade=retrofit;evalue=1.3e-149;coverage=99.5;probability=1.0
-Os0351_INT#LTR/Copia	ltrapl	CDS	2779	2937	535.3	+	0	ID=Os0351_INT#LTR/Copia|RT_retrofit;gene=RT;clade=retrofit;evalue=2.8e-162;coverage=20.3;probability=0.76
+Os0351_INT#LTR/Copia	ltrapl	CDS	2932	3657	535.3	+	0	ID=Os0351_INT#LTR/Copia|RT_retrofit;gene=RT;clade=retrofit;evalue=2.8e-162;coverage=100.0;probability=0.99
 Os0351_INT#LTR/Copia	ltrapl	CDS	3955	4353	341.3	+	0	ID=Os0351_INT#LTR/Copia|RNaseH_retrofit;gene=RNaseH;clade=retrofit;evalue=7.2e-104;coverage=97.9;probability=0.99
 Os0353_INT#LTR/Copia	ltrapl	CDS	71	916	326.0	+	1	ID=Os0353_INT#LTR/Copia|GAG_retrofit;gene=GAG;clade=retrofit;evalue=5.8e-99;coverage=99.7;probability=0.9
 Os0353_INT#LTR/Copia	ltrapl	CDS	998	1246	150.0	+	1	ID=Os0353_INT#LTR/Copia|AP_retrofit;gene=AP;clade=retrofit;evalue=7.9e-46;coverage=95.6;probability=0.97
@@ -623,6 +624,7 @@ Os1214_INT#LTR/Copia	ltrapl	CDS	193	978	203.1	+	0	ID=Os1214_INT#LTR/Copia|GAG_or
 Os1214_INT#LTR/Copia	ltrapl	CDS	1201	1446	120.0	+	0	ID=Os1214_INT#LTR/Copia|AP_oryco;gene=AP;clade=oryco;evalue=9.4e-37;coverage=96.4;probability=0.98
 Os1214_INT#LTR/Copia	ltrapl	CDS	1597	2250	405.9	+	0	ID=Os1214_INT#LTR/Copia|INT_oryco;gene=INT;clade=oryco;evalue=3.2e-123;coverage=100.0;probability=0.99
 Os1214_INT#LTR/Copia	ltrapl	CDS	2875	3600	488.9	+	0	ID=Os1214_INT#LTR/Copia|RT_oryco;gene=RT;clade=oryco;evalue=2.3e-148;coverage=97.9;probability=0.97
+Os1214_INT#LTR/Copia	ltrapl	CDS	3886	4290	232.7	+	0	ID=Os1214_INT#LTR/Copia|RNaseH_oryco;gene=RNaseH;clade=oryco;evalue=5.9e-71;coverage=99.3;probability=0.97
 Os1281_INT#LTR/Copia	ltrapl	CDS	61	771	84.0	+	0	ID=Os1281_INT#LTR/Copia|GAG_tork;gene=GAG;clade=tork;evalue=8.3e-26;coverage=99.3;probability=0.85
 Os1281_INT#LTR/Copia	ltrapl	CDS	904	1152	119.4	+	0	ID=Os1281_INT#LTR/Copia|AP_tork;gene=AP;clade=tork;evalue=2e-36;coverage=100.0;probability=0.96
 Os1281_INT#LTR/Copia	ltrapl	CDS	1303	1944	349.5	+	0	ID=Os1281_INT#LTR/Copia|INT_tork;gene=INT;clade=tork;evalue=2.9e-106;coverage=100.0;probability=0.97
@@ -857,6 +859,7 @@ Os3306_INT#LTR/Copia	ltrapl	CDS	188	973	184.6	+	1	ID=Os3306_INT#LTR/Copia|GAG_or
 Os3306_INT#LTR/Copia	ltrapl	CDS	1190	1438	142.5	+	1	ID=Os3306_INT#LTR/Copia|AP_oryco;gene=AP;clade=oryco;evalue=1.3e-43;coverage=96.4;probability=0.99
 Os3306_INT#LTR/Copia	ltrapl	CDS	1586	2239	437.4	+	1	ID=Os3306_INT#LTR/Copia|INT_oryco;gene=INT;clade=oryco;evalue=9e-133;coverage=100.0;probability=1.0
 Os3306_INT#LTR/Copia	ltrapl	CDS	2825	3415	428.0	+	1	ID=Os3306_INT#LTR/Copia|RT_oryco;gene=RT;clade=oryco;evalue=6.4e-130;coverage=80.6;probability=0.99
+Os3306_INT#LTR/Copia	ltrapl	CDS	3843	4247	265.1	+	2	ID=Os3306_INT#LTR/Copia|RNaseH_oryco;gene=RNaseH;clade=oryco;evalue=8.8e-81;coverage=100.0;probability=0.98
 Os3307_INT#LTR/Copia	ltrapl	CDS	273	629	15.6	+	2	ID=Os3307_INT#LTR/Copia|GAG_retrofit;gene=GAG;clade=retrofit;evalue=3.7e-05;coverage=29.5;probability=0.81
 Os3307_INT#LTR/Copia	ltrapl	CDS	1161	1406	34.1	+	2	ID=Os3307_INT#LTR/Copia|AP_retrofit;gene=AP;clade=retrofit;evalue=2.6e-10;coverage=62.2;probability=0.87
 Os3307_INT#LTR/Copia	ltrapl	CDS	1554	2192	164.7	+	2	ID=Os3307_INT#LTR/Copia|INT_retrofit;gene=INT;clade=retrofit;evalue=3.5e-50;coverage=98.2;probability=0.93
@@ -953,6 +956,7 @@ Os3335_INT#LTR/Copia	ltrapl	CDS	172	963	239.8	+	0	ID=Os3335_INT#LTR/Copia|GAG_or
 Os3335_INT#LTR/Copia	ltrapl	CDS	1198	1446	139.9	+	0	ID=Os3335_INT#LTR/Copia|AP_oryco;gene=AP;clade=oryco;evalue=8.2e-43;coverage=100.0;probability=0.98
 Os3335_INT#LTR/Copia	ltrapl	CDS	1594	2247	408.0	+	0	ID=Os3335_INT#LTR/Copia|INT_oryco;gene=INT;clade=oryco;evalue=7.3e-124;coverage=100.0;probability=1.0
 Os3335_INT#LTR/Copia	ltrapl	CDS	2884	3606	488.2	+	0	ID=Os3335_INT#LTR/Copia|RT_oryco;gene=RT;clade=oryco;evalue=3.9e-148;coverage=98.3;probability=0.99
+Os3335_INT#LTR/Copia	ltrapl	CDS	3898	4302	251.7	+	0	ID=Os3335_INT#LTR/Copia|RNaseH_oryco;gene=RNaseH;clade=oryco;evalue=1.1e-76;coverage=100.0;probability=0.99
 Os3342_INT#LTR/Copia	ltrapl	CDS	80	859	298.3	+	1	ID=Os3342_INT#LTR/Copia|GAG_retrofit;gene=GAG;clade=retrofit;evalue=1.4e-90;coverage=97.6;probability=0.91
 Os3342_INT#LTR/Copia	ltrapl	CDS	947	1198	123.2	+	1	ID=Os3342_INT#LTR/Copia|AP_retrofit;gene=AP;clade=retrofit;evalue=1.3e-37;coverage=96.7;probability=0.97
 Os3342_INT#LTR/Copia	ltrapl	CDS	1349	1987	409.5	+	1	ID=Os3342_INT#LTR/Copia|INT_retrofit;gene=INT;clade=retrofit;evalue=2.6e-124;coverage=94.6;probability=0.95
@@ -1155,7 +1159,7 @@ Os3475_INT#LTR/Gypsy	ltrapl	CDS	3625	4179	365.9	+	0	ID=Os3475_INT#LTR/Gypsy|RT_d
 Os3475_INT#LTR/Gypsy	ltrapl	CDS	4315	4665	245.9	+	0	ID=Os3475_INT#LTR/Gypsy|RNaseH_del;gene=RNaseH;clade=del;evalue=4.3e-75;coverage=99.1;probability=0.98
 Os3475_INT#LTR/Gypsy	ltrapl	CDS	5324	5998	474.6	+	1	ID=Os3475_INT#LTR/Gypsy|INT_del;gene=INT;clade=del;evalue=5.3e-144;coverage=64.2;probability=0.99
 Os3475_INT#LTR/Gypsy	ltrapl	CDS	6066	6209	39.7	+	2	ID=Os3475_INT#LTR/Gypsy|CHR_retroelement;gene=CHR;clade=retroelement;evalue=6.7e-12;coverage=83.3;probability=0.86
-Os3476_INT#LTR/Copia	ltrapl	CDS	1229	1351	14.1	+	1	ID=Os3476_INT#LTR/Copia|AP_ty1/copia;gene=AP;clade=ty1/copia;evalue=0.00031;coverage=35.2;probability=0.69
+Os3476_INT#LTR/Copia	ltrapl	CDS	1364	1525	14.1	+	1	ID=Os3476_INT#LTR/Copia|AP_ty1/copia;gene=AP;clade=ty1/copia;evalue=0.00031;coverage=27.5;probability=0.84
 Os3476_INT#LTR/Copia	ltrapl	CDS	1622	2260	184.8	+	1	ID=Os3476_INT#LTR/Copia|INT_retrofit;gene=INT;clade=retrofit;evalue=2.8e-56;coverage=100.0;probability=0.92
 Os3476_INT#LTR/Copia	ltrapl	CDS	3007	3693	305.3	+	0	ID=Os3476_INT#LTR/Copia|RT_tork;gene=RT;clade=tork;evalue=7.2e-93;coverage=94.7;probability=0.99
 Os3476_INT#LTR/Copia	ltrapl	CDS	4080	4421	202.7	+	2	ID=Os3476_INT#LTR/Copia|RNaseH_retrofit;gene=RNaseH;clade=retrofit;evalue=8.2e-62;coverage=80.0;probability=0.98
@@ -1257,6 +1261,7 @@ Os3495_INT#LTR/Copia	ltrapl	CDS	174	872	148.1	+	2	ID=Os3495_INT#LTR/Copia|GAG_or
 Os3495_INT#LTR/Copia	ltrapl	CDS	1169	1417	132.7	+	1	ID=Os3495_INT#LTR/Copia|AP_oryco;gene=AP;clade=oryco;evalue=1.3e-40;coverage=96.4;probability=0.99
 Os3495_INT#LTR/Copia	ltrapl	CDS	1565	2218	426.5	+	1	ID=Os3495_INT#LTR/Copia|INT_oryco;gene=INT;clade=oryco;evalue=1.8e-129;coverage=100.0;probability=1.0
 Os3495_INT#LTR/Copia	ltrapl	CDS	2843	3568	497.5	+	1	ID=Os3495_INT#LTR/Copia|RT_oryco;gene=RT;clade=oryco;evalue=6.1e-151;coverage=99.2;probability=0.99
+Os3495_INT#LTR/Copia	ltrapl	CDS	3860	4264	238.9	+	1	ID=Os3495_INT#LTR/Copia|RNaseH_oryco;gene=RNaseH;clade=oryco;evalue=8e-73;coverage=100.0;probability=0.97
 Os3497_INT#LTR/Gypsy	ltrapl	CDS	655	1131	83.7	+	0	ID=Os3497_INT#LTR/Gypsy|GAG_reina;gene=GAG;clade=reina;evalue=1.1e-25;coverage=61.8;probability=0.87
 Os3497_INT#LTR/Gypsy	ltrapl	CDS	1528	1782	93.9	+	0	ID=Os3497_INT#LTR/Gypsy|AP_reina;gene=AP;clade=reina;evalue=1.5e-28;coverage=97.8;probability=0.95
 Os3497_INT#LTR/Gypsy	ltrapl	CDS	2158	2832	491.3	+	0	ID=Os3497_INT#LTR/Gypsy|RT_reina;gene=RT;clade=reina;evalue=3.8e-149;coverage=100.0;probability=1.0
@@ -1411,6 +1416,7 @@ Os3641_INT#LTR/Copia	ltrapl	CDS	145	933	224.2	+	0	ID=Os3641_INT#LTR/Copia|GAG_or
 Os3641_INT#LTR/Copia	ltrapl	CDS	1159	1389	135.4	+	0	ID=Os3641_INT#LTR/Copia|AP_oryco;gene=AP;clade=oryco;evalue=1.9e-41;coverage=92.9;probability=0.99
 Os3641_INT#LTR/Copia	ltrapl	CDS	1555	2208	470.7	+	0	ID=Os3641_INT#LTR/Copia|INT_oryco;gene=INT;clade=oryco;evalue=7.6e-143;coverage=100.0;probability=1.0
 Os3641_INT#LTR/Copia	ltrapl	CDS	2806	3525	506.9	+	0	ID=Os3641_INT#LTR/Copia|RT_oryco;gene=RT;clade=oryco;evalue=8.7e-154;coverage=98.8;probability=1.0
+Os3641_INT#LTR/Copia	ltrapl	CDS	3823	4227	273.1	+	0	ID=Os3641_INT#LTR/Copia|RNaseH_oryco;gene=RNaseH;clade=oryco;evalue=3.5e-83;coverage=99.3;probability=0.99
 Os3653_INT#LTR/Copia	ltrapl	CDS	2884	3411	69.1	+	0	ID=Os3653_INT#LTR/Copia|INT_copia;gene=INT;clade=copia;evalue=2.9e-21;coverage=60.8;probability=0.92
 Os3653_INT#LTR/Copia	ltrapl	CDS	4447	5115	218.7	+	0	ID=Os3653_INT#LTR/Copia|RT_tork;gene=RT;clade=tork;evalue=1.1e-66;coverage=90.2;probability=0.96
 Os3653_INT#LTR/Copia	ltrapl	CDS	5428	5850	63.7	+	0	ID=Os3653_INT#LTR/Copia|RNaseH_tork;gene=RNaseH;clade=tork;evalue=1.4e-19;coverage=100.0;probability=0.83

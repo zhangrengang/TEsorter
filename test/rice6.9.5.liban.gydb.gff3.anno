@@ -1,0 +1,315 @@
+#TE	Superfamily	Family	Clade	Code	Strand	hmmmatchs
+Os0008_INT#LTR/Copia	LTR	Copia	sire	cmpl	+	GAG|sire AP|sire INT|sire RT|sire RNaseH|sire
+Os0016_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0019_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0025_INT#LTR/Gypsy	LTR	Gypsy	athila	lost	+	GAG|athila AP|athila
+Os0028_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0030_INT_RIRE2#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0032_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0034_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0039_INT_RIRE3#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0040_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat AP|tat RNaseH|tat INT|tat
+Os0041_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	INT|retrofit RT|tork RNaseH|retrofit
+Os0057_INT#LTR/Copia	LTR	Copia	sire	cmpl	+	GAG|sire AP|sire INT|sire RT|sire RNaseH|sire
+Os0058_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os0060_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm
+Os0076_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0077_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0079_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	AP|reina RT|reina RNaseH|reina INT|reina
+Os0088_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0097_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0101_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0107_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0110_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0111_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0119_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0128_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os0130_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0133_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm AP|crm
+Os0137_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	AP|crm
+Os0139_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0140_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os0143_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0146_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|tork RNaseH|retrofit
+Os0149_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina
+Os0151_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0155_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit INT|retrofit RT|tork RNaseH|retrofit
+Os0156_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0157_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0158_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat
+Os0159_INT#LTR/Gypsy	LTR	unknown	retroelement	unknown	+	GAG|reina AP|del CHR|retroelement
+Os0160_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0162_INT#LTR/Gypsy	LTR	Gypsy	athila	lost	+	GAG|athila RT|athila RNaseH|athila INT|athila
+Os0168_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0170_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0171_INT#LTR/Copia	LTR	Copia	sire	lost	+	GAG|sire
+Os0175_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0176_INT#LTR/Copia	LTR	Copia	sire	cmpl	+	GAG|sire AP|sire INT|sire RT|sire RNaseH|sire ENV|sire
+Os0178_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0183_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0189_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0190_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os0195_INT_RIRE1#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0196_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|athila INT|tat
+Os0199_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os0200_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0210_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0211_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0217_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0232_INT#LTR/Gypsy	LTR	Gypsy	crm	cmpl	+	GAG|crm AP|crm RT|crm RNaseH|crm INT|crm
+Os0233_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0234_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0237_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0242_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os0245_INT#LTR/Copia	LTR	Copia	tork	lost	+	GAG|tork AP|tork
+Os0253_INT#LTR/Copia	LTR	Copia	sire	cmpl	+	GAG|sire AP|sire INT|sire RT|sire RNaseH|sire
+Os0254_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0258_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|retrofit INT|retrofit RT|tork RNaseH|retrofit
+Os0259_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0261_INT#LTR/Gypsy	LTR	Gypsy	athila	lost	+	GAG|athila
+Os0262_INT#LTR/Gypsy	LTR	Gypsy	athila	lost	+	GAG|athila RT|athila RNaseH|athila INT|athila
+Os0263_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0267_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0268_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat
+Os0272_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|all
+Os0274_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm
+Os0278_INT#LTR/Gypsy	LTR	Gypsy	crm	cmpl	+	GAG|crm AP|crm RT|crm RNaseH|crm INT|crm
+Os0282_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0283_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|sire RNaseH|retrofit
+Os0285_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0288_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os0289_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0290_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0295_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0305_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0311_INT#LTR/Gypsy	LTR	Gypsy	crm	cmpl	+	GAG|crm AP|crm RT|crm RNaseH|crm INT|crm
+Os0316_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0321_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit INT|retrofit RT|tork RNaseH|retrofit
+Os0322_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat RT|tat RNaseH|tat INT|tat
+Os0324_INT#LTR/Copia	LTR	Copia	tork	lost	+	AP|ty1/copia RT|tork RNaseH|retrofit
+Os0336_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0338_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|tork RNaseH|retrofit
+Os0340_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os0341_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0350_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0351_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0353_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0356_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0365_INT_Truncator#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0366_INT_Truncator#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0376_INT#LTR/Gypsy	LTR	Gypsy	del	lost	+	GAG|del
+Os0387_INT#LTR/Gypsy	LTR	Gypsy	del	lost	+	GAG|del
+Os0391_INT_CRR#LTR/Gypsy	LTR	Gypsy	crm	cmpl	+	GAG|crm AP|crm RT|crm RNaseH|crm INT|crm
+Os0395_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0419_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat AP|tat RT|tat INT|tat
+Os0443_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0458_INT#LTR/Copia	LTR	Copia	sire	lost	+	GAG|sire AP|sire RT|sire RNaseH|sire
+Os0462_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0476_INT#LTR/Copia	LTR	Copia	copia	lost	+	INT|copia RT|tork RNaseH|pCretro
+Os0492_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0592_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os0632_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0699_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0712_INT#LTR/Copia	LTR	Copia	sire	lost	+	GAG|sire
+Os0715_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0736_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0737#Evirus/ERTBV	LTR	Caulimoviridae	caulimovirus	lost	+	MOV|caulimovirus
+Os0744_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os0748_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0830_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os0831_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os0850_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os0873_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os0961_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os0985_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	AP|tat RT|tat RNaseH|tat INT|tat
+Os0988_INT#LTR/Copia	LTR	Copia	tork	lost	+	INT|copia RT|tork RNaseH|tork
+Os0993_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os0994_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os1018_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat
+Os1031_INT#LTR/Copia	LTR	Copia	sire	cmpl	+	GAG|sire AP|sire INT|sire RT|sire RNaseH|sire
+Os1036_INT#LTR/Copia	LTR	Copia	tork	lost	+	GAG|tork AP|tork
+Os1044_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	AP|crm
+Os1061_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|retrofit INT|retrofit RT|tork RNaseH|retrofit
+Os1064_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os1083_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os1113_INT#LTR/Copia	LTR	Copia	tork	lost	+	INT|copia RT|tork RNaseH|tork
+Os1144_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os1207_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os1214_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os1281_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|tork INT|tork RT|tork RNaseH|tork
+Os1285_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os1294_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os1299_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os1300_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os1335_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os1353_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os1399_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os1458_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os1468_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os1501_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os1517#DNAauto/MULE	LTR	Gypsy	gypsy	lost	+	AP|gypsy
+Os1525_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os1528_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os1537_INT#LTR/Copia	LTR	Copia	sire	cmpl	+	GAG|sire AP|sire INT|sire RT|sire RNaseH|sire
+Os1610_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os1713_INT#LTR/Gypsy	LTR	Gypsy	crm	cmpl	+	GAG|crm AP|crm RT|crm RNaseH|crm INT|crm
+Os1831_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os1864_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat AP|tat RT|tat
+Os1884_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os1895_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os1950_INT#LTR/Gypsy	LTR	Gypsy	del	lost	+	GAG|del
+Os1960_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os2002_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os2007_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os2038_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm AP|crm
+Os2091_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	AP|tat RT|tat RNaseH|tat INT|tat
+Os2092#Evirus/ERTBV	LTR	Caulimoviridae	caulimovirus	lost	+	RT|caulimovirus RNaseH|caulimovirus
+Os2096_INT#LTR/Copia	LTR	Copia	oryco	lost	+	GAG|oryco
+Os2125_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm
+Os2158_INT#LTR/TRIM	LTR	Copia	retrofit	lost	+	RNaseH|retrofit
+Os2253_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os2256_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	INT|retrofit RT|tork RNaseH|retrofit
+Os2280_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os2298_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os2326_INT#LTR/Copia	LTR	Copia	oryco	lost	+	GAG|oryco
+Os2371_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os2475_INT#LTR/Gypsy	LTR	Gypsy	del	lost	+	GAG|del
+Os2618_INT#LTR/Copia	LTR	Copia	oryco	lost	+	GAG|oryco
+Os2654_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os2708_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os2830_INT#LTR/Gypsy	LTR	Gypsy	athila	lost	+	GAG|athila
+Os2840_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|ty1/copia INT|tork RT|tork RNaseH|tork
+Os2911_INT#LTR/Copia	LTR	Copia	copia	lost	+	INT|oryco RT|copia RNaseH|tork
+Os3087_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm
+Os3290_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3291_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os3298_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3299_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3300_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os3301_INT#LTR/Gypsy	LTR	Gypsy	crm	cmpl	+	GAG|crm AP|crm RT|crm RNaseH|crm INT|crm
+Os3303_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3304_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3305_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3306_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3307_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3308_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3309_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3310_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3311_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3312_INT#LTR/Gypsy	LTR	Gypsy	crm	cmpl	+	GAG|crm AP|crm RT|crm RNaseH|crm INT|crm
+Os3313_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|all
+Os3314_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3315_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	GAG|reina AP|reina RT|reina RNaseH|reina CHR|retroelement
+Os3316_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3317_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3318_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3319_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3320_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os3324_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os3329#Evirus/ERTBV-A	LTR	Caulimoviridae	badnavirus	lost	?	MOV|badnavirus RNaseH|badnavirus RT|caulimovirus
+Os3330#Evirus/ERTBV-B	LTR	Caulimoviridae	badnavirus	lost	+	MOV|badnavirus RT|caulimovirus RNaseH|badnavirus
+Os3331#Evirus/ERTBV-C	LTR	Caulimoviridae	badnavirus	lost	-	RNaseH|badnavirus RT|caulimovirus MOV|badnavirus
+Os3334_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3335_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3342_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3344_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	AP|tat RT|tat RNaseH|tat INT|tat
+Os3348_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3359_INT#LTR/Copia	LTR	Copia	oryco	lost	+	GAG|oryco
+Os3408_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|athila AP|tat RT|tat RNaseH|tat INT|tat
+Os3410_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3413_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3414_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|tork RNaseH|retrofit
+Os3415_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3416_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3417_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3418_INT#LTR/Copia	LTR	Copia	oryco	lost	+	GAG|oryco
+Os3427_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3440_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3441_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit AP|retrofit INT|retrofit RNaseH|retrofit
+Os3445_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3446_INT#LTR/Copia	LTR	Copia	tork	cmpl	+	GAG|tork AP|ty1/copia INT|tork RT|tork RNaseH|tork
+Os3448_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	GAG|tat AP|tat RT|tat RNaseH|tat
+Os3449_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina
+Os3450_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3451_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit AP|retrofit RNaseH|retrofit
+Os3452_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3453_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	GAG|reina AP|reina RT|reina RNaseH|reina CHR|retroelement
+Os3454_INT#LTR/Copia	LTR	Copia	oryco	lost	+	RT|oryco RNaseH|oryco
+Os3455_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3456_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	AP|reina RT|reina RNaseH|reina INT|reina
+Os3457_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3458_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3459_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3460_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3461_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3462_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit AP|retrofit INT|retrofit RNaseH|retrofit
+Os3463_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os3465_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	AP|tat RT|tat RNaseH|tat INT|tat
+Os3466_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|all
+Os3467_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina
+Os3469_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3471_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|retrofit RNaseH|retrofit
+Os3472_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3473_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3474_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3475_INT#LTR/Gypsy	LTR	Gypsy	del	cmpl	+	GAG|del AP|del RT|del RNaseH|del INT|del CHR|retroelement
+Os3476_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os3477_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3478_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3479_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3480_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os3481_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3482_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	GAG|reina AP|reina RT|reina INT|reina
+Os3483_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3484_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3485_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3486_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3487_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3488_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3489_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit RT|retrofit RNaseH|retrofit
+Os3490_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3491_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os3492_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit AP|retrofit INT|retrofit RNaseH|retrofit
+Os3493_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3494_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3495_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3497_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3498_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3499_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|tat AP|tat RT|tat RNaseH|tat INT|tat
+Os3500_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os3501_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3502_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit AP|retrofit INT|retrofit
+Os3503_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	GAG|reina AP|reina RT|reina RNaseH|reina
+Os3504_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3505_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3506_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3507_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3509_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3510_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os3511_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	GAG|reina AP|reina RNaseH|reina INT|reina CHR|retroelement
+Os3513_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|retrofit INT|copia RT|retrofit RNaseH|retrofit
+Os3514_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3515_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|del RT|reina RNaseH|reina INT|reina CHR|retroelement
+Os3516_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os3517_INT#LTR/Copia	LTR	Copia	retrofit	cmpl	+	GAG|retrofit AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3518_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|ty1/copia INT|retrofit RT|tork RNaseH|retrofit
+Os3529_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3535_INT#LTR/Gypsy	LTR	Gypsy	reina	lost	+	GAG|reina AP|reina RT|reina RNaseH|reina
+Os3536_INT#LTR/Gypsy	LTR	Gypsy	tat	cmpl	+	GAG|athila AP|tat RT|tat RNaseH|tat INT|tat
+Os3540_INT_ICL#LTR/Copia	LTR	Copia	retrofit	lost	+	RT|retrofit RNaseH|retrofit
+Os3544_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit AP|ty1/copia INT|retrofit RT|tork
+Os3546_INT#LTR/Gypsy	LTR	Gypsy	del	lost	+	GAG|del
+Os3548_INT_ICR#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit
+Os3554_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	INT|retrofit RT|tork RNaseH|retrofit
+Os3556_INT#LTR/Copia	LTR	Copia	sire	cmpl	+	GAG|sire AP|sire INT|sire RT|sire RNaseH|sire
+Os3558_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3562_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	GAG|retrofit AP|retrofit INT|retrofit RNaseH|retrofit
+Os3563_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm
+Os3572_INT#LTR/Gypsy	LTR	Gypsy	crm	lost	+	GAG|crm AP|crm
+Os3598_INT#LTR/Gypsy	LTR	Gypsy	tat	lost	+	RT|tat RNaseH|tat INT|tat
+Os3640_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	AP|retrofit INT|retrofit RT|retrofit RNaseH|retrofit
+Os3641_INT#LTR/Copia	LTR	Copia	oryco	cmpl	+	GAG|oryco AP|oryco INT|oryco RT|oryco RNaseH|oryco
+Os3653_INT#LTR/Copia	LTR	Copia	tork	lost	+	INT|copia RT|tork RNaseH|tork
+Os3654_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina
+Os3656_INT#LTR/Copia	LTR	Copia	retrofit	lost	+	RT|sire RNaseH|retrofit
+Os3657_INT#LTR/Gypsy	LTR	Gypsy	reina	cmpl	+	GAG|reina AP|reina RT|reina RNaseH|reina INT|reina CHR|retroelement
