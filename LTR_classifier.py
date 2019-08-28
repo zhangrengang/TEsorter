@@ -1,7 +1,11 @@
+#!/bin/env python
+# coding: utf-8
+# Author: zrg1989@qq.com
+# Version: 0.1
 import sys
 import glob
 import os, re
-#from math import log
+from math import log
 from collections import Counter, OrderedDict
 from Bio import SeqIO
 
