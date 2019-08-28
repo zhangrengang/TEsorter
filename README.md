@@ -4,7 +4,7 @@ It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to cl
 ### Installation ###
 Dependencies:
 +	python 2.7
-   +	biopython
+   +   biopython
 +	hmmscan 3.1b2
  
 `git clone https://github.com/zhangrengang/LTR_classifier`
@@ -18,7 +18,8 @@ cd test
 python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban
 python ../LTR_classifier.py Classifier rice6.9.5.rexdb.liban.gff3 > rice6.9.5.liban.rexdb.gff3.anno
 ```
-By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) (viridiplantae_v3.0) database is used, which is more sensitive. GyDB can also be used to test, like:
+By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) (viridiplantae_v3.0) database is used, which is more sensitive and thus is recommended. 
+GyDB can also be used for testing, like:
 ```
 python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban gydb
 python ../LTR_classifier.py Classifier rice6.9.5.liban.gydb.gff3 gydb > rice6.9.5.liban.gydb.gff3.anno
@@ -29,7 +30,7 @@ python ../LTR_classifier.py Classifier rice6.9.5.liban.gydb.gff3 gydb > rice6.9.
 rice6.9.5.liban.aa                  translated LTR sequences
 rice6.9.5.liban.rexdb.domtbl        HMMScan raw output
 rice6.9.5.liban.rexdb.tsv           inner domains of LTRs, which might be used to filter domains based on their scores and coverages.
-rice6.9.5.liban.rexdb.faa           protein sequences of gene/domain, which can be used for phylogenetics analysis.
+rice6.9.5.liban.rexdb.faa           protein sequences of domain, which can be used for phylogenetics analysis.
 rice6.9.5.liban.rexdb.gff3          domain annotations
 rice6.9.5.liban.rexdb.gff3.anno     LTR classifications
 	Column 5: "cmpl" means one LTR Copia/Gypsy element with full GAG-POL domains.

@@ -21,7 +21,7 @@ while (<>){
 	s/^\s+//;
 	my ($id, $seq)=(split /\n/, $_, 2);
 	#$id=~s/\s+//g;
-	my @idline = (split /\s/, $id, 2);
+	my @idline = (split /\s/, $id, 2); # revised by Zhang to be compatible with biopython
 	$id=$idline[0];
 	$seq=~s/\s+//g;
 	$seq=uc $seq;
