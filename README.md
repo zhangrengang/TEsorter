@@ -16,7 +16,7 @@ cd LTR_classifier
 cd test
 
 python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban
-python ../LTR_classifier.py Classifier rice6.9.5.rexdb.liban.gff3 > rice6.9.5.liban.rexdb.gff3.anno
+python ../LTR_classifier.py Classifier rice6.9.5.liban.rexdb.gff3 > rice6.9.5.liban.rexdb.gff3.anno
 ```
 By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) (viridiplantae_v3.0) database is used, which is more sensitive and thus is recommended. 
 GyDB can also be used for testing, like:

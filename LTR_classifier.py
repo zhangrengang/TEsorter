@@ -68,7 +68,8 @@ class Retriever():
 		self.retriever_all_scn = self.genome + '.retriever.all.scn'
 		self.ltrlib = self.genome + '.LTRlib.fa'
 		self.retriever_all_scn2 = self.retriever_all_scn + '2'
-		if not (os.path.exists(self.retriever_all_scn2) and os.path.getsize(self.retriever_all_scn2) > 1000):
+		if not (os.path.exists(self.retriever_all_scn2) \
+		   and os.path.getsize(self.retriever_all_scn2) > 1000):
 			print >>sys.stderr, 're-organize', self.retriever_all_scn
 			self.re_scn()
 		self.retriever_all_scn = self.retriever_all_scn2
@@ -568,7 +569,7 @@ def LTRlibAnn(ltrlib, seqtype='dna', hmmdb='rexdb', prefix=None):
 def replaceCls(ltrlib, seqtype='dna', db='rexdb'):
 	gff = ltrlib + '.' + db + '.gff3'
 	if not os.path.exists(gff):
-		gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype, db=db)
+		gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype, hmmdb=db)
 	annout = '{}.anno'.format(gff)
 	newlib = '{}.reclassified'.format(ltrlib)
 	fann = open(annout, 'w')
