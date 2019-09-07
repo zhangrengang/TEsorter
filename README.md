@@ -19,7 +19,7 @@ python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban
 python ../LTR_classifier.py Classifier rice6.9.5.liban.rexdb.gff3 > rice6.9.5.liban.rexdb.gff3.anno
 ```
 By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) (viridiplantae_v3.0) database is used, which is more sensitive and thus is recommended. 
-GyDB can also be used for testing, like:
+[GyDB](http://gydb.org/) can also be used for testing, like:
 ```
 python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban gydb
 python ../LTR_classifier.py Classifier rice6.9.5.liban.gydb.gff3 gydb > rice6.9.5.liban.gydb.gff3.anno
