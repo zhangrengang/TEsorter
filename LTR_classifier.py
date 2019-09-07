@@ -12,8 +12,10 @@ from Bio import SeqIO
 bindir = os.path.dirname(os.path.realpath(__file__))
 DB = {
 	'gydb' : bindir + '/database/GyDB2.hmm',
-	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
+	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
+	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
 	}
+DB['rexdb'] = DB['rexdb-plant']
 
 class IntactRecord():
 	def __init__(self, title, temp):
@@ -196,7 +198,7 @@ class Classifier():
 		self.gff = gff
 		self.db = db
 		self.fout = fout
-		if self.db == 'rexdb':
+		if self.db.startswith('rexdb'):
 			self.markers = {'GAG', 'PROT', 'INT', 'RT', 'RH'}
 		elif self.db == 'gydb':
 			self.markers = {'GAG', 'AP', 'INT', 'RT', 'RNaseH', 'ENV'}
@@ -236,7 +238,7 @@ class Classifier():
 			genes  = [line.gene  for line in rc_flt]
 			clades = [line.clade for line in rc_flt]
 			names = [line.name for line in rc_flt]
-			if self.db == 'rexdb':
+			if self.db.startswith('rexdb'):
 				order, superfamily, max_clade, coding = self.identify_rexdb(genes, names)
 			elif self.db == 'gydb':
 				order, superfamily, max_clade, coding = self.identify(genes, clades)
@@ -438,12 +440,13 @@ def parse_hmmname(hmmname, db='gydb'):
 	if db == 'gydb':
 		temp = hmmname.split('_')
 		gene, clade = temp[0], '_'.join(temp[1:])
-	elif db == 'rexdb':	# Class_I/LTR/Ty3_gypsy/chromovirus/Tekay:Ty3-RT
+	elif db.startswith('rexdb'):	# Class_I/LTR/Ty3_gypsy/chromovirus/Tekay:Ty3-RT
 		gene = hmmname.split(':')[1] #.split('-')[1]
 		clade = hmmname.split(':')[0].split('/')[-1]
 	elif db.startswith('pfam'):
 		gene = hmmname
 		clade = hmmname
+
 	return gene, clade
 
 def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20, maxeval=1e-3):
@@ -458,7 +461,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20
 			else:
 				qid = rc.qname
 			domain,clade = parse_hmmname(rc.tname, db=db)
-			if db == 'rexdb':
+			if db.startswith('rexdb'):
 				cdomain = domain.split('-')[1]
 				if cdomain == 'aRH':
 					cdomain = 'RH'
@@ -490,7 +493,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20
 		rawid = qid
 #		clade = '_'.join(rc.tname.split('_')[1:])
 		gene,clade = parse_hmmname(rc.tname, db=db)
-		if db == 'rexdb':
+		if db.startswith('rexdb'):
 			domain = gene
 		gid = '{}|{}'.format(qid, rc.tname)
 		gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
