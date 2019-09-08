@@ -3036,5 +3036,5 @@ Class_I/LINE:LINE-RT -            252 Os3659#LINE/unknown|aa3 -           1218  
 # Target file:     /share/home/nature/users/zhangrenang/LTR_classifier/database/REXdb_protein_database_metazoa_v3.hmm
 # Option settings: hmmscan --domtblout rice6.9.5.liban.rexdb-metazoa.domtbl --noali --notextw -E 0.01 --domE 0.01 --cpu 4 /share/home/nature/users/zhangrenang/LTR_classifier/database/REXdb_protein_database_metazoa_v3.hmm rice6.9.5.liban.aa 
 # Current dir:     /share/home/nature/users/zhangrenang/LTR_classifier/test
-# Date:            Sat Sep  7 09:48:04 2019
+# Date:            Sun Sep  8 10:31:30 2019
 # [ok]

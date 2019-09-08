@@ -13,10 +13,10 @@ from Bio import SeqIO
 bindir = os.path.dirname(os.path.realpath(__file__))
 DB = {
 	'gydb' : bindir + '/database/GyDB2.hmm',
+	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0_plus_metazoa_v3.hmm',
 	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
 	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
 	}
-DB['rexdb'] = DB['rexdb-plant']
 
 class IntactRecord():
 	def __init__(self, title, temp):

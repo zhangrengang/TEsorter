@@ -18,16 +18,11 @@ cd test
 python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban
 python ../LTR_classifier.py Classifier rice6.9.5.liban.rexdb.gff3 > rice6.9.5.liban.rexdb.gff3.anno
 ```
-By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) (viridiplantae_v3.0) database is used, which is more sensitive and thus is recommended. 
+By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v3.0 + metazoa_v3](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended. 
 [GyDB](http://gydb.org/) can also be used for testing, like:
 ```
 python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban gydb
 python ../LTR_classifier.py Classifier rice6.9.5.liban.gydb.gff3 gydb > rice6.9.5.liban.gydb.gff3.anno
-```
-For species of [Metazoa](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Tree&id=33208&lvl=2&lin=f&keep=1&srchmode=1&unlock), the REXdb [metazoa_v3](https://bitbucket.org/petrnovak/re_databases) release may be used:
-```
-python ../LTR_classifier.py LTRlibAnn rice6.9.5.liban rexdb-metazoa
-python ../LTR_classifier.py Classifier rice6.9.5.liban.rexdb-metazoa.gff3 rexdb-metazoa > rice6.9.5.liban.rexdb-metazoa.gff3.anno
 ```
 
 ### Outputs ###

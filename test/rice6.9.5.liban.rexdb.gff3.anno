@@ -153,7 +153,7 @@ Os0707#DNAauto/Helitron	Helitron	unknown	Helitron	unknown	+	Helitron-HEL1|Helitr
 Os0712_INT#LTR/Copia	LTR	Copia	SIRE	lost	+	Ty1-GAG|SIRE
 Os0715_INT#LTR/Copia	LTR	Copia	Ivana	cmpl	+	Ty1-GAG|Ivana Ty1-PROT|Ivana Ty1-INT|Ivana Ty1-RT|Ivana Ty1-RH|Ivana
 Os0736_INT#LTR/Gypsy	LTR	Gypsy	Reina	cmpl	+	Ty3-GAG|Reina Ty3-PROT|Reina Ty3-RT|Reina Ty3-RH|Reina Ty3-INT|Reina Ty3-CHD|Reina
-Os0737#Evirus/ERTBV	pararetrovirus	unknown	pararetrovirus	unknown	+	PARA-PROT|pararetrovirus
+Os0737#Evirus/ERTBV	LTR	Gypsy	Ty3_gypsy	lost	+	Ty3-PROT|Ty3_gypsy
 Os0744_INT#LTR/Copia	LTR	Copia	Ale	lost	+	Ty1-PROT|Ale Ty1-INT|Ale Ty1-RT|Ale Ty1-RH|Ale
 Os0748_INT#LTR/Gypsy	LTR	Gypsy	Reina	cmpl	+	Ty3-GAG|Reina Ty3-PROT|Reina Ty3-RT|Reina Ty3-RH|Reina Ty3-INT|Reina Ty3-CHD|Reina
 Os0762_INT#LTR/Copia	LTR	Copia	Bianca	lost	+	Ty1-GAG|Bianca
@@ -171,7 +171,7 @@ Os0842#DNAauto/POLE	TIR	PIF_Harbinger	PIF_Harbinger	unknown	+	Harbinger-TPase|PI
 Os0850_INT#LTR/Gypsy	LTR	Gypsy	Tekay	cmpl	+	Ty3-GAG|Tekay Ty3-PROT|Tekay Ty3-RT|Tekay Ty3-RH|Tekay Ty3-INT|Tekay Ty3-CHD|Tekay
 Os0854#DNAauto/MULE	TIR	MuDR_Mutator	MuDR_Mutator	unknown	+	MuDR-TPase|MuDR_Mutator
 Os0873_INT#LTR/Copia	LTR	Copia	Ale	cmpl	+	Ty1-GAG|Ale Ty1-PROT|Ale Ty1-INT|Ale Ty1-RT|Ale Ty1-RH|Ale
-Os0875#LINE/unknown	LINE	unknown	LINE	unknown	+	LINE-ENDO|LINE LINE-RT|LINE
+Os0875#LINE/unknown	LINE	unknown	LINE	unknown	+	LINE-RT|LINE
 Os0893#DNAauto/MULE	TIR	MuDR_Mutator	MuDR_Mutator	unknown	-	MuDR-TPase|MuDR_Mutator
 Os0894#DNAauto/MULE	TIR	MuDR_Mutator	MuDR_Mutator	unknown	-	MuDR-TPase|MuDR_Mutator
 Os0896#DNAauto/MULE	TIR	MuDR_Mutator	MuDR_Mutator	unknown	-	MuDR-TPase|MuDR_Mutator
@@ -299,7 +299,7 @@ Os2150#DNAauto/Helitron	Helitron	unknown	Helitron	unknown	-	Helitron-HEL2|Helitr
 Os2158_INT#LTR/TRIM	LTR	Copia	Ale	lost	+	Ty1-RH|Ale
 Os2207#DNAnona/hAT	TIR	hAT	hAT	unknown	-	hAT-TPase|hAT
 Os2240#DNAauto/CACTA	TIR	EnSpm_CACTA	EnSpm_CACTA	unknown	-	CACTA-TPase|EnSpm_CACTA
-Os2246#DNAauto/Helitron	Helitron	unknown	Helitron	unknown	-	Helitron-HEL1|Helitron
+Os2246#DNAauto/Helitron	Helitron	unknown	Helitron	unknown	-	Helitron-HEL2|Helitron Helitron-HEL1|Helitron
 Os2253_INT#LTR/Gypsy	LTR	Gypsy	Reina	cmpl	+	Ty3-GAG|Reina Ty3-PROT|Reina Ty3-RT|Reina Ty3-RH|Reina Ty3-INT|Reina Ty3-CHD|Reina
 Os2256_INT#LTR/Copia	LTR	Copia	Ale	lost	+	Ty1-PROT|Ale Ty1-INT|Ale Ty1-RT|Ale Ty1-RH|Ale
 Os2270#DNAauto/MULE	TIR	MuDR_Mutator	MuDR_Mutator	unknown	+	MuDR-TPase|MuDR_Mutator
@@ -531,7 +531,7 @@ Os3519#DNAauto/hAT	TIR	hAT	hAT	unknown	+	hAT-TPase|hAT
 Os3522#DNAnona/hAT	TIR	hAT	hAT	unknown	-	hAT-TPase|hAT
 Os3529_INT#LTR/Copia	LTR	Copia	Ivana	cmpl	+	Ty1-GAG|Ivana Ty1-PROT|Ivana Ty1-INT|Ivana Ty1-RT|Ivana Ty1-RH|Ivana
 Os3532#DNAauto/hAT	TIR	hAT	hAT	unknown	-	hAT-TPase|hAT
-Os3534#LINE/unknown	LINE	unknown	LINE	unknown	+	LINE-RT|LINE
+Os3534#LINE/unknown	LINE	unknown	LINE	unknown	+	LINE-ENDO|LINE LINE-RT|LINE
 Os3535_INT#LTR/Gypsy	LTR	Gypsy	Reina	cmpl	+	Ty3-GAG|Reina Ty3-PROT|Reina Ty3-RT|Reina Ty3-RH|Reina Ty3-INT|Reina
 Os3536_INT#LTR/Gypsy	LTR	Gypsy	Ogre	cmpl	+	Ty3-GAG|Ogre Ty3-PROT|Ogre Ty3-RT|Ogre Ty3-RH|Ogre Ty3-INT|Ogre
 Os3540_INT_ICL#LTR/Copia	LTR	Copia	Ale	lost	+	Ty1-RT|Ale Ty1-RH|Ale

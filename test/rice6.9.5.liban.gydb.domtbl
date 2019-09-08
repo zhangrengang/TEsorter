@@ -21700,5 +21700,5 @@ RT_lentiviridae        -            234 Os3657_INT#LTR/Gypsy|aa3 -           146
 # Target file:     /share/home/nature/users/zhangrenang/LTR_classifier/database/GyDB2.hmm
 # Option settings: hmmscan --domtblout rice6.9.5.liban.gydb.domtbl --noali --notextw -E 0.01 --domE 0.01 --cpu 4 /share/home/nature/users/zhangrenang/LTR_classifier/database/GyDB2.hmm rice6.9.5.liban.aa 
 # Current dir:     /share/home/nature/users/zhangrenang/LTR_classifier/test
-# Date:            Sat Sep  7 09:45:13 2019
+# Date:            Sun Sep  8 10:19:24 2019
 # [ok]
