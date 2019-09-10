@@ -1,200 +1,143 @@
 #!/bin/env python
 # coding: utf-8
 '''# Author: zrg1989@qq.com
-# Version: 0.1
 '''
 import sys
+import os
+import re
 import glob
-import os, re
+import argparse
 from math import log
 from collections import Counter, OrderedDict
 from Bio import SeqIO
 
 bindir = os.path.dirname(os.path.realpath(__file__))
+sys.path = [bindir + '/bin'] + sys.path
+from RunCmdsMP import pp_run
+from split_records import split_fastx_by_chunk_num
+
+__version__ = '0.1'
+
 DB = {
 	'gydb' : bindir + '/database/GyDB2.hmm',
 	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0_plus_metazoa_v3.hmm',
 	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
 	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
 	}
-
-class IntactRecord():
-	def __init__(self, title, temp):
-		self.dict = dict([(key, value) for key, value in zip(title, temp)])
-#		print self.dict
-		self.dict['Identity'] = float(self.dict['Identity'])
-		self.dict['Insertion_Time'] = int(self.dict['Insertion_Time'])
-		for key, value in self.dict.items():
-			try: exec 'self.{} = value'.format(key)
-			except SyntaxError: pass
-		
-class CandidateRecord():
-	def __init__(self, title, temp, mu=1.3e-8):
-		if len(temp) < len(title):
-			temp += [None] * (len(title)-len(temp))
-		self.dict = dict([(key, value) for key, value in zip(title, temp)])
-		for key, value in self.dict.items():
-			try: self.dict[key] = int(value)
-			except: continue
-		try: self.dict['similarity'] = float(self.dict['similarity'])
-		except ValueError: self.dict['similarity'] = 0
-		try: self.dict['ageya'] = int(self.dict['ageya'])
-		except ValueError:
-			if self.dict['similarity'] <= 0.75:
-				self.dict['ageya'] = None
-			else:
-	#				d = -3.0/4*log(1-4.0/3*(1-self.dict['similarity']/100))
-	#				self.dict['ageya'] = d / (2*mu)
-				self.dict['ageya'] = None
-		except:
-			self.dict['ageya'] = None
-		for key, value in self.dict.items():
-			try: exec 'self.{} = value'.format(key)
-			except SyntaxError: pass
-		self.INT_str, self.INT_end = self.lLTR_end+1, self.rLTR_str-1
-	def write(self, fout):
-		self.line = [self.start, self.end, self.len, self.lLTR_str, self.lLTR_end, self.lLTR_len, 
-				self.rLTR_str, self.rLTR_end, self.rLTR_len, self.similarity, 
-				self.seqid, self.chr, self.direction, self.TSD, self.lTSD, self.rTSD, 
-				self.motif, self.superfamily, self.family, self.ageya]
-		self.line = ['' if value is None else str(value) for value in self.line]
-		print >> fout, '\t'.join(self.line)
-class Retriever():
-	def __init__(self, genome):
-		self.genome = genome
-		if glob.glob(genome+'.mod.*'):
-			self.genome = self.genome + '.mod'
-		self.pass_list = self.genome + '.pass.list'
-		self.pass_gff3 = self.genome + '.pass.gff3'
-		self.nmtf_pass_list = self.genome + '.nmtf.pass.list'
-		self.pass_lists = [self.pass_list, self.nmtf_pass_list]
-		self.retriever_all_scn = self.genome + '.retriever.all.scn'
-		self.ltrlib = self.genome + '.LTRlib.fa'
-		self.retriever_all_scn2 = self.retriever_all_scn + '2'
-		if not (os.path.exists(self.retriever_all_scn2) \
-		   and os.path.getsize(self.retriever_all_scn2) > 1000):
-			print >>sys.stderr, 're-organize', self.retriever_all_scn
-			self.re_scn()
-		self.retriever_all_scn = self.retriever_all_scn2
-	def re_scn(self):
-		idmap = self.seqIdmap
-		lrt_set = set([])
-		f = open(self.retriever_all_scn2, 'w')
-		i,j,k = 0,0,0
-		for line in open(self.retriever_all_scn):
-			temp = line.strip().split()
-			if line.startswith('#'):
-				f.write(line)
-			if line.startswith('#start'):
-				temp = line.strip().strip('#()').replace('(', '').split()
-				title = temp
-				continue
-			elif line.startswith('#'):
-				continue
-			rc = CandidateRecord(title, temp)
-			i += 1
-			if rc.chr is None or rc.chr == 'NA':
-				j += 1
-				rc.chr = idmap[rc.seqid]
-			key = (rc.chr, rc.start, rc.end, rc.lLTR_str, rc.lLTR_end, rc.rLTR_str, rc.rLTR_end)
-			if key in lrt_set:
-				k += 1
-				continue
-			lrt_set.add(key)
-			rc.write(f)
-		f.close()
-		print >>sys.stderr, '{} total {}, {} without chr, {} discarded, {} retained'.format(self.retriever_all_scn, i, j, k, i-k)
-	@property
-	def seqIdmap(self):
-		i = 0
-		d = {}
-		for rc in SeqIO.parse(self.genome, 'fasta'):
-			d[i] = rc.id
-			i += 1
-		return d
-	def intact_list(self):
-		for pass_list in self.pass_lists:
-			for line in open(pass_list):
-				temp = line.strip().split('\t')
-				if line.startswith('#'):
-					temp = line.strip().split()
-					temp[0] = temp[0].strip('#')
-					title = temp
-					continue
-				yield IntactRecord(title, temp)
-	def all_scn(self):
-		for line in open(self.retriever_all_scn):
-			temp = line.strip().split()
-			if line.startswith('#start'):
-				temp = line.strip().strip('#()').replace('(', '').split()
-				title = temp
-				continue
-			elif line.startswith('#'):
-				continue
-			yield CandidateRecord(title, temp)
-	def re_classify(self, seqtype='dna', db='rexdb'):
-		ltrlib = self.ltrlib
-		gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype, db=db)
-		gff = ltrlib + '.' + db + '.gff3'
-		annout = '{}.anno'.format(gff)
-		newlib = '{}.reclassified'.format(ltrlib)
-		fann = open(annout, 'w')
-		flib = open(newlib, 'w')
-		Classifier(gff, fout=fann).replace_annotation(ltrlib, fout=flib, idmap=self.ltr_map)
-		fann.close()
-		flib.close()
-	@property
-	def ltr_map(self):
-		d = {}
-		for rc in self.all_scn():
-#			print rc.chr, rc.lLTR_str, rc.lLTR_end
-			LTR1 = '{}:{}..{}_LTR'.format(rc.chr, rc.lLTR_str, rc.lLTR_end)
-			LTR2 = '{}:{}..{}_LTR'.format(rc.chr, rc.rLTR_str, rc.rLTR_end)
-			INT  = '{}:{}..{}_INT'.format(rc.chr, rc.INT_str, rc.INT_end)
-			for id in [LTR1, LTR2, INT]:
-				d[id] = INT
-		return d
-
-def InsertionTimePlot(genome, type, mu=1.3e-8):
-	if type == 'intact':
-		outfig = genome + '.Intact.Insertion_Time.pdf'
-		records = Retriever(genome).intact_list()
-		typeStr = '{TE_type}/{SuperFamily}'
-		timeStr = 'Insertion_Time'
-	elif type == 'candidate':
-		outfig = genome + '.Candidate.Insertion_Time.pdf'
-		records = Retriever(genome).all_scn()
-		typeStr = '{superfamily}/{family}'
-		timeStr = 'ageya'
-	else:
-		raise ValueError('Unknown type: {}'.format(type))
-	tmpfile = genome + '.pass.insert_time'	
-	f = open(tmpfile, 'w')
-	line = ['TE_Type', 'Insertion_Time']
-	print >>f, '\t'.join(line)
-	for rc in records:
-		Type = typeStr.format(**rc.dict)
-		if rc.dict[timeStr] is None:
-			continue
-		Insertion_Time = rc.dict[timeStr] / 1e6 * (1.3e-8 / mu) # Mya
-		line = [Type, Insertion_Time]
-		line = map(str, line)
-		print >>f, '\t'.join(line)
-	f.close()
+BLASType = {
+    'qseqid': str,
+    'sseqid': str,
+    'pident': float,
+    'length': int,
+    'mismatch': int,
+    'gapopen': int,
+    'qstart': int,
+    'qend': int,
+    'sstart': int,
+    'send': int,
+    'evalue': float,
+    'bitscore': float,
+    'qlen': int,
+    'slen': int,
+    'qcovs': float,
+    'qcovhsp': float,
+    'sstrand': str,
+	}
 	
-	# plot
-	r_src = '''
-data <- read.table('{}', head=T)
-library(ggplot2)
-p <- ggplot(data, aes(x=Insertion_Time, color=TE_Type)) + geom_line(stat="density")
-ggsave('{}', p)
-'''.format(tmpfile, outfig)
-	r_file = tmpfile + '.r'
-	with open(r_file, 'w') as f:
-		print >>f, r_src
-	cmd = 'Rscript {}'.format(r_file)
+def pipeline(args):
+	if not os.path.exists(args.tmp_dir):
+		os.makedirs(args.tmp_dir)
+		
+	# search against DB and parse
+	gff, geneSeq = LTRlibAnn(
+			ltrlib = args.sequence, 
+			hmmdb = args.hmm_database, 
+			seqtype = args.seq_type,
+			prefix = args.prefix,
+			processors = args.processors,
+			tmpdir = args.tmp_dir,
+			mincov = args.min_coverage,
+			maxeval = args.max_evalue,
+			)
+			
+	# classify	
+	classify_out = args.prefix + '.cls'
+	fc = open(classify_out, 'w')
+	d_class = OrderedDict()
+	for rc in Classifier(gff, db=args.hmm_database, fout=fc):
+		d_class[rc.ltrid] = rc
+	fc.close()
+	if not args.disable_pass2:
+		
+	# pass-2 classify
+class BlastClassifier(object):
+	def __int__(self, ltrlib, d_class, seqtype='nucl', ncpu=4):
+		
+	
+def classify_by_blast(db_seq, qry_seq, blast_out=None, seqtype='nucl', ncpu=4, 
+					  min_identtity=80, min_coverge=80, min_length=80):
+	blast_outfmt = '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen qcovs qcovhsp sstrand'
+	blast_out = blast(db_seq, qry_seq, seqtype=seqtype, blast_out=blast_out, blast_outfmt=blast_outfmt, ncpu=ncpu)
+	d_best_hit = BlastOut(blast_out, blast_outfmt).filter_besthit(fout=None)
+	for qseqid, rc in d_best_hit.iteritems():
+		if not (rc.pindent >= min_identtity and rc.qcovs >= min_coverge and rc.qlen >= min_length):
+			del d_best_hit[qseqid]
+	d_class = OrderedDict([(qseqid, rc.sseqid) for qseqid, rc in d_best_hit.iteritems()])
+	return d_class
+	
+def blast(db_seq, qry_seq, seqtype='nucl', blast_out=None, blast_outfmt=None, ncpu=4):
+	if seqtype == 'nucl':
+		blast = 'blastn'
+	elif seqtype == 'prot':
+		blast = 'blastp'
+	else:
+		raise ValueError('Unknown molecule type "{}" for blast'.format(seqtype))
+	if blast_out is None:
+		blast_out = qry_seq + '.blastout'
+	if blast_outfmt is None:
+		blast_outfmt = '6'
+	cmd = 'makeblastdb -in {} -dbtype {}'.format(db_seq, seqtype)
 	os.system(cmd)
-class Classifier():
+		
+	cmd = '{} -query {} -db {} -out {} -outfmt {} -num_threads {}'.format(qry_seq, db_seq, blast_out, blast_outfmt, ncpu)
+	os.system(cmd)
+	return blast_out
+
+class BlastOut(object):
+	def __init__(self, blast_out, outfmt=None):
+		self.blast_out = blast_out
+		if outfmt is None:
+			self.outfmt = 'qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore'.split()
+		elif outfmt[0] == '6':
+			self.outfmt = outfmt.split()[1:]
+		else:
+			raise ValueError('Only support for blast outfmt 6 = tabular')
+	def __iter__(self):
+		return self.parse()
+	def parse(self):
+		for line in open(self.blast_out):
+			values = line.strip().split('\t')
+			yield BlastOutRecord(self.outfmt, values)
+	def filter_besthit(self, fout=None):
+		d_best_hit = OrderedDict()
+		for rc in self.parse():
+			if rc.qseqid in d_best_hit:
+				if rc.bitscore > d_best_hit[rc.qseqid]:
+					d_best_hit[rc.qseqid] = rc
+			else:
+				d_best_hit[rc.qseqid] = rc
+		if fout is None:
+			return d_best_hit
+		for qseqid, rc in d_best_hit.iteritems():
+			rc.write(fout)
+class BlastOutRecord(object):
+	def __init__(self, outfmt, values):
+		self.values = values
+		for key, value in zip(outfmt, values):
+			setattr(self, key, BLASType[key](value))
+	def write(self, fout=sys.stdout):
+		print >> fout, '\t'.join(self.values)
+class Classifier(object):
 	def __init__(self, gff, db='rexdb', fout=sys.stdout): # gff is sorted
 		self.gff = gff
 		self.db = db
@@ -220,7 +163,7 @@ class Classifier():
 			last_lid = lid
 		yield record
 	def classify(self, ):
-		line = ['#TE', 'Superfamily', 'Family', 'Clade', 'Code', 'Strand', 'hmmmatchs']
+		line = ['#TE', 'Order', 'Superfamily', 'Clade', 'Code', 'Strand', 'hmmmatchs']
 		print >> self.fout, '\t'.join(line)
 		for rc in self.parse():
 			rc_flt = rc #[line for line in rc if line.gene in self.markers]
@@ -305,7 +248,7 @@ class Classifier():
 			ordered_genes = perfect_structure[(order, superfamily)]
 			my_genes = [gene for gene in genes if gene in set(ordered_genes)]
 			if ordered_genes == my_genes:
-				coding = 'cmpl' # completed gene structure
+				coding = 'cmpl' # completed gene structure and the same order
 			else:
 				coding = 'lost'
 		except KeyError:
@@ -434,8 +377,8 @@ class HmmDomRecord():
 	def hmmcov(self):
 		return round(1e2*(self.hmmend - self.hmmstart + 1) / self.tlen, 1)
 def seq2dict(inSeq):
-	from Bio import SeqIO
 	return dict([(rc.id, rc) for rc in SeqIO.parse(inSeq, 'fasta')])
+	
 def parse_hmmname(hmmname, db='gydb'):
 	db = db.lower()
 	if db == 'gydb':
@@ -450,7 +393,7 @@ def parse_hmmname(hmmname, db='gydb'):
 
 	return gene, clade
 
-def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20, maxeval=1e-3):
+def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=20, maxeval=1e-3):
 	if prefix is None:
 		prefix = inSeq
 	d_besthit = {}
@@ -498,7 +441,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20
 			domain = gene
 		gid = '{}|{}'.format(qid, rc.tname)
 		gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
-		if seqtype == 'dna':
+		if seqtype == 'nucl':
 			strand, frame = parse_frame(rc.qname.split('|')[-1])
 			if strand == '+':
 				nuc_start = rc.envstart * 3 - 2  + frame
@@ -547,29 +490,58 @@ def translate(inSeq, prefix=None):
 	cmd = '{} {} > {}'.format(prog, inSeq, outSeq)
 	os.system(cmd)
 	return outSeq
-def hmmscan(inSeq, hmmdb='rexdb', prefix=None):
-	if prefix is None:
-		prefix = inSeq
-	outDomtbl = prefix + '.domtbl'
-	cmd = 'hmmscan --notextw -E 0.01 --domE 0.01 --noali --cpu 4 --domtblout {} {} {} > /dev/null'.format(outDomtbl, hmmdb, inSeq)
+def hmmscan(inSeq, hmmdb='rexdb.hmm', hmmout=None):
+	if hmmout is None:
+		hmmout = prefix + '.domtbl'
+	cmd = 'hmmscan --notextw -E 0.01 --domE 0.01 --noali --cpu 4 --domtblout {} {} {} > /dev/null'.format(hmmout, hmmdb, inSeq)
 	os.system(cmd)
-	return outDomtbl
-def LTRlibAnn(ltrlib, seqtype='dna', hmmdb='rexdb', prefix=None):
-#	ltrlib = Retriever(genome).ltrlib
+	return hmmout
+def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp'):
+	chunk_prefix = '{}/{}'.format(tmpdir, 'chunk_aaseq')
+	_, _, _, chunk_files = split_fastx_by_chunk_num(
+			inSeq, prefix=chunk_prefix, chunk_num=processors, seqfmt='fasta', suffix='')
+	domtbl_files = [chunk_file + '.domtbl' for chunk_file in chunk_files]
+	commands = [ 
+		'hmmscan --notextw -E 0.01 --domE 0.01 --noali --domtblout {} {} {}'.format(domtbl_file, hmmdb, chunk_file) \
+			for chunk_file, domtbl_file in zip(chunk_files, domtbl_files)]
+	jobs = pp_run(commands)
+	for cmd, (stdout, stderr, status) in zip(commands, jobs):
+		if not status == 0:
+			print >>sys.err, "Warning: exit code {} for CMD '{}'".format(status, CMD)
+	# cat files
+	if hmmout is None:
+		hmmout = prefix + '.domtbl'
+	with open(hmmout, 'w') as f:
+		for domtbl_file in domtbl_files:
+			for line in open(domtbl_file):
+				f.write(line)
+	return hmmout
+
+def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='dna', prefix=None, 
+			force_write_hmmscan=False,
+			processors=4, tmpdir='./tmp', 
+			mincov=20, maxeval=1e-3):
 	if prefix is None:
 		prefix = '{}.{}'.format(ltrlib, hmmdb)
-	if seqtype == 'dna':
+	
+	if seqtype == 'nucl':
 		print >>sys.stderr, 'translating {} in six frames'.format(ltrlib)
 		aaSeq = translate(ltrlib)
-#		aaSeq = ltrlib + '.aa'
 	elif seqtype == 'prot':
 		aaSeq = ltrlib
+	
 	print >>sys.stderr, 'HMM scanning against {}'.format(DB[hmmdb])
-	domtbl = hmmscan(aaSeq, hmmdb=DB[hmmdb], prefix=prefix)
-#	domtbl = prefix + '.domtbl'
+	domtbl = aaSeq + '.domtbl'
+	if not (os.path.exists(domtbl) and os.path.getsize(domtbl) >0) or force_write_hmmscan:
+		if processors > 1:
+			hmmscan_pp(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl, tmpdir=tmpdir):
+		else:
+			hmmscan(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl)
+	else:
+		print >>sys.stderr, 'use existed {} and skip hmmscan'.format(domtbl)
 	print >>sys.stderr, 'generating gene anntations'
 	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=prefix, seqtype=seqtype)
-	return gff, geneSeq, aaSeq
+	return gff, geneSeq
 def replaceCls(ltrlib, seqtype='dna', db='rexdb'):
 	gff = ltrlib + '.' + db + '.gff3'
 	if not os.path.exists(gff):
@@ -628,5 +600,48 @@ def main():
 		Retriever(genome).re_classify()
 	else:
 		raise ValueError('Unknown command: {}'.format(subcmd))
+		
+
+	
+def Args():
+	parser = argparse.ArgumentParser(version=__version__)
+	parser.add_argument("-s","--sequence", action="store",type=str,
+					dest="input", required=True, 
+					help="input TE sequences in fasta format [required]")
+	parser.add_argument("-db","--hmm-database", action="store",type=str,
+					dest="database name", default='rexdb', choices=DB.keys(),  
+					help="the database used [default=%(default)s]")
+	parser.add_argument("-st","--seq-type", action="store",type=str,
+					dest="sequence type", default='nucl', choices=['nucl', 'prot'],  
+					help="'nucl' for DNA and 'prot' for protein [default=%(default)s]")
+	parser.add_argument("-pre", "--prefix", action="store",
+					dest="prefix", default=None, type=str,
+					help="output prefix [default='-s']")
+	parser.add_argument("-fw", "--force-write-hmmscan", action="store_ture",
+					dest="write", default=False, 
+					help="if False, will use existed hmmscan outfile and skip hmmscan [default=%(default)s]")
+	parser.add_argument("-p", "--processors", action="store",
+					dest="processors", default=4, type=int,
+					help="processors to use [default=%(default)s]")
+	parser.add_argument("-tmp", "--tmp-dir", action="store",
+					dest="tmp", default='./tmp', type=str,
+					help="directory for temporary files [default=%(default)s]")
+	parser.add_argument("-cov", "--min-coverage", action="store",
+					dest="covearge", default=20, type=float,
+					help="mininum covearge for protein domains in HMMScan output.[default=%(default)s]")
+	parser.add_argument("-eval", "--max-evalue", action="store",
+					dest="evalue", default=1e-3, type=float,
+					help="maxinum E-value for protein domains in HMMScan output.[default=%(default)s]")				
+	parser.add_argument("-dp2", "--disable-pass2", action="store_true",
+					dest="disable", default=False, 
+					help="do not to classify the unclassified sequences [default=%(default)s]")
+	parser.add_argument("-nolib", "--no-library", action="store_true",
+					dest="disable", default=False, 
+					help="do not generate a library for RepeatMasker [default=%(default)s]")
+	args = parser.parse_args()
+	if args.prefix is None:
+		args.prefix = '{}.{}'.format(args.sequence, args.hmm_database)
+	return args
+	
 if __name__ == '__main__':
 	main()
