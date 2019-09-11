@@ -773,13 +773,14 @@ class Dependency(object):
 	def check(self):
 		pass
 	def check_hmmer(self, db, program='hmmscan'):
-		dp_version = self.get_hmm_version(db)
+		dp_version = self.get_hmm_version(db)[:3]
 		if self.check_presence(program):
-			version = self.check_hmmer_verion(program)
-			if version == dp_version:
-				logger.info('hmmer\t{}\tOK'.format(version))
+			version0 = self.check_hmmer_verion(program)
+			version = version0[:3]
+			if version >= dp_version:
+				logger.info('hmmer\t{}\tOK'.format(version0))
 			elif version < dp_version:
-				logger.info('hmmer version {} is too low. Please update to {} from http://hmmer.org/download.html'.format(version, dp_version))
+				logger.warn('hmmer version {} is too low. Please update to {} from http://hmmer.org/download.html'.format(version, dp_version))
 			else:
 				logger.info('hmmer version {} is too high. You may use the version {}. However, I update the database first.'.format(version, dp_version))
 				self.update_hmmer(db)
@@ -792,6 +793,8 @@ class Dependency(object):
 	def update_hmmer(self, db):
 		from small_tools import backup_file
 		bk_db, db = backup_file(db)
+		for suffix in ['.h3f', '.h3i', '.h3m', '.h3p']:
+			backup_file(bk_db + suffix)
 		cmd = 'hmmconvert {} > {}'.format(bk_db, db) 
 		out, err, status0 = run_cmd(cmd, logger=logger)
 		cmd = 'hmmpress {}'.format(db)

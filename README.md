@@ -6,7 +6,7 @@ Dependencies:
 +	[python 2.7](https://www.python.org/)
    +   [biopython](https://biopython.org/): quickly install by `pip install biopython`
    +   [parallel python](https://www.parallelpython.com/): quickly install by `pip install pp`
-+	[hmmscan 3.1b2](http://hmmer.org/)
++	[hmmscan 3.1x or 3.2x](http://hmmer.org/)
 +   [blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
  
 `git clone https://github.com/zhangrengang/LTR_classifier`
