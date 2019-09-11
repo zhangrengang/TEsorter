@@ -105,8 +105,8 @@ You may want to use the RT domains to analysis relationships among retrotranspos
 ```
 # to extract RT domain sequences
 cat rice6.9.5.liban.rexdb.dom.tsv | grep RT | python ../bin/get_record.py -i rice6.9.5.liban.rexdb.faa -o rice6.9.5.liban.rexdb.RT.faa -t fasta
-# to align with mafft or other tools
+# to align with MAFFT or other tools
 mafft --auto rice6.9.5.liban.rexdb.RT.faa > rice6.9.5.liban.rexdb.RT.faa.aln
-# to reconduct the phylogenetic tree with iqtree or other tools
+# to reconduct the phylogenetic tree with IQTREE or other tools
 iqtree -s rice6.9.5.liban.rexdb.RT.faa.aln -bb 1000 -nt AUTO 
 ```
