@@ -711,6 +711,7 @@ def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors
 	for cmd, (stdout, stderr, status) in zip(cmds, jobs):
 		if not status == 0:
 			logger.warn( "exit code {} for CMD '{}'".format(status, cmd) )
+			logger.warn('\n\tSTDOUT:\n{0}\n\tSTDERR:\n{1}\n\n'.format(stdout, stderr))
 	# cat files
 	if hmmout is None:
 		hmmout = prefix + '.domtbl'

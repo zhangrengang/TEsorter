@@ -25,7 +25,7 @@ def run_cmd(cmd, logger=None):
 	status = job.poll()
 	if logger is not None and status > 0:
 		 logger.warn("exit code {} for CMD `{}`: ".format(status, cmd))
-		 logger.warn('\n\tSTDOUT:\n{0}\n\tSTDERR:\n{1}\n>-<>-<\n'.format(*output))
+		 logger.warn('\n\tSTDOUT:\n{0}\n\tSTDERR:\n{1}\n\n'.format(*output))
 	return output + (status,)
 
 def default_processors(actual=None):
