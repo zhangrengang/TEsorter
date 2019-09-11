@@ -47,12 +47,12 @@ python ../LTR_classifier.py RepeatPeps.lib -st prot -p 20
 ### Outputs ###
 ```
 rice6.9.5.liban.rexdb.domtbl        HMMScan raw output
-rice6.9.5.liban.rexdb.faa           protein sequences of domain, which can be used for phylogenetic analysis.
+rice6.9.5.liban.rexdb.dom.faa       protein sequences of domain, which can be used for phylogenetic analysis.
 rice6.9.5.liban.rexdb.dom.tsv       inner domains of LTRs, which might be used to filter domains based on their scores and coverages.
-rice6.9.5.liban.rexdb.gff3          domain annotations
+rice6.9.5.liban.rexdb.dom.gff3      domain annotations
 rice6.9.5.liban.rexdb.cls.tsv       TEs/LTRs classifications
 	Column 5: "yes" means one LTR Copia/Gypsy element with full GAG-POL domains.
-rice6.9.5.liban.rexdb.classified    library for RepeatMakser
+rice6.9.5.liban.rexdb.cls.lib       library for RepeatMakser
 ```
 
 ### Usage ###
@@ -102,18 +102,19 @@ optional arguments:
 ### Limitations ###
 1. For each domain (e.g. RT), only the best hit with the highest score will output, which means: 1) if frame is shifted, only one part can be annotated; 2) for example, if two or more RT domains are present in one query sequence, only one of these RT domains will be annotated.
 2. Many LTRs cannot be classified due to no hit, which might be because: 1) the database is still incompleted; 2) some LTRs may have too many mutations such as frame shifts and stop gains; 3) some LTRs may be false positive. For the test data set ([rice6.9.5.liban](https://raw.githubusercontent.com/oushujun/EDTA/master/database/rice6.9.5.liban)), ~84% LTRs (INT sequences) are classified.
+3. Non-autonomous TEs that lack of protein domains, unactive autonomous TEs that have lost their protein domainsand any other elements that contain non protein domains,  are excepted to be un-classified.
 
 ### Further phylogenetic analyses ###
 You may want to use the RT domains to analysis relationships among retrotransposons (LTR, LINE, DIRS, etc.). Here is an example:
 ```
 # to extract RT domain sequences
-cat rice6.9.5.liban.rexdb.dom.tsv | grep RT | python ../bin/get_record.py -i rice6.9.5.liban.rexdb.faa -o rice6.9.5.liban.rexdb.RT.faa -t fasta
+cat rice6.9.5.liban.rexdb.dom.tsv | grep -P "\-RT\t" | python ../bin/get_record.py -i rice6.9.5.liban.rexdb.dom.faa -o rice6.9.5.liban.rexdb.dom.RT.faa -t fasta
 
 # to align with MAFFT or other tools
-mafft --auto rice6.9.5.liban.rexdb.RT.faa > rice6.9.5.liban.rexdb.RT.faa.aln
+mafft --auto rice6.9.5.liban.rexdb.dom.RT.faa > rice6.9.5.liban.rexdb.dom.RT.aln
 
 # to reconduct the phylogenetic tree with IQTREE or other tools
-iqtree -s rice6.9.5.liban.rexdb.RT.faa.aln -bb 1000 -nt AUTO 
+iqtree -s rice6.9.5.liban.rexdb.dom.RT.aln -bb 1000 -nt AUTO 
 
 # Finally, visualize and edit the tree 'rice6.9.5.liban.rexdb.RT.faa.aln.treefile' with FigTree or other tools.
 ```

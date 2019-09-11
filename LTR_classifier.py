@@ -87,12 +87,15 @@ def Args():
 	parser.add_argument("-nolib", "--no-library", action="store_true",
 					default=False, 
 					help="do not generate a library file for RepeatMasker [default=%(default)s]")
+	parser.add_argument("-norc", "--no-reverse", action="store_true",
+					default=False,
+					help="do not reverse complement sequences if they are detected in minus strand [default=%(default)s]")
 	parser.add_argument("--no-cleanup", action="store_true",
 					default=False,
 					help="do not clean up the temporary directory [default=%(default)s]")
 	args = parser.parse_args()
 	if args.prefix is None:
-		args.prefix = '{}.{}'.format(args.sequence, args.hmm_database)
+		args.prefix = '{}.{}'.format(os.path.basename(args.sequence), args.hmm_database)
 	
 	if args.seq_type == 'prot':
 		args.disable_pass2 = True
@@ -149,7 +152,8 @@ def pipeline(args):
 			line = [unclfed_id, order, superfamily, clade, 'none', '?', 'none']
 			print >> fc, '\t'.join(line)
 			# update
-			d_class[unclfed_id] = CommonClassification(order=order, superfamily=superfamily, clade=clade)
+		#	d_class[unclfed_id] = CommonClassification(order=order, superfamily=superfamily, clade=clade)
+			d_class[unclfed_id] = CommonClassification(*line)
 		fc.close()
 		logger.info('{} sequences classified in pass 2'.format(len(d_class2)))
 		logger.info('total {} sequences classified.'.format(len(d_class)))
@@ -157,13 +161,16 @@ def pipeline(args):
 
 	# output library
 	if not args.no_library:
-		out_lib = args.prefix + '.classified'
+		out_lib = args.prefix + '.cls.lib'
 		logger.info( 'writing library for RepeatMasker in `{}`'.format(out_lib) )
 		fout = open(out_lib, 'w')
 		for rc in SeqIO.parse(args.sequence, 'fasta'):
 			if rc.id in d_class:
 				cl = d_class[rc.id]
+				strand = cl.strand
 				cl = fmt_cls(cl.order, cl.superfamily, cl.clade)
+				if not args.no_reverse and strand == '-':
+					rc.seq = rc.seq.reverse_complement()
 			else:
 				cl = 'Unknown'
 	#		if not cl:
@@ -321,7 +328,7 @@ class Classifier(object):
 			last_lid = lid
 		yield record
 	def classify(self, ):
-		line = ['#TE', 'Order', 'Superfamily', 'Clade', 'Completed', 'Strand', 'Domains']
+		line = ['#TE', 'Order', 'Superfamily', 'Clade', 'Complete', 'Strand', 'Domains']
 		print >> self.fout, '\t'.join(line)
 		for rc in self.parse():
 			rc_flt = rc #[line for line in rc if line.gene in self.markers]
@@ -665,7 +672,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 		attr = 'ID={};gene={};clade={};evalue={};coverage={};probability={}'.format(gid, domain, clade, rc.evalue, rc.hmmcov, rc.acc)
 		gffline = [qid, 'TE_classifier', 'CDS', nuc_start, nuc_end, rc.score, strand, frame, attr, rc.evalue, rc.hmmcov, rc.acc, rawid, gid, gseq]
 		lines.append(gffline)
-	gff, seq, tsv = '{}.gff3'.format(prefix), '{}.faa'.format(prefix), '{}.dom.tsv'.format(prefix)
+	gff, seq, tsv = '{}.dom.gff3'.format(prefix), '{}.dom.faa'.format(prefix), '{}.dom.tsv'.format(prefix)
 	fgff = open(gff, 'w')
 	fseq = open(seq, 'w')
 	ftsv = open(tsv, 'w')
