@@ -37,7 +37,7 @@ To improve specificity, increase the criteria and disable the pass2 mode:
 ```
 python ../LTR_classifier.py rice6.9.5.liban -p 20 -cov 30 -eval 1e-5 -dp2
 ```
-To do with TE polyprotein sequences:
+To do with [TE polyprotein sequences](http://www.repeatmasker.org/RMDownload.html):
 ```
 python ../LTR_classifier.py RepeatPeps.lib -st prot -p 20
 ```
