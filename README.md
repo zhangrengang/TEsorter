@@ -10,6 +10,7 @@ Dependencies:
 +   [blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
  
 `git clone https://github.com/zhangrengang/LTR_classifier`
+Note: do not move or hard link `LTR_classifier.py` to anywhere else, as it rely on `database/` and `bin/`. You can add the directory to `PATH` or soft link `LTR_classifier.py` to `PATH`.
 
 ### Quick Start ###
 ```
