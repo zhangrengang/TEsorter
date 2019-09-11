@@ -70,17 +70,17 @@ def Args():
 					default=False, 
 					help="if False, will use the existed hmmscan outfile and skip hmmscan [default=%(default)s]")
 	parser.add_argument("-p", "--processors", action="store",
-					default=1, type=int,
+					default=4, type=int,
 					help="processors to use [default=%(default)s]")
 	parser.add_argument("-tmp", "--tmp-dir", action="store",
 					default='./tmp', type=str,
 					help="directory for temporary files [default=%(default)s]")
 	parser.add_argument("-cov", "--min-coverage", action="store",
 					default=20, type=float,
-					help="mininum coverage for protein domains in HMMScan output.[default=%(default)s]")
+					help="mininum coverage for protein domains in HMMScan output [default=%(default)s]")
 	parser.add_argument("-eval", "--max-evalue", action="store",
 					default=1e-3, type=float,
-					help="maxinum E-value for protein domains in HMMScan output.[default=%(default)s]")				
+					help="maxinum E-value for protein domains in HMMScan output [default=%(default)s]")				
 	parser.add_argument("-dp2", "--disable-pass2", action="store_true",
 					default=False, 
 					help="do not further classify the unclassified sequences [default=%(default)s for `nucl`, True for `prot`]")
@@ -93,8 +93,9 @@ def Args():
 	args = parser.parse_args()
 	if args.prefix is None:
 		args.prefix = '{}.{}'.format(args.sequence, args.hmm_database)
+	
 	if args.seq_type == 'prot':
-		args.dp2 = True
+		args.disable_pass2 = True
 	return args
 
 def pipeline(args):
@@ -122,7 +123,7 @@ def pipeline(args):
 			)
 			
 	# classify	
-	classify_out = args.prefix + '.cls'
+	classify_out = args.prefix + '.cls.tsv'
 	fc = open(classify_out, 'w')
 	d_class = OrderedDict()
 	for rc in Classifier(gff, db=args.hmm_database, fout=fc):
@@ -165,7 +166,9 @@ def pipeline(args):
 				cl = fmt_cls(cl.order, cl.superfamily, cl.clade)
 			else:
 				cl = 'Unknown'
-			rc.id += '#' + cl
+	#		if not cl:
+	#			print rc.id, vars(d_class[rc.id])
+			rc.id = rc.id.split('#')[0] + '#' + cl
 			SeqIO.write(rc, fout, 'fasta')
 		fout.close()
 	logger.info('Summary of classifications:')
@@ -189,22 +192,24 @@ def summary(d_class):
 			d_sum[key][2] += [clf.clade]
 		if clf.completed == 'yes':
 			d_sum[key][3] += 1
+	out_order = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown']
 	template = '{:<16}{:<16}{:>15}{:>15}{:>15}{:>15}'
 	line = ['Order', 'Superfamily', '# of Sequences', '# of Clade Sequences', '# of Clades', '# of full Domains']
 	
 	print >> sys.stderr, template.format(*line) #'\t'.join(line)
-	for (order, superfamliy), summary in sorted(d_sum.items()):
+	for (order, superfamliy), summary in \
+			sorted(d_sum.items(), key=lambda x: (out_order.index(x[0][0]), x[0][1])):
 		line = [order, superfamliy, summary[0], summary[1], len(set(summary[2])), summary[3]]
 		line = map(str, line)
 		line = template.format(*line)
 		print >> sys.stderr, line #'\t'.join(line)
 def fmt_cls(*args):
-	args = []
+	values = []
 	for arg in args:
-		if arg == 'unknown' or arg in set(args):
+		if arg == 'unknown' or arg in set(values):
 			continue
-		args += [arg]
-	return '/'.join(args)
+		values += [arg]
+	return '/'.join(values)
 	
 class CommonClassification(object):
 	def __init__(self, id=None, order=None, superfamily=None, 
@@ -348,11 +353,12 @@ class Classifier(object):
  #           ('LTR', 'Gypsy'): ['Ty3-GAG', 'Ty3-PROT', 'Ty3-RT', 'Ty3-RH', 'Ty3-INT'],
 			('LTR', 'Copia'): ['GAG', 'PROT', 'INT', 'RT', 'RH'],
 			('LTR', 'Gypsy'): ['GAG', 'PROT', 'RT', 'RH', 'INT'],
+			('LTR', 'Bel-Pao'): ['GAG', 'PROT', 'RT', 'RH', 'INT'],
 			}
 		clade_count = Counter(clades)
 		max_clade = max(clade_count, key=lambda x: clade_count[x])
 		order, superfamily = self._parse_rexdb(max_clade)
-		if len(clade_count) == 1:
+		if len(clade_count) == 1 or clade_count[max_clade] > 1:
 			max_clade = max_clade.split('/')[-1]
 		elif len(clade_count) > 1:
 			max_clade = 'mixture'
@@ -371,17 +377,27 @@ class Classifier(object):
 				coding = 'no'
 		except KeyError:
 			coding = 'unknown'
+		if superfamily not in {'Copia', 'Gypsy'}:
+			max_clade = 'unknown'
+		if max_clade.startswith('Ty'): # Ty3_gypsy, Ty1_copia, Ty1-outgroup in metazoa_v3
+			max_clade = 'unknown'
 		return order, superfamily, max_clade, coding
 	def _parse_rexdb(self, clade): # full clade name
 		if clade.startswith('Class_I/LTR/Ty1_copia'):
 			order, superfamily = 'LTR', 'Copia'
 		elif clade.startswith('Class_I/LTR/Ty3_gypsy'):
 			order, superfamily = 'LTR', 'Gypsy'
+		elif clade.startswith('Class_I/LTR/'): # LTR/Bel-Pao, LTR/Retrovirus
+			order, superfamily = clade.split('/')[1:3]
 		elif clade.startswith('Class_I/'): # LINE, pararetrovirus, Penelope, DIRS
 			order, superfamily = clade.split('/')[1], 'unknown'
-		elif clade.startswith('Class_II/'):
+		elif clade.startswith('Class_II/'): # TIR/hAT, Helitro, Maverick
 			try: order, superfamily = clade.split('/')[2:4]
 			except ValueError: order, superfamily = clade.split('/')[2], 'unknown'
+		elif clade.startswith('NA'): # "NA:Retrovirus-RH"
+			order, superfamily = 'LTR', 'Retrovirus'
+		else:
+			logger.error('Unknown clade {}'.format(clade))
 		return order, superfamily
 	def identify(self, genes, clades):
 		perfect_structure = {
@@ -444,6 +460,16 @@ class Classifier(object):
 class CladeInfo():
 	def __init__(self, infile=DB['gydb']+'.info'):
 		self.infile = infile
+		self.clade_map = {
+			'Ty_(Pseudovirus)': 'pseudovirus',
+			'Cer2-3': 'cer2-3',
+			'412/Mdg1': '412_mdg1',
+			'TF1-2': 'TF',
+			'Micropia/Mdg3': 'micropia_mdg3',
+			'CoDi-I': 'codi_I',
+			'CoDi-II': 'codi_II',
+			'17.6': '17_6',
+			}
 	def __iter__(self):
 		return self.parse()
 	def parse(self):
@@ -459,22 +485,45 @@ class CladeInfo():
 				self.clade = self.dict['Cluster_or_genus']
 			else:
 				self.clade = self.dict['Clade']
-			if self.clade == '17.6': # exception
-				self.clade = '17_6'
 			self.superfamily = self.dict['Family'].split('/')[-1]
 			if self.superfamily == 'Retroviridae':	# deltaretroviridae gammaretroviridae
 				self.clade = self.dict['Cluster_or_genus'].replace('virus', 'viridae')
 			if self.superfamily == 'Retrovirus':	# an exception
 				self.superfamily = 'Retroviridae'
 			self.order = 'LTR' if self.dict['System'] in {'LTR_retroelements', 'LTR_Retroelements', 'LTR_retroid_elements'} else self.dict['System']
+			yield self
+			if self.clade in self.clade_map:
+				self.clade = self.clade_map[self.clade]
+				yield self
+				if self.clade == '412_mdg1':
+					self.clade = '412-mdg1'  # 412-mdg1 and 412_mdg1
+					yield self
+
 			self.clade = self.clade.replace('-', '_') # A-clade V-clade C-clade
-			
 			yield self
 			self.clade = self.clade.lower()
 			yield self
 		self.order, self.superfamily, self.clade, self.dict = ['LTR', 'Copia', 'ty1/copia', {}]  # AP_ty1/copia
 		yield self
-		for clade, order in zip(['retroelement', 'shadow', 'all'], ['LTR', 'Unknown', 'Unknown']): # CHR
+		order_map = { 	# some unknown clade
+			'retroelement': 'LTR',
+			'retroviridae': 'LTR',
+			'B-type_betaretroviridae': 'LTR',
+			'D-type_betaretroviridae': 'LTR',
+			'caulimoviruses': 'LTR',
+			'caulimoviridae_dom2': 'LTR',
+			'errantiviridae': 'LTR',
+			'retropepsins': 'LTR',
+			'VPX_retroviridae': 'LTR',
+			'cog5550': 'Unknown',
+			'ddi': 'Unknown',
+			'dtg_ilg_template': 'Unknown',
+			'saspase': 'Unknown',
+			'GIN1': 'Unknown',
+			'shadow': 'Unknown',
+			'all': 'Unknown',
+			}
+		for clade, order in order_map.items():
 			self.order, self.superfamily, self.clade, self.dict = [order, 'unknown', clade, {}]  # CHR_retroelement
 			yield self	
 				
@@ -553,7 +602,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 	for inHmmout in inHmmouts:
 		for rc in HmmScan(inHmmout):
 			suffix = rc.qname.split('|')[-1]
-			if suffix.startswith('aa') or suffix.startswith('rev_aa'):
+			if seqtype == 'nucl' and (suffix.startswith('aa') or suffix.startswith('rev_aa')):
 				qid = '|'.join(rc.qname.split('|')[:-1])
 			else:
 				qid = rc.qname
@@ -562,6 +611,8 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 				cdomain = domain.split('-')[1]
 				if cdomain == 'aRH':
 					cdomain = 'RH'
+				if cdomain == 'TPase':
+					cdomain = 'INT'
 				key = (qid, cdomain)
 				if key in d_besthit:
 					best_rc = d_besthit[key]
@@ -573,7 +624,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 							d_besthit[key] = rc
 				else:
 					d_besthit[key] = rc
-			else:
+			else: # gydb
 				key = (qid, domain)
 				if key in d_besthit:
 					if rc.score > d_besthit[key].score:
@@ -614,7 +665,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 		attr = 'ID={};gene={};clade={};evalue={};coverage={};probability={}'.format(gid, domain, clade, rc.evalue, rc.hmmcov, rc.acc)
 		gffline = [qid, 'TE_classifier', 'CDS', nuc_start, nuc_end, rc.score, strand, frame, attr, rc.evalue, rc.hmmcov, rc.acc, rawid, gid, gseq]
 		lines.append(gffline)
-	gff, seq, tsv = '{}.gff3'.format(prefix), '{}.faa'.format(prefix), '{}.tsv'.format(prefix)
+	gff, seq, tsv = '{}.gff3'.format(prefix), '{}.faa'.format(prefix), '{}.dom.tsv'.format(prefix)
 	fgff = open(gff, 'w')
 	fseq = open(seq, 'w')
 	ftsv = open(tsv, 'w')

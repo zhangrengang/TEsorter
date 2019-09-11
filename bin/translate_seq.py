@@ -1,12 +1,14 @@
 #!/bin/env python
 import sys
 from Bio import SeqIO
+from Bio.Data import CodonTable
 def six_frame_translate(inFa, fout=sys.stdout):
 	for rc in SeqIO.parse(inFa, 'fasta'):
 		for seq, suffix0 in zip([rc.seq, rc.seq.reverse_complement()], ['aa', 'rev_aa']):
 			for frame in range(0,3):
 				cds_seq = seq[frame:]
-				aa_seq = translate_seq(cds_seq)
+				try: aa_seq = translate_seq(cds_seq)
+				except CodonTable.TranslationError: continue   # Codon 'XGA' is invalid
 				suffix = '|{}{}'.format(suffix0, frame+1)
 				print >> fout, '>{}{}\n{}'.format(rc.id, suffix, aa_seq)
 			
