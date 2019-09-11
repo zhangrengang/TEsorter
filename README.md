@@ -95,6 +95,8 @@ optional arguments:
                         [default=False for `nucl`, True for `prot`]
   -nolib, --no-library  do not generate a library file for RepeatMasker
                         [default=False]
+  -norc, --no-reverse   do not reverse complement sequences if they are
+                        detected in minus strand [default=False]
   --no-cleanup          do not clean up the temporary directory
                         [default=False]
 ```
