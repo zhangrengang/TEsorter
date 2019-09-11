@@ -5,7 +5,7 @@ It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to cl
 Dependencies:
 +	[python 2.7](https://www.python.org/)
    +   [biopython](https://biopython.org/): quickly install by `pip install biopython`
-   +   [parallelpython](https://www.parallelpython.com/): quickly install by `pip install pp`
+   +   [parallel python](https://www.parallelpython.com/): quickly install by `pip install pp`
 +	[hmmscan 3.1b2](http://hmmer.org/)
 +   [blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
  
@@ -21,7 +21,7 @@ cd test
 python ../LTR_classifier.py rice6.9.5.liban
 ```
 By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v3.0 + metazoa_v3](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended. 
-[GyDB](http://gydb.org/) can also be used for testing, like:
+[GyDB](http://gydb.org/) can also be used:
 ```
 python ../LTR_classifier.py rice6.9.5.liban -db gydb
 ```
@@ -110,3 +110,4 @@ mafft --auto rice6.9.5.liban.rexdb.RT.faa > rice6.9.5.liban.rexdb.RT.faa.aln
 # to reconduct the phylogenetic tree with IQTREE or other tools
 iqtree -s rice6.9.5.liban.rexdb.RT.faa.aln -bb 1000 -nt AUTO 
 ```
+Finally, visualize and edit the tree `rice6.9.5.liban.rexdb.RT.faa.aln.treefile` with FigTree or other tools.
