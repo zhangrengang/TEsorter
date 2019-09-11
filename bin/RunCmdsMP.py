@@ -16,12 +16,16 @@ def file2list(cmd_file, sep="\n"):
 		cmd_list = f.read().split(sep)
 	return [cmd for cmd in cmd_list if cmd]
 
-def run_cmd(cmd, log=None):
-	
+def run_cmd(cmd, logger=None):
+	if logger is not None:
+		logger.info('run CMD: `{}`'.format(cmd))
 	job = subprocess.Popen(cmd,stdout=subprocess.PIPE,\
 							stderr=subprocess.PIPE,shell=True)
 	output = job.communicate()
 	status = job.poll()
+	if logger is not None and status > 0:
+		 logger.warn("exit code {} for CMD `{}`: ".format(status, cmd))
+		 logger.warn('\n\tSTDOUT:\n{0}\n\tSTDERR:\n{1}\n>-<>-<\n'.format(*output))
 	return output + (status,)
 
 def default_processors(actual=None):

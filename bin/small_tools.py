@@ -1,19 +1,3 @@
-
-'''
-2016-4-20	remove_short_seqs		ZRG	add
-2016-4-20	fq_switch		ZRG	add
-2016-4-20	mkdirs		ZRG	add
-2016-4-20	is_complete_cds		ZRG	add
-2016-4-20	time_convert		ZRG	add
-2016-4-20	is_gz		ZRG	add
-2016-4-22	table2xls	ZRG add
-2016-4-22	combine_tabs_2xls	ZRG add
-2016-4-25	open_file	ZRG add
-2016-6-8	run_time	ZRG
-2016-8-28	backup_file	ZRG
-2016-9-21	count_record ZRG
-'''
-
 import sys
 import os
 

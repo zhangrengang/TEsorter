@@ -1,3 +1,4 @@
+#!/bin/env python
 import sys
 import os
 import shutil
@@ -263,7 +264,7 @@ def main():
 					help='size of chunk [default=%(default)s]')
 	parser.add_argument("-f","--format", action="store", 
 					dest="rcfmt", default='fasta', 
-					choices=['sam', 'fasta', 'fastq', 'paf'], 
+					choices=['fasta', 'fastq', 'sam', 'paf'], 
 					help="record file format [default=%(default)s]")
 	parser.add_argument("--gzip-output", action="store_true",
 					dest="gzip_output", default=False, 
