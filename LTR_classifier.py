@@ -178,6 +178,22 @@ def pipeline(args):
 			rc.id = rc.id.split('#')[0] + '#' + cl
 			SeqIO.write(rc, fout, 'fasta')
 		fout.close()
+
+	# rename id of protein domains
+	pep_lib = args.prefix + '.cls.pep'
+	logger.info( 'writing classified protein domains in `{}`'.format(pep_lib) )
+	fout = open(pep_lib, 'w')
+	for rc in SeqIO.parse(geneSeq, 'fasta'):
+		raw_id = rc.id.split('|')[0]
+		assert raw_id in d_class
+		cl = d_class[raw_id]
+		cl = fmt_cls(cl.order, cl.superfamily, cl.clade)
+		d_desc = dict([pair.split('=')for pair in rc.description.split()[-1].split(';')])
+		gene, clade = d_desc['gene'], d_desc['clade']
+		new_id = '{}#{}#{}|{}'.format(raw_id.split('#')[0], cl, gene, clade)
+		rc.id = new_id
+		SeqIO.write(rc, fout, 'fasta')
+	fout.close()
 	logger.info('Summary of classifications:')
 	summary(d_class)
 	logger.info( 'Pipeline done.' )
