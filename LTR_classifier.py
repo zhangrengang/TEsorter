@@ -21,10 +21,10 @@ from translate_seq import six_frame_translate
 # for multi-processing HMMScan
 from RunCmdsMP import run_cmd, pp_run
 from split_records import split_fastx_by_chunk_num
-# for pass-2 balst classifying
+# for pass-2 blast classifying
 from get_record import get_records
 
-__version__ = '0.1'
+__version__ = '1.0'
 
 DB = {
 	'gydb' : bindir + '/database/GyDB2.hmm',
@@ -99,6 +99,7 @@ def Args():
 	
 	if args.seq_type == 'prot':
 		args.disable_pass2 = True
+		args.no_reverse = True
 	return args
 
 def pipeline(args):
@@ -134,6 +135,7 @@ def pipeline(args):
 	fc.close()
 	logger.info('{} sequences classified'.format(len(d_class)))
 	logger.info('see protein domain sequences in `{}` and annotation gff3 file in `{}`'.format(geneSeq, gff))
+
 	# pass-2 classify
 	if not args.disable_pass2:
 		logger.info('classifying the unclassified sequences by searching against the classified ones')
@@ -366,7 +368,7 @@ class Classifier(object):
 			if self.db.startswith('rexdb'):
 				order, superfamily, max_clade, coding = self.identify_rexdb(genes, names)
 			elif self.db == 'gydb':
-				order, superfamily, max_clade, coding = self.identify(genes, clades)
+				order, superfamily, max_clade, coding = self.identify_gydb(genes, clades)
 			line = [lid, order, superfamily, max_clade, coding, strand, domains]
 			print >> self.fout, '\t'.join(line)
 			yield CommonClassification(*line)
@@ -422,7 +424,7 @@ class Classifier(object):
 		else:
 			logger.error('Unknown clade {}'.format(clade))
 		return order, superfamily
-	def identify(self, genes, clades):
+	def identify_gydb(self, genes, clades):
 		perfect_structure = {
 			('LTR', 'Copia')         : ['GAG', 'AP', 'INT', 'RT', 'RNaseH'],
 			('LTR', 'Gypsy')         : ['GAG', 'AP', 'RT', 'RNaseH', 'INT'],
