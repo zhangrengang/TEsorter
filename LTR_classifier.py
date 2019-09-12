@@ -663,8 +663,9 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 			continue
 		rawid = qid
 		gene,clade = parse_hmmname(rc.tname, db=db)
-#		if db.startswith('rexdb'):
+		if db.startswith('rexdb'):
 #			domain = gene
+			domain = gene.split('-')[1]
 		gid = '{}|{}'.format(qid, rc.tname)
 		gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
 		if seqtype == 'nucl':
