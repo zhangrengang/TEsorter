@@ -3,10 +3,10 @@ It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to cl
 
 ### Installation ###
 Dependencies:
-+	[python 2.7](https://www.python.org/)
++    [python 2.7](https://www.python.org/)
    +   [biopython](https://biopython.org/): quickly install by `pip install biopython`
    +   [parallel python](https://www.parallelpython.com/): quickly install by `pip install pp`
-+	[hmmscan 3.1x or 3.2x](http://hmmer.org/)
++    [hmmscan 3.1x or 3.2x](http://hmmer.org/)
 +   [blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
  
 ```
@@ -40,7 +40,7 @@ To improve specificity, increase the criteria and disable the pass2 mode:
 ```
 python ../LTR_classifier.py rice6.9.5.liban -p 20 -cov 30 -eval 1e-5 -dp2
 ```
-To do with TE polyprotein sequences([an example](http://www.repeatmasker.org/RMDownload.html)):
+To do with TE polyprotein sequences ([an example](http://www.repeatmasker.org/RMDownload.html)):
 ```
 python ../LTR_classifier.py RepeatPeps.lib -st prot -p 20
 ```
@@ -51,15 +51,15 @@ rice6.9.5.liban.rexdb.dom.faa       protein sequences of domain, which can be us
 rice6.9.5.liban.rexdb.dom.tsv       inner domains of LTRs, which might be used to filter domains based on their scores and coverages.
 rice6.9.5.liban.rexdb.dom.gff3      domain annotations in `gff3` format
 rice6.9.5.liban.rexdb.cls.tsv       TEs/LTRs classifications
-	Column 1: raw id
-	Column 2: Order, e.g. LTR
-	Column 3: Superfamily, e.g. Copia
-	Column 4: Clade, e.g. SIRE
-	Column 5: Complete, "yes" means one LTR Copia/Gypsy element with full GAG-POL domains.
-	Column 6: Strand, + or - or ?
-	Column 7: Domains, e.g. GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE; `none` for pass-2 classifications
+    Column 1: raw id
+    Column 2: Order, e.g. LTR
+    Column 3: Superfamily, e.g. Copia
+    Column 4: Clade, e.g. SIRE
+    Column 5: Complete, "yes" means one LTR Copia/Gypsy element with full GAG-POL domains.
+    Column 6: Strand, + or - or ?
+    Column 7: Domains, e.g. GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE; `none` for pass-2 classifications
 rice6.9.5.liban.rexdb.cls.lib       fasta library for RepeatMakser
-rice6.9.5.liban.rexdb.cls.pep       the same as `rice6.9.5.liban.rexdb.dom.faa`, but id changed with classifications.
+rice6.9.5.liban.rexdb.cls.pep       the same sequences as `rice6.9.5.liban.rexdb.dom.faa`, but id changed with classifications.
 ```
 
 ### Usage ###
