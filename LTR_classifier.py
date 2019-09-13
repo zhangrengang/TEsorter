@@ -778,7 +778,7 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 	else:
 		logger.info( 'use existed non-empty `{}` and skip hmmscan'.format(domtbl) )
 	logger.info( 'generating gene anntations' )
-	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=prefix, seqtype=seqtype)
+	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval)
 	return gff, geneSeq
 def replaceCls(ltrlib, seqtype='nucl', db='rexdb'):
 	gff = ltrlib + '.' + db + '.gff3'
