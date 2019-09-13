@@ -133,10 +133,14 @@ def pipeline(args):
 	for rc in Classifier(gff, db=args.hmm_database, fout=fc):
 		d_class[rc.id] = rc
 	fc.close()
-	logger.info('{} sequences classified'.format(len(d_class)))
+	classfied_num = len(d_class)
+	logger.info('{} sequences classified'.format(classfied_num))
 	logger.info('see protein domain sequences in `{}` and annotation gff3 file in `{}`'.format(geneSeq, gff))
 
 	# pass-2 classify
+	if classfied_num == 0 and not args.disable_pass2:
+			logger.warn('skipping pass-2 classification for zero classification in step-1')
+			args.disable_pass2 = True
 	if not args.disable_pass2:
 		logger.info('classifying the unclassified sequences by searching against the classified ones')
 		classified_seq = '{}/pass1_classified.fa'.format(args.tmp_dir)
@@ -353,10 +357,13 @@ class Classifier(object):
 			#if len(rc_flt) == 0:
 			#	rc_flt = [line for line in rc]
 			strands = [line.strand for line in rc_flt]
-			if len(set(strands)) >1 :
+			strands_num = len(set(strands))
+			if strands_num >1 :
 				strand = '?'
-			else:
+			elif strands_num == 1:
 				strand = strands[0]
+			else:
+				continue
 			if strand == '-':
 				rc_flt.reverse()
 				rc.reverse()
