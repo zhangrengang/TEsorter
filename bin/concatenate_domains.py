@@ -52,7 +52,7 @@ def main(inSeq, domains, outSeq=sys.stdout, tmpdir='/tmp'):
 	alnfiles = []
 	for seqfile in files:
 		alnfile = seqfile + '.aln'
-		cmd = 'mafft --auto {} > {}'.format(seqfile, alnfile)
+		cmd = 'mafft --auto {} > {} 2> /dev/null'.format(seqfile, alnfile)
 		os.system(cmd)
 		alnfiles += [alnfile]
 	# concatenate

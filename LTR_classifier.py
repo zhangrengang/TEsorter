@@ -366,7 +366,7 @@ class Classifier(object):
 				continue
 			if strand == '-':
 				rc_flt.reverse()
-				rc.reverse()
+			#	rc.reverse()
 			lid = rc_flt[0].ltrid
 			domains = ' '.join(['{}|{}'.format(line.gene, line.clade)  for line in rc])
 			genes  = [line.gene  for line in rc_flt]
