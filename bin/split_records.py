@@ -219,7 +219,7 @@ def split_fastx_by_size(inFastx, prefix, chunk_num, seqfmt, suffix, out_random=T
 	for d_bin in bins:
 		chunk_id = i + 1
 		out_file = '%s.%s.%s%s' % (prefix, chunk_id, seqfmt, suffix)
-		outfiles += [outfile]
+		outfiles += [out_file]
 		f = open(out_file,'w')
 		for id in d_bin.keys():
 			j +=1
