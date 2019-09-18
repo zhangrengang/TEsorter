@@ -2,12 +2,13 @@
 import os
 import sys
 import re
+import uuid
 from Bio import SeqIO
-#from RunCmdsMP import run_cmd
+from RunCmdsMP import run_cmd
 
 def main(inSeq, domains, outSeq=sys.stdout, tmpdir='/tmp'):
 	d_domain = {domain: [] for domain in domains}
-
+	uid = uuid.uuid1()
 	# intersect
 	for rc in SeqIO.parse(inSeq, 'fasta'):
 		domain = re.compile(r'gene=([^;\s]+)').search(rc.description).groups()[0]
@@ -27,7 +28,7 @@ def main(inSeq, domains, outSeq=sys.stdout, tmpdir='/tmp'):
 	d_file = {}
 	files = []
 	for i, domain in enumerate(domains):
-		outfile = '{}/{}.fa'.format(tmpdir, i)
+		outfile = '{}/{}.{}.fa'.format(tmpdir, uid, i)
 		fout = open(outfile, 'w')
 		d_file[domain] = fout
 		files += [outfile]
@@ -52,8 +53,9 @@ def main(inSeq, domains, outSeq=sys.stdout, tmpdir='/tmp'):
 	alnfiles = []
 	for seqfile in files:
 		alnfile = seqfile + '.aln'
-		cmd = 'mafft --auto {} > {} 2> /dev/null'.format(seqfile, alnfile)
-		os.system(cmd)
+		cmd = 'mafft --auto {} > {}'.format(seqfile, alnfile)
+#		os.system(cmd)
+		run_cmd(cmd, log=True)
 		alnfiles += [alnfile]
 	# concatenate
 	catAln(alnfiles, outSeq)

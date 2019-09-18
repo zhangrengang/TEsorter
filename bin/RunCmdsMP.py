@@ -6,6 +6,9 @@ import os
 import subprocess
 import pp
 from optparse import OptionParser
+import logging
+logging.basicConfig(level = logging.INFO,format = '%(asctime)s -%(levelname)s- %(message)s')
+LOGGER = logging.getLogger(__name__)
 
 __version__ = '1.0'
 def file2list(cmd_file, sep="\n"):
@@ -16,7 +19,9 @@ def file2list(cmd_file, sep="\n"):
 		cmd_list = f.read().split(sep)
 	return [cmd for cmd in cmd_list if cmd]
 
-def run_cmd(cmd, logger=None):
+def run_cmd(cmd, logger=None, log=None):
+	if log is True and logger is None:
+		logger = LOGGER
 	if logger is not None:
 		logger.info('run CMD: `{}`'.format(cmd))
 	job = subprocess.Popen(cmd,stdout=subprocess.PIPE,\

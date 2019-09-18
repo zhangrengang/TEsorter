@@ -1,4 +1,4 @@
-# LTR_classifier
+# LTRsorter
 It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify LTRs. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
 
 ### Installation ###
@@ -59,7 +59,7 @@ rice6.9.5.liban.rexdb.cls.tsv       TEs/LTRs classifications
     Column 6: Strand, + or - or ?
     Column 7: Domains, e.g. GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE; `none` for pass-2 classifications
 rice6.9.5.liban.rexdb.cls.lib       fasta library for RepeatMakser
-rice6.9.5.liban.rexdb.cls.pep       the same sequences as `rice6.9.5.liban.rexdb.dom.faa`, but id changed with classifications.
+rice6.9.5.liban.rexdb.cls.pep       the same sequences as `rice6.9.5.liban.rexdb.dom.faa`, but id is changed with classifications.
 ```
 
 ### Usage ###
