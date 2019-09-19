@@ -1,4 +1,4 @@
-# LTRsorter
+# TEsorter
 It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify LTRs. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
 
 ### Installation ###
