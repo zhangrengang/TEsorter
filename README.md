@@ -40,6 +40,10 @@ To improve specificity, increase the criteria and disable the pass2 mode:
 ```
 python ../TEsorter.py rice6.9.5.liban -p 20 -cov 30 -eval 1e-5 -dp2
 ```
+To improve sensitivity of pass-2, reduce the rule:
+```
+python ../TEsorter.py rice6.9.5.liban -p 20 -rule 70-30-80
+```
 To classify TE polyprotein sequences ([an example](http://www.repeatmasker.org/RMDownload.html)):
 ```
 python ../TEsorter.py RepeatPeps.lib -st prot -p 20
@@ -65,12 +69,11 @@ rice6.9.5.liban.rexdb.cls.pep       the same sequences as `rice6.9.5.liban.rexdb
 ### Usage ###
 ```
 $ python TEsorter.py  -h
-usage: TEsorter.py [-h] [-v]
-                         [-db {rexdb,rexdb-plant,rexdb-metazoa,gydb}]
-                         [-st {nucl,prot}] [-pre PREFIX] [-fw] [-p PROCESSORS]
-                         [-tmp TMP_DIR] [-cov MIN_COVERAGE] [-eval MAX_EVALUE]
-                         [-dp2] [-nolib] [-norc] [--no-cleanup]
-                         sequence
+usage: TEsorter.py [-h] [-v] [-db {rexdb,rexdb-plant,rexdb-metazoa,gydb}]
+                   [-st {nucl,prot}] [-pre PREFIX] [-fw] [-p PROCESSORS]
+                   [-tmp TMP_DIR] [-cov MIN_COVERAGE] [-eval MAX_EVALUE]
+                   [-dp2] [-rule PASS2_RULE] [-nolib] [-norc] [-nocln]
+                   sequence
 
 positional arguments:
   sequence              input TE sequences in fasta format [required]
@@ -92,19 +95,22 @@ optional arguments:
   -tmp TMP_DIR, --tmp-dir TMP_DIR
                         directory for temporary files [default=./tmp]
   -cov MIN_COVERAGE, --min-coverage MIN_COVERAGE
-                        mininum coverage for protein domains in HMMScan
-                        output.[default=20]
+                        mininum coverage for protein domains in HMMScan output
+                        [default=20]
   -eval MAX_EVALUE, --max-evalue MAX_EVALUE
-                        maxinum E-value for protein domains in HMMScan
-                        output.[default=0.001]
+                        maxinum E-value for protein domains in HMMScan output
+                        [default=0.001]
   -dp2, --disable-pass2
                         do not further classify the unclassified sequences
                         [default=False for `nucl`, True for `prot`]
+  -rule PASS2_RULE, --pass2-rule PASS2_RULE
+                        classifying rule [identity-coverage-length] in pass-2
+                        based on simliarity [default=80-80-80]
   -nolib, --no-library  do not generate a library file for RepeatMasker
                         [default=False]
   -norc, --no-reverse   do not reverse complement sequences if they are
                         detected in minus strand [default=False]
-  --no-cleanup          do not clean up the temporary directory
+  -nocln, --no-cleanup  do not clean up the temporary directory
                         [default=False]
 ```
 

@@ -84,13 +84,16 @@ def Args():
 	parser.add_argument("-dp2", "--disable-pass2", action="store_true",
 					default=False, 
 					help="do not further classify the unclassified sequences [default=%(default)s for `nucl`, True for `prot`]")
+	parser.add_argument("-rule", "--pass2-rule", action="store",
+					default='80-80-80', type=str,
+					help="classifying rule [identity-coverage-length] in pass-2 based on similarity [default=%(default)s]")
 	parser.add_argument("-nolib", "--no-library", action="store_true",
 					default=False, 
 					help="do not generate a library file for RepeatMasker [default=%(default)s]")
 	parser.add_argument("-norc", "--no-reverse", action="store_true",
 					default=False,
 					help="do not reverse complement sequences if they are detected in minus strand [default=%(default)s]")
-	parser.add_argument("--no-cleanup", action="store_true",
+	parser.add_argument("-nocln", "--no-cleanup", action="store_true",
 					default=False,
 					help="do not clean up the temporary directory [default=%(default)s]")
 	args = parser.parse_args()
@@ -100,6 +103,9 @@ def Args():
 	if args.seq_type == 'prot':
 		args.disable_pass2 = True
 		args.no_reverse = True
+	if not args.disable_pass2:
+		for key, par in zip(['p2_identity', 'p2_coverage', 'p2_length'], args.pass2_rule.split('-')):
+			setattr(args, key, float(par))
 	return args
 
 def pipeline(args):
@@ -148,8 +154,11 @@ def pipeline(args):
 		get_records(args.sequence, classified_seq, d_class.keys(), type='fasta', process='get')
 		get_records(args.sequence, unclassified_seq, d_class.keys(), type='fasta', process='remove')
 
+		logger.info('using the {} rule'.format(args.pass2_rule))
 		d_class2 = classify_by_blast(classified_seq, unclassified_seq, 
-						seqtype=args.seq_type, ncpu=args.processors)
+						seqtype=args.seq_type, ncpu=args.processors,
+						min_identtity=args.p2_identity, min_coverge=args.p2_coverage, min_length=args.p2_length,
+						)
 		fc = open(classify_out, 'a')
 		for unclfed_id, clfed_id in d_class2.items():
 			clfed = d_class[clfed_id]
@@ -258,7 +267,7 @@ def classify_by_blast(db_seq, qry_seq, blast_out=None, seqtype='nucl', ncpu=4,
 	with open(blast_out+'.best', 'w') as fb:
 		d_best_hit = BlastOut(blast_out, blast_outfmt).filter_besthit(fout=fb)
 	for qseqid, rc in d_best_hit.iteritems():
-		if not (rc.pident >= min_identtity and rc.qcovs >= min_coverge and rc.qlen >= min_length):
+		if not (rc.pident >= min_identtity and rc.qcovs >= min_coverge and rc.length >= min_length):
 			del d_best_hit[qseqid]
 #	print d_best_hit
 	d_class = OrderedDict([(qseqid, rc.sseqid) for qseqid, rc in d_best_hit.iteritems()])
