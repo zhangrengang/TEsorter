@@ -77,6 +77,7 @@ def split_sam_by_chunk_num(inSam, prefix, chunk_num):
 	# open files
 	outfiles = []
 	for chunk_id in range(chunk_num):
+		chunk_id += 1
 		outfile = '%s.%s.sam' % (prefix, chunk_id)
 		outfiles += [outfile]
 		hname = 'f%s' % (chunk_id,)
@@ -95,7 +96,7 @@ def split_sam_by_chunk_num(inSam, prefix, chunk_num):
 				exec '%s.write(header)' % (hname, )
 		chunk_id = i % chunk_num + 1
 		hname = 'f%s' % (chunk_id,)
-		exec '%s.write(header)' % (hname, )
+		exec '%s.write(line)' % (hname, )
 		i += 1
 	# close files
 	for chunk_id in range(chunk_num):
@@ -264,7 +265,7 @@ def main():
 					help='size of chunk [default=%(default)s]')
 	parser.add_argument("-f","--format", action="store", 
 					dest="rcfmt", default='fasta', 
-					choices=['fasta', 'fastq', 'sam', 'paf'], 
+					choices=['fasta', 'fastq', 'fastx', 'sam', 'paf'], 
 					help="record file format [default=%(default)s]")
 	parser.add_argument("--gzip-output", action="store_true",
 					dest="gzip_output", default=False, 
@@ -275,7 +276,7 @@ def main():
 	parser.add_argument("--by-chrom", action="store_true",
 					dest="by_chr", default=False,
 					help='split by mapped chromsome [default=%(default)s]')
-	parser.add_argument("--print-filenames", action="store_true",
+	parser.add_argument("-pfn", "--print-filenames", action="store_true",
 					dest="print_filenames", default=False, 
 					help='print filenames [default=%(default)s]')
 
@@ -308,7 +309,7 @@ def main():
 			stats = split_sam_by_chunk_size(options.input, options.prefix, options.chunk_size)
 		elif options.by_chr:
 			stats = split_sam_by_chr(options.input, options.prefix,)
-	elif options.rcfmt in set(['fasta', 'fastq']):
+	elif options.rcfmt in set(['fasta', 'fastq', 'fastx']):
 		if options.chunk_num:
 			if options.by_size:
 				stats = split_fastx_by_size(options.input, options.prefix, 

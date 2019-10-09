@@ -18,6 +18,7 @@ Note: do not move or hard link `TEsorter.py` alone to anywhere else, as it rely 
 ```
 git clone https://github.com/zhangrengang/TEsorter
 cd TEsorter
+sh build_database.sh 
 cd test
 
 # run
