@@ -4,7 +4,7 @@
 import sys
 import os, stat
 import shutil
-import psutil
+#import psutil
 import subprocess
 from optparse import OptionParser
 import logging
@@ -178,6 +178,7 @@ def avail_cpu(cpu):
 	cpu_count = psutil.cpu_count()
 	return max(1, int(1.0*cpu_count/cpu))
 def avail_mem(mem):
+	import psutil
 	memory = psutil.virtual_memory()
 	mem_free = memory.available
 	mem = mem2float(mem)
