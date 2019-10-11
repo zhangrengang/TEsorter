@@ -1,5 +1,5 @@
 # TEsorter
-It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify LTRs at first. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
+It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify long terminal repeat retrotransposons (LTR-RTs) at first. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
   
 For more details of methods and benchmarking, see the [preprint paper](https://doi.org/10.1101/800177).
 
@@ -120,7 +120,7 @@ optional arguments:
 
 ### Limitations ###
 1. For each domain (e.g. RT), only the best hit with the highest score will output, which means: 1) if frame is shifted, only one part can be annotated; 2) for example, if two or more RT domains are present in one query sequence, only one of these RT domains will be annotated.
-2. Many LTRs cannot be classified due to no hit, which might be because: 1) the database is still incompleted; 2) some LTRs may have too many mutations such as frame shifts and stop gains; 3) some LTRs may be false positive. For the test data set ([rice6.9.5.liban](https://raw.githubusercontent.com/oushujun/EDTA/master/database/rice6.9.5.liban)), ~84% LTRs (INT sequences) are classified.
+2. Many LTR-RTs cannot be classified due to no hit, which might be because: 1) the database is still incompleted; 2) some LTR-RTs may have too many mutations such as frame shifts and stop gains or have lost protein domains; 3) some LTR-RTs may be false positive. For the test data set ([rice6.9.5.liban](https://raw.githubusercontent.com/oushujun/EDTA/master/database/rice6.9.5.liban)), ~84% LTR-RTs (_INT sequences) are classified.
 3. Non-autonomous TEs that lack protein domains, some un-active autonomous TEs that have lost their protein domains and any other elements that contain none protein domains, are excepted to be un-classified.
 
 ### Further phylogenetic analyses ###
@@ -153,3 +153,24 @@ cat rice6.9.5.liban.rexdb.cls.pep.INT.aln rice6.9.5.liban.rexdb.cls.pep.TPase.al
 mafft --auto rice6.9.5.liban.rexdb.cls.pep.INT_TPase.faa > rice6.9.5.liban.rexdb.cls.pep.INT_TPase.aln
 ```
 Note: the domain names between rexdb and gydb are different: PROT (rexdb) = AP (gydb), RH (rexdb) = RNaseH (gydb). You should use the actual domain name.
+
+### extracting TE sequences from genome ###
+Here are examples to extract TE sequences from outputs of wide-used softwares.
+
+1. extract all TE sequences from [RepeatMasker](http://www.repeatmasker.org/RMDownload.html) output:
+```
+# run RepeatMasker, which will generate a *.out file.
+RepeatMasker [options] genome.fa
+
+# extract sequences
+python [path_to_TEsorter]/bin/RepeatMasker.py out2seqs genome.fa.out genome.fa > whole_genome_te.fa
+```
+
+2. extract all intact LTR-RTs sequences from [LTR_retriever](https://github.com/oushujun/LTR_retriever) output:
+```
+# run LTR_retriever, which generate *.pass.list files.
+LTR_retriever -genome genome.fa [options]
+
+# extract sequences
+python [path_to_TEsorter]/bin/LTR_retriever.py get_full_seqs genome.fa > intact_ltr.fa
+```
