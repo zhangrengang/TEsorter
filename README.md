@@ -1,5 +1,7 @@
 # TEsorter
-It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify LTRs. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
+It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify LTRs at first. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
+  
+For more details of methods and benchmarking, see the [preprint paper](https://doi.org/10.1101/800177).
 
 ### Installation ###
 Dependencies:
@@ -25,6 +27,7 @@ cd test
 python ../TEsorter.py rice6.9.5.liban
 ```
 By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v3.0 + metazoa_v3](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended. 
+  
 Classical [GyDB](http://gydb.org/) can also be used:
 ```
 python ../TEsorter.py rice6.9.5.liban -db gydb
