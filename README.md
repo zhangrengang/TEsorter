@@ -154,8 +154,8 @@ mafft --auto rice6.9.5.liban.rexdb.cls.pep.INT_TPase.faa > rice6.9.5.liban.rexdb
 ```
 Note: the domain names between rexdb and gydb are different: PROT (rexdb) = AP (gydb), RH (rexdb) = RNaseH (gydb). You should use the actual domain name.
 
-### extracting TE sequences from genome for TEsorter ###
-Here are examples to extract TE sequences from outputs of wide-used softwares.
+### Extracting TE sequences from genome for TEsorter ###
+Here are examples to extract TE sequences from outputs of wide-used softwares, when you have only genome sequences.
 
 1. extract all TE sequences from [RepeatMasker](http://www.repeatmasker.org/RMDownload.html) output:
 ```

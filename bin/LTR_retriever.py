@@ -82,7 +82,8 @@ class Retriever():
 		d_seqs = seq2dict(self.genome)
 		for rc in self.intact_list():
 			ltr_seq = d_seqs[rc.chr].seq[rc.start-1:rc.end]
-			print >> fout, '>{}\n{}'.format(rc.LTR_loc, ltr_seq)
+			ltr_cls = '{}/{}'.format(rc.TE_type, rc.SuperFamily)
+			print >> fout, '>{}#{}\n{}'.format(rc.LTR_loc, ltr_cls, ltr_seq)
 	def re_scn(self): # remove redundant
 		idmap = self.seqIdmap
 		lrt_set = set([])

@@ -24,7 +24,9 @@ class RMOutRecord():
 		convert = [int, float, float, float,
 				   str, int, int, str, str,
 				   str, str, str, int, str, str ]
-		assert len(temp) == len(title) or (len(temp)-1 == len(title) and temp[-1] == "*")
+		assert len(temp) == len(title) or (len(temp)-1 == len(title) and temp[-1] == "*") or (len(temp) == len(title)-1)
+#		try: assert len(temp) == len(title) or (len(temp)-1 == len(title) and temp[-1] == "*")
+#		except AssertionError: print >> sys.stderr, temp, '\n', title
 		self.__dict__ = {key: func(value) for key,value,func in zip(title, temp, convert)}
 		self.query_left = int(self.query_left.strip('()'))
 		self.repeat_begin = int(self.repeat_begin.strip('()'))
@@ -70,6 +72,7 @@ class RMOutRecord():
 		id = '{}:{}..{}|{}#{}'.format(self.query_id, self.query_begin, self.query_end, self.repeat_family, self.super_class)
 		teRecord = seqRecord[self.query_begin-1:self.query_end]
 		teRecord.id = id
+		teRecord.description = id
 		return teRecord
 
 class RMOutParser():
