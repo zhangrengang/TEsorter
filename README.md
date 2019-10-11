@@ -154,7 +154,7 @@ mafft --auto rice6.9.5.liban.rexdb.cls.pep.INT_TPase.faa > rice6.9.5.liban.rexdb
 ```
 Note: the domain names between rexdb and gydb are different: PROT (rexdb) = AP (gydb), RH (rexdb) = RNaseH (gydb). You should use the actual domain name.
 
-### extracting TE sequences from genome ###
+### extracting TE sequences from genome for TEsorter ###
 Here are examples to extract TE sequences from outputs of wide-used softwares.
 
 1. extract all TE sequences from [RepeatMasker](http://www.repeatmasker.org/RMDownload.html) output:
@@ -164,13 +164,19 @@ RepeatMasker [options] genome.fa
 
 # extract sequences
 python [path_to_TEsorter]/bin/RepeatMasker.py out2seqs genome.fa.out genome.fa > whole_genome_te.fa
+
+# classify
+python [path_to_TEsorter]/TEsorter.py whole_genome_te.fa [options]
 ```
 
-2. extract all intact LTR-RTs sequences from [LTR_retriever](https://github.com/oushujun/LTR_retriever) output:
+2. extract all intact LTR-RTs sequences from [LTR_retriever](https://github.com/oushujun/LTR_retriever) outputs:
 ```
 # run LTR_retriever, which generate *.pass.list files.
 LTR_retriever -genome genome.fa [options]
 
 # extract sequences
 python [path_to_TEsorter]/bin/LTR_retriever.py get_full_seqs genome.fa > intact_ltr.fa
+
+# classify
+python [path_to_TEsorter]/TEsorter.py intact_ltr.fa [options]
 ```
