@@ -6,8 +6,8 @@ For more details of methods and benchmarking results, see the [preprint paper](h
 ### Installation ###
 Dependencies:
 +    [python 2.7](https://www.python.org/)  
-   +   [biopython](https://biopython.org/): quickly install by `pip install biopython`
-   +   [parallel python](https://www.parallelpython.com/): quickly install by `pip install pp`
+	+   [biopython](https://biopython.org/): quickly install by `pip install biopython`
+	+   [parallel python](https://www.parallelpython.com/): quickly install by `pip install pp`
 +    [hmmscan 3.1x or 3.2x](http://hmmer.org/): be compatible with HMMER3/f database format.
 +   [blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download)
  
