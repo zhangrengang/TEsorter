@@ -1,11 +1,11 @@
 # TEsorter
 It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify long terminal repeat retrotransposons (LTR-RTs) at first. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
   
-For more details of methods and benchmarking, see the [preprint paper](https://doi.org/10.1101/800177).
+For more details of methods and benchmarking results, see the [preprint paper](https://doi.org/10.1101/800177).
 
 ### Installation ###
 Dependencies:
-+    [python 2.7](https://www.python.org/)
++    [python 2.7](https://www.python.org/)  
    +   [biopython](https://biopython.org/): quickly install by `pip install biopython`
    +   [parallel python](https://www.parallelpython.com/): quickly install by `pip install pp`
 +    [hmmscan 3.1x or 3.2x](http://hmmer.org/): be compatible with HMMER3/f database format.
@@ -34,9 +34,9 @@ python ../TEsorter.py rice6.9.5.liban -db gydb
 ```
 To speed up, use more processors [default=4]:
 ```
-python ../TEsorter.py rice6.9.5.liban -p 36
+python ../TEsorter.py rice6.9.5.liban -p 20
 ```
-To improve sensitivity, reduce the criteria:
+To improve sensitivity, reduce the criteria (coverage and E-value):
 ```
 python ../TEsorter.py rice6.9.5.liban -p 20 -cov 10 -eval 1e-2
 ```
@@ -171,7 +171,7 @@ python [path_to_TEsorter]/TEsorter.py whole_genome_te.fa [options]
 
 2. extract all intact LTR-RTs sequences from [LTR_retriever](https://github.com/oushujun/LTR_retriever) outputs:
 ```
-# run LTR_retriever, which generate *.pass.list files.
+# run LTR_retriever, which generate two *.pass.list files.
 LTR_retriever -genome genome.fa [options]
 
 # extract sequences
