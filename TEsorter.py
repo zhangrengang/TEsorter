@@ -761,7 +761,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 			nuc_start = ltrstart + nuc_start - 1
 			nuc_end = ltrstart + nuc_end -1
 		attr = 'ID={};gene={};clade={};evalue={};coverage={};probability={}'.format(gid, domain, clade, rc.evalue, rc.hmmcov, rc.acc)
-		gffline = [qid, 'TE_classifier', 'CDS', nuc_start, nuc_end, rc.score, strand, frame, attr, rc.evalue, rc.hmmcov, rc.acc, rawid, gid, gseq]
+		gffline = [qid, 'TEsorter', 'CDS', nuc_start, nuc_end, rc.score, strand, frame, attr, rc.evalue, rc.hmmcov, rc.acc, rawid, gid, gseq]
 		lines.append(gffline)
 	gff, seq, tsv = '{}.dom.gff3'.format(prefix), '{}.dom.faa'.format(prefix), '{}.dom.tsv'.format(prefix)
 	fgff = open(gff, 'w')

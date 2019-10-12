@@ -48,7 +48,7 @@ To improve sensitivity of pass-2, reduce the rule:
 ```
 python ../TEsorter.py rice6.9.5.liban -p 20 -rule 70-30-80
 ```
-To classify TE polyprotein sequences ([an example](http://www.repeatmasker.org/RMDownload.html)):
+To classify TE polyprotein sequences ([an example](http://www.repeatmasker.org/RMDownload.html)) or gene protein seqeunces:
 ```
 python ../TEsorter.py RepeatPeps.lib -st prot -p 20
 ```
@@ -56,9 +56,9 @@ python ../TEsorter.py RepeatPeps.lib -st prot -p 20
 ```
 rice6.9.5.liban.rexdb.domtbl        HMMScan raw output
 rice6.9.5.liban.rexdb.dom.faa       protein sequences of domain, which can be used for phylogenetic analysis.
-rice6.9.5.liban.rexdb.dom.tsv       inner domains of LTRs, which might be used to filter domains based on their scores and coverages.
+rice6.9.5.liban.rexdb.dom.tsv       inner domains of TEs/LTR-RTs, which might be used to filter domains based on their scores and coverages.
 rice6.9.5.liban.rexdb.dom.gff3      domain annotations in `gff3` format
-rice6.9.5.liban.rexdb.cls.tsv       TEs/LTRs classifications
+rice6.9.5.liban.rexdb.cls.tsv       TEs/LTR-RTs classifications
     Column 1: raw id
     Column 2: Order, e.g. LTR
     Column 3: Superfamily, e.g. Copia
@@ -66,7 +66,7 @@ rice6.9.5.liban.rexdb.cls.tsv       TEs/LTRs classifications
     Column 5: Complete, "yes" means one LTR Copia/Gypsy element with full GAG-POL domains.
     Column 6: Strand, + or - or ?
     Column 7: Domains, e.g. GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE; `none` for pass-2 classifications
-rice6.9.5.liban.rexdb.cls.lib       fasta library for RepeatMakser
+rice6.9.5.liban.rexdb.cls.lib       fasta library for RepeatMasker
 rice6.9.5.liban.rexdb.cls.pep       the same sequences as `rice6.9.5.liban.rexdb.dom.faa`, but id is changed with classifications.
 ```
 
