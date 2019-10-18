@@ -27,6 +27,11 @@ cd test
 python ../TEsorter.py rice6.9.5.liban
 ```
 By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v3.0 + metazoa_v3](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended. 
+
+For plants, it might be better to use only the plant database:
+```
+python ../TEsorter.py rice6.9.5.liban -db rexdb-plant
+```
   
 Classical [GyDB](http://gydb.org/) can also be used:
 ```

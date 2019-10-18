@@ -88,7 +88,9 @@ class Grid(object):
 		jt.joinFiles = self.join_files
 		joblist = s.runBulkJobs(jt, 1, len(self.cmd_list), 1)
 		jobid = joblist[0].split('.')[0]
-		_qsub_log(jobid, self.work_dir, self.script)
+		if self.grid == 'sge':
+			sub_info = '{} -t 1-{} {} -o {}'.format('qqsub', len(self.cmd_list), self.grid_opts, self.out_path.strip(':'))
+			_qsub_log(jobid, self.work_dir, self.script, sub_info)
 		#jid = s.runJob(jt)
 		s.synchronize(joblist, drmaa.Session.TIMEOUT_WAIT_FOREVER, False)
 		logger.info('waiting for {} tasks'.format(len(joblist)))
@@ -191,14 +193,14 @@ def mem2float(mem):
 		return float(num) * d_mem[unit.lower()]
 	except AttributeError:
 		raise AttributeError('Illegal MEMORY string `{}` (legal: 2g, 100m, 0.3t).'.format(mem))
-def _qsub_log(jid, pwd, cmd):
-    wlog = '''LOGFILE=/share/sge/default/common/working_dirs
+def _qsub_log(jid, pwd, cmd, opts):
+    wlog = r'''LOGFILE=/share/sge/default/common/working_dirs
 JID={}
 PWD={}
-CMD={}
+CMD="{} {}"
 DATE=`date +"%Y-%m-%d-%H-%M-%S"`
-echo "$JID:$PWD:$CMD:$(whoami):$DATE" >> $LOGFILE
-'''.format(jid, pwd, cmd)
+echo "$JID:$PWD:\"$CMD\":$(whoami):$DATE" >> $LOGFILE
+'''.format(jid, pwd, opts, cmd)
     run_cmd(wlog)
 		
 def file2list(cmd_file, sep="\n"):
@@ -333,7 +335,7 @@ def main():
 	usage = __doc__ + "\npython %prog [options] <commands.list>"
 	parser = OptionParser(usage, version="%prog " + __version__)
 	parser.add_option("-p","--processors", action="store",type="int",\
-					dest="processors", default=None, \
+					dest="processors", default=40, \
 					help="number of processors [default=all available]")
 	parser.add_option("-s","--separation", action="store", type="string",\
 					dest="separation", default='\n', \
@@ -348,7 +350,7 @@ def main():
 					dest="retry", default=1, \
 					help="retry times [default=%default]")
 	parser.add_option("--grid-opts", action="store", type="string",\
-					dest="grid_opts", default='-tc {tc} -l h_vmem={mem} -pe mpi {cpu}', \
+					dest="grid_opts", default='-tc {tc}', \
 					help='grid options [default="%default"]')
 	(options,args)=parser.parse_args()
 	if not args:
