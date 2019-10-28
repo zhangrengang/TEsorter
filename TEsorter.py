@@ -693,9 +693,11 @@ def multi(*n):
 		result = result * i
 	return result
 	
-def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=20, maxeval=1e-3):
+def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='nucl', mincov=20, maxeval=1e-3):
 	if prefix is None:
 		prefix = inSeq
+	if nucl_len is None and seqtype=='nucl':
+		raise ValueError('Sequences length must provide for `{}` sequences'.format(seqtype))
 	d_besthit = {}
 	for inHmmout in inHmmouts:
 		for rc in HmmScan(inHmmout):
@@ -746,15 +748,16 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 				nuc_start = rc.envstart * 3 - 2  + frame
 				nuc_end = rc.envend* 3 + frame
 			elif strand == '-':
-				nuc_start = rc.qlen*3 - (rc.envend* 3 + frame) + 1
-				nuc_end = rc.qlen*3 - (rc.envstart* 3 + frame) + 1
+				nucl_length = nucl_len[qid]
+				nuc_start = nucl_length - (rc.envend* 3 + frame) + 1
+				nuc_end = nucl_length - (rc.envstart* 3 + frame) + 1
 			else:
 				nuc_start = rc.envstart
 				nuc_end = rc.envend
 		elif seqtype == 'prot':
 			strand, frame = '+', '.'
 			nuc_start, nuc_end, = rc.envstart, rc.envend
-		match = re.compile(r'(\S+?):(\d+)\.\.(\d+)').match(qid)
+		match = re.compile(r'(\S+?):(\d+)[\.\-]+(\d+)').match(qid)
 		if match:
 			qid, ltrstart, ltrend = match.groups()
 			ltrstart = int(ltrstart)
@@ -767,7 +770,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 	fgff = open(gff, 'w')
 	fseq = open(seq, 'w')
 	ftsv = open(tsv, 'w')
-	print >> ftsv, '\t'.join(['#id', 'length', 'evalue', 'coverge', 'probability'])
+	print >> ftsv, '\t'.join(['#id', 'length', 'evalue', 'coverge', 'probability', 'score'])
 	for line in sorted(lines, key=lambda x: (x[0], x[-3], x[3])):
 		gffline = line[:9]
 		gffline = map(str, gffline)
@@ -776,7 +779,8 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='nucl', mincov=2
 		gdesc = line[8]
 		print >> fseq, '>{} {}\n{}'.format(gid, gdesc, gseq)
 		evalue, hmmcov, acc = line[-6:-3]
-		line = [gid, len(gseq), evalue, hmmcov, acc]
+		score = gffline[5]
+		line = [gid, len(gseq), evalue, hmmcov, acc, score]
 		print >> ftsv, '\t'.join(map(str, line))
 	fgff.close()
 	fseq.close()
@@ -788,6 +792,14 @@ def translate(inSeq, prefix=None):
 	with open(outSeq, 'w') as fp:
 		six_frame_translate(inSeq, fp)
 	return outSeq
+def translate_pp(inSeq, prefix=None, tmpdir='./tmp', processors=4):
+	if prefix is None:
+		prefix = inSeq
+	outSeq = prefix + '.aa'
+	chunk_prefix = '{}/{}'.format(tmpdir, 'chunk_nuclseq')
+	_, _, _, chunk_files = split_fastx_by_chunk_num(
+			inSeq, prefix=chunk_prefix, chunk_num=processors, seqfmt='fasta', suffix='')
+	
 def hmmscan(inSeq, hmmdb='rexdb.hmm', hmmout=None, ncpu=4):
 	if hmmout is None:
 		hmmout = prefix + '.domtbl'
@@ -827,6 +839,7 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 		logger.info( 'translating `{}` in six frames'.format(ltrlib) )
 		tmp_prefix = '{}/translated'.format(tmpdir)
 		aaSeq = translate(ltrlib, prefix=tmp_prefix)
+		d_nucl_len = dict([(rc.id, len(rc.seq)) for rc in SeqIO.parse(ltrlib, 'fasta')])
 	elif seqtype == 'prot':
 		aaSeq = ltrlib
 	
@@ -840,7 +853,8 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 	else:
 		logger.info( 'use existed non-empty `{}` and skip hmmscan'.format(domtbl) )
 	logger.info( 'generating gene anntations' )
-	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval)
+	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, nucl_len=d_nucl_len,
+				prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval)
 	return gff, geneSeq
 def replaceCls(ltrlib, seqtype='nucl', db='rexdb'):
 	gff = ltrlib + '.' + db + '.gff3'
@@ -853,7 +867,7 @@ def replaceCls(ltrlib, seqtype='nucl', db='rexdb'):
 	Classifier(gff, fout=fann).replace_annotation(ltrlib, fout=flib)
 	fann.close()
 	flib.close()
-def parse_frame(string):
+def parse_frame(string):	# frame=0-2
 	if string.startswith('rev'):
 		strand = '-'
 	elif string.startswith('aa'):

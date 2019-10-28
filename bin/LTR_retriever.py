@@ -82,7 +82,8 @@ class Retriever():
 		d_seqs = seq2dict(self.genome)
 		for rc in self.intact_list():
 			ltr_seq = d_seqs[rc.chr].seq[rc.start-1:rc.end]
-			ltr_cls = '{}/{}'.format(rc.TE_type, rc.SuperFamily)
+			TE_type = rc.TE_type if rc.TE_type != 'NA' else 'LTR'
+			ltr_cls = '{}/{}'.format(TE_type, rc.SuperFamily)
 			print >> fout, '>{}#{}\n{}'.format(rc.LTR_loc, ltr_cls, ltr_seq)
 	def re_scn(self): # remove redundant
 		idmap = self.seqIdmap
@@ -121,6 +122,7 @@ class Retriever():
 			i += 1
 		return d
 	def intact_list(self):
+		ids = set([])
 		for pass_list in self.pass_lists:
 			for line in open(pass_list):
 				temp = line.strip().split('\t')
@@ -129,6 +131,10 @@ class Retriever():
 					temp[0] = temp[0].strip('#')
 					title = temp
 					continue
+				id = temp[0]
+				if id in ids:
+					continue
+				ids.add(id)
 				yield IntactRecord(title, temp)
 	def all_scn(self):
 		for line in open(self.retriever_all_scn):
