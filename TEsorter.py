@@ -745,12 +745,12 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 		if seqtype == 'nucl':
 			strand, frame = parse_frame(rc.qname.split('|')[-1])
 			if strand == '+':
-				nuc_start = rc.envstart * 3 - 2  + frame
-				nuc_end = rc.envend* 3 + frame
+				nuc_start = (rc.envstart-1) * 3  + frame + 1
+				nuc_end = rc.envend * 3 + frame
 			elif strand == '-':
 				nucl_length = nucl_len[qid]
-				nuc_start = nucl_length - (rc.envend* 3 + frame) + 1
-				nuc_end = nucl_length - (rc.envstart* 3 + frame) + 1
+				nuc_start = nucl_length - (rc.envend * 3 + frame) + 1
+				nuc_end = nucl_length - ((rc.envstart-1) * 3 + frame)
 			else:
 				nuc_start = rc.envstart
 				nuc_end = rc.envend
