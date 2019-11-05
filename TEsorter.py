@@ -842,6 +842,7 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 		d_nucl_len = dict([(rc.id, len(rc.seq)) for rc in SeqIO.parse(ltrlib, 'fasta')])
 	elif seqtype == 'prot':
 		aaSeq = ltrlib
+		d_nucl_len = None
 	
 	logger.info( 'HMM scanning against `{}`'.format(DB[hmmdb]) )
 	domtbl = prefix + '.domtbl'
