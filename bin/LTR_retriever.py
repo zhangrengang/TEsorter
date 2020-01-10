@@ -24,12 +24,13 @@ class IntactRecord():
 #		print self.dict
 		self.dict['Identity'] = float(self.dict['Identity'])
 		self.dict['Insertion_Time'] = int(self.dict['Insertion_Time'])
+		self.dict['TE_type'] = self.dict['TE_type'] if self.dict['TE_type'] != 'NA' else 'LTR'
 		for key, value in self.dict.items():
 			try: exec 'self.{} = value'.format(key)
 			except SyntaxError: pass
 		self.chr, self.start, self.end = re.compile(r'(\S+?):(\d+)\.\.(\d+)').match(self.LTR_loc).groups()
 		self.start, self.end = int(self.start), int(self.end)
-		
+
 class CandidateRecord():
 	def __init__(self, title, temp, mu=1.3e-8):
 		if len(temp) < len(title):
@@ -90,6 +91,8 @@ class Retriever():
 		lrt_set = set([])
 		f = open(self.retriever_all_scn2, 'w')
 		i,j,k = 0,0,0
+		line = 'start end len lLTR_str lLTR_end lLTR_len rLTR_str rLTR_end rLTR_len similarity seqid chr direction TSD lTSD rTSD motif superfamily family age(ya)'
+		title = temp = line.strip().strip('#()').replace('(', '').split()
 		for line in open(self.retriever_all_scn):
 			temp = line.strip().split()
 			if line.startswith('#'):

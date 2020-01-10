@@ -31,7 +31,10 @@ class Grid(object):
 			tc_tasks = None, script=None,
 			join_files=True):
 		self.cmd_list = cmd_list
-		self.grid = self.which_grid()
+		try: self.grid = self.which_grid()
+		except Exception as e:
+			logger.warn(e)
+			self.grid = 'unknown'
 		self.grid_opts = grid_opts
 		self.template = template
 #		if tc_tasks is not None:
@@ -67,9 +70,12 @@ class Grid(object):
 			
 	def make_script(self, fout=sys.stdout):
 		print >> fout, '#!/bin/bash'
-		if self.template is None and self.grid == 'sge':
+		if self.template is None:
+			if self.grid == 'sge':
 #			print >> fout, '#$ {}'.format(self.grid_opts)
-			self.template = 'if [ $SGE_TASK_ID -eq {id} ]; then\n{cmd}\nfi'
+				self.template = 'if [ $SGE_TASK_ID -eq {id} ]; then\n{cmd}\nfi'
+			elif self.grid == 'slurm':
+				self.template = 'if [ $SLURM_ARRAY_TASK_ID -eq {id} ]; then\n{cmd}\nfi'
 		for i, cmd in enumerate(self.cmd_list):
 			grid_cmd = self.template.format(id=i+1, cmd=cmd)
 			print >> fout, grid_cmd
@@ -111,11 +117,16 @@ class Grid(object):
 	def which_grid(self):
 		with drmaa.Session() as s:
 			name = s.drmaaImplementation
-		grid, version = name.split()
-		if grid == 'OGS/GE':
+#		grid, version = name.split()
+#		if grid == 'OGS/GE':
+		if 'OGS/GE' in name:
 			return 'sge'
+		elif 'Slurm' in name:
+			return 'slurm'
+		else:
+			logger.warn('Please provide your grid system `{}` to auther'.format(name))
 def run_tasks(cmd_list, tc_tasks=None, mode='grid', grid_opts='', cpu=1, mem='1g', cont=1,
-			retry=1, script=None, out_path=None, completed=None, cmd_sep='\n', template=None, **kargs):
+			retry=1, script=None, out_path=None, completed=None, cmd_sep='\n', **kargs):
 	if not cmd_list:
 		logger.info('cmd_list with 0 command. exit with 0')
 		return 0
@@ -344,7 +355,7 @@ def main():
 					dest="to_be_continue", default=1, \
 					help="continue [1] or not [0] [default=%default]")
 	parser.add_option("-m","--mode", action="store", type="choice",\
-					dest="mode", default='local', choices=['local', 'grid'], \
+					dest="mode", default='grid', choices=['local', 'grid'], \
 					help='run mode [default=%default]')
 	parser.add_option("--retry", action="store", type="int",\
 					dest="retry", default=1, \
@@ -367,8 +378,9 @@ def main():
 #				cmd_sep=separation, cont=to_be_continue)
 	run_job(cmd_file, tc_tasks=processors, mode=mode, grid_opts=grid_opts,
                 cont=to_be_continue, retry=retry, cmd_sep=separation)
-def run_job(cmd_file, cmd_list=None, tc_tasks=8, mode='grid', grid_opts='', cont=1,
+def run_job(cmd_file, cmd_list=None, tc_tasks=8, mode='grid', grid_opts='', cont=1, fail_exit=True,
             ckpt=None, retry=1, out_path=None, cmd_sep='\n', **kargs):
+	tc_tasks = int(tc_tasks)
 	if cmd_list is not None:
 		with open(cmd_file, 'w') as fp:
 			for cmd in cmd_list:
@@ -394,9 +406,9 @@ def run_job(cmd_file, cmd_list=None, tc_tasks=8, mode='grid', grid_opts='', cont
 	exit = run_tasks(cmd_list, tc_tasks=tc_tasks, mode=mode, grid_opts=grid_opts, 
 				retry=retry, script=script, out_path=out_path, cont=cont,
 				completed=cmd_cpd_file, cmd_sep=cmd_sep, **kargs)
-	if not exit == 0:
+	if fail_exit and not exit == 0:
 		raise ValueError('faild to run {}, see detail in {}'.format(cmd_file, out_path))
-	else:
+	elif exit == 0:
 		os.mknod(ckpt)
 	return exit
 

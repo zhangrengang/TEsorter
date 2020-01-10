@@ -202,6 +202,28 @@ def split_fastx_by_chunk_num(inFastx, prefix, chunk_num, seqfmt, suffix):
 		chunk_id += 1
 		exec 'f%s.close()' % (chunk_id, )
 	return (i, chunk_num, i/chunk_num, outfiles)
+def cut_seqs(inSeq, outSeq, window_size=500000, window_ovl=100000, seqfmt='fasta'):
+	for rc in SeqIO.parse(inSeq, seqfmt):
+		seq_len = len(rc.seq)
+		for s in range(0, seq_len+1, window_size):
+			e = s + window_size + window_ovl
+			if e > seq_len:
+				e = seq_len
+#				if e-s < window_size/10:
+#					s = max(0, s-window_size/10)
+			sseq = rc.seq[s:e]
+			sid = '%s:%s-%s' % (rc.id, s+1, e)
+			sid += ' length=%s' % len(sseq)
+			print >>outSeq, '>%s\n%s' % (sid, sseq)
+			if e == seq_len:
+				continue
+
+def bin_split_fastx_by_chunk_num(inFastx, prefix, chunk_num, seqfmt, suffix, window_size=1e6, window_ovl=1e5, tmpdir='/tmp'):
+	window_size, window_ovl = int(window_size) ,int(window_ovl)
+	cutSeq = '{}/cut.{}'.format(tmpdir, seqfmt)
+	with open(cutSeq, 'w') as f:
+		cut_seqs(inFastx, f, window_size=window_size, window_ovl=window_ovl, seqfmt=seqfmt)
+	return split_fastx_by_size(cutSeq, prefix, chunk_num, seqfmt, suffix)
 
 def split_fastx_by_size(inFastx, prefix, chunk_num, seqfmt, suffix, out_random=True):
 	import binpacking
@@ -295,7 +317,7 @@ def main():
 		sys.exit()
 	if options.gzip_output:
 		suffix = '.gz'
-		print >>sys.err, 'Warning: for large dataset, gzip output is very slow. You may want to diable it.'
+		print >>sys.stderr, 'Warning: for large dataset, gzip output is very slow. You may want to diable it.'
 	else:
 		suffix = ''
 	if not isinstance(options.input, file):
