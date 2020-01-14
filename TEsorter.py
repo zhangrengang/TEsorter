@@ -309,7 +309,7 @@ class BlastOut(object):
 		d_best_hit = OrderedDict()
 		for rc in self.parse():
 			if rc.qseqid in d_best_hit:
-				if rc.bitscore > d_best_hit[rc.qseqid]:
+				if rc.bitscore > d_best_hit[rc.qseqid].bitscore:
 					d_best_hit[rc.qseqid] = rc
 			else:
 				d_best_hit[rc.qseqid] = rc
