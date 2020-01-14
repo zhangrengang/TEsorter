@@ -24,7 +24,7 @@ from split_records import split_fastx_by_chunk_num
 # for pass-2 blast classifying
 from get_record import get_records
 
-__version__ = '1.0'
+__version__ = '1.2.5'
 
 DB = {
 	'gydb' : bindir + '/database/GyDB2.hmm',
