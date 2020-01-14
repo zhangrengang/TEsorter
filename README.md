@@ -3,7 +3,7 @@ It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to cl
   
 For more details of methods and benchmarking results, see the [preprint paper](https://doi.org/10.1101/800177).
 
-It is coded by python2 and a python3 version by @Juke34 can by found [here](https://github.com/NBISweden/TEsorter).
+It is coded by python2 and a python3 version by [@Juke34](https://github.com/Juke34) can by found [here](https://github.com/NBISweden/TEsorter).
 
 ### Installation ###
 Dependencies:
