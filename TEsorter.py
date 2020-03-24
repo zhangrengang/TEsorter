@@ -450,10 +450,10 @@ class Classifier(object):
 			max_clade = max_clade
 		elif len(clade_count) > 1:
 			max_clade = 'mixture'
-			superfamlies = [d_map[clade][1] for clade in clades]
+			superfamlies = [d_map.get(clade, [None,None])[1] for clade in clades]
 			if len(Counter(superfamlies)) > 1:
 				superfamily = 'mixture'
-				orders = [d_map[clade][0] for clade in clades]
+				orders = [d_map.get(clade, [None,None])[0] for clade in clades]
 				if len(Counter(orders)) > 1:
 					order = 'mixture'
 
