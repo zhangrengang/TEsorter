@@ -446,6 +446,17 @@ class Classifier(object):
 		except KeyError: 
 			(order, superfamily) = ('Unknown', 'unknown')
 			logger.warn( 'unknown clade: {}'.format(max_clade) )
+		if len(clade_count) == 1 or clade_count[max_clade] > 1:
+			max_clade = max_clade
+		elif len(clade_count) > 1:
+			max_clade = 'mixture'
+			superfamlies = [d_map[clade][1] for clade in clades]
+			if len(Counter(superfamlies)) > 1:
+				superfamily = 'mixture'
+				orders = [d_map[clade][0] for clade in clades]
+				if len(Counter(orders)) > 1:
+					order = 'mixture'
+
 		try:
 			ordered_genes = perfect_structure[(order, superfamily)]
 			my_genes = [gene for gene in genes if gene in set(ordered_genes)]
@@ -751,7 +762,7 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 				nucl_length = nucl_len[qid]
 				nuc_start = nucl_length - (rc.envend * 3 + frame) + 1
 				nuc_end = nucl_length - ((rc.envstart-1) * 3 + frame)
-			else:
+			else:	# not translated
 				nuc_start = rc.envstart
 				nuc_end = rc.envend
 		elif seqtype == 'prot':

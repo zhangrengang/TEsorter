@@ -19,7 +19,7 @@ try:
 	import drmaa    # for grid
 	from tempfile import NamedTemporaryFile
 except ImportError as e:
-	logger.warn('{}\ngrid computing is not available'.format(e))
+	logger.warn('{} && grid computing is not available'.format(e))
 
 __version__ = '1.0'
 
@@ -29,7 +29,7 @@ class Grid(object):
 			err_path=None, grid_opts='',
 			cpu=1, mem='1g', template=None, 
 			tc_tasks = None, script=None,
-			join_files=True):
+			join_files=True, stdout=False):
 		self.cmd_list = cmd_list
 		try: self.grid = self.which_grid()
 		except Exception as e:
@@ -67,10 +67,12 @@ class Grid(object):
 			elif not self.err_path.startswith(':'):
 				self.err_path = ':' + self.err_path
 			self.join_files = join_files	# True if stdin and stdout should be merged, False otherwise.
-			
+			self.stdout = stdout
+
 	def make_script(self, fout=sys.stdout):
 		print >> fout, '#!/bin/bash'
 		if self.template is None:
+			self.template = 'if [ $SGE_TASK_ID -eq {id} ]; then\n{cmd}\nfi'
 			if self.grid == 'sge':
 #			print >> fout, '#$ {}'.format(self.grid_opts)
 				self.template = 'if [ $SGE_TASK_ID -eq {id} ]; then\n{cmd}\nfi'
@@ -88,8 +90,11 @@ class Grid(object):
 		jt.nativeSpecification = self.grid_opts
 		jt.remoteCommand = self.script
 		jt.workingDirectory = self.work_dir
-		jt.outputPath = self.out_path
-#		jt.errorPath = self.err_path
+		if not self.stdout:
+			jt.outputPath = self.out_path
+		else:
+			self.join_files = False
+		jt.errorPath = self.err_path
 		logger.info('submiting {}'.format([self.script, self.grid_opts]))
 		jt.joinFiles = self.join_files
 		joblist = s.runBulkJobs(jt, 1, len(self.cmd_list), 1)
@@ -111,6 +116,14 @@ class Grid(object):
 					retval.jobId, retval.hasExited, retval.exitStatus))
 			task_id, status = retval.jobId, (not retval.hasExited) + retval.exitStatus
 			job_status += [(task_id, status)]
+			if self.stdout:
+				outfile = '{script}.o{taskid}'.format(
+							script=os.path.basename(self.script), 
+							taskid=task_id)
+				f = sys.stdout
+				for line in open(outfile):
+					f.write(line)
+				os.remove(outfile)
 		s.deleteJobTemplate(jt)
 		s.exit()
 		return job_status
@@ -165,9 +178,12 @@ def run_tasks(cmd_list, tc_tasks=None, mode='grid', grid_opts='', cpu=1, mem='1g
 			job_status = pp_run(cmd_list, processors=tc_tasks)
 			exit_codes = []
 			fout = open(out_path, xmod) if out_path is not None else None
+			f = sys.stdout
 			for (stdout, stderr, status) in job_status:
 				if fout is not None:
-					print >>fout, '>>STATUS:\t{}\n>>STDOUT:\n{}\n>>STDERR:\n{}'.format(status, stdout, stderr)
+			#		print >>fout, '>>STATUS:\t{}\n>>STDOUT:\n{}\n>>STDERR:\n{}'.format(status, stdout, stderr)
+					print >>fout, '>>STATUS:\t{}\n>>STDERR:\n{}'.format(status, stderr)
+				f.write(stdout)
 				exit_codes += [status]
 			if fout is not None:
 				fout.close()
@@ -217,15 +233,19 @@ echo "$JID:$PWD:\"$CMD\":$(whoami):$DATE" >> $LOGFILE
 def file2list(cmd_file, sep="\n"):
 	if not '\n' in sep:
 		sep += '\n'
-	if not os.path.exists(cmd_file) or not os.path.getsize(cmd_file):
-		cmd_list = []
-	else:
-		f = open(cmd_file, 'r')
+	if isinstance(cmd_file, file):
+		f = cmd_file
 		cmd_list = f.read().split(sep)
+	else:
+		if not os.path.exists(cmd_file) or not os.path.getsize(cmd_file):
+			cmd_list = []
+		else:
+			f = open(cmd_file, 'r')
+			cmd_list = f.read().split(sep)
 	return [cmd for cmd in cmd_list if cmd]
 
-def run_cmd(cmd, logger=None, log=None):
-	if log is True and logger is None:
+def run_cmd(cmd, logger=None, log=False):
+	if log and logger is None:
 		logger = LOGGER
 	if logger is not None:
 		logger.info('run CMD: `{}`'.format(cmd))
@@ -235,7 +255,7 @@ def run_cmd(cmd, logger=None, log=None):
 	status = job.poll()
 	if logger is not None and status > 0:
 		 logger.warn("exit code {} for CMD `{}`: ".format(status, cmd))
-		 logger.warn('\n\tSTDOUT:\n{0}\n\tSTDERR:\n{1}\n\n'.format(*output))
+		 logger.warn('\n###STDOUT:{0}\n###STDERR:{1}'.format(*output))
 	return output + (status,)
 
 def default_processors(actual=None):
@@ -323,20 +343,21 @@ def submit_pp(cmd_file, processors=None, cmd_sep="\n", cont=True):
 		i = 0
 		mode = 'w'
 	f = open(cmd_cpd_file, mode)
-	f_out = open(cmd_out_file, mode)
+	f_out = sys.stdout #open(cmd_out_file, mode)
 	f_err = open(cmd_err_file, mode)
 	f_warn = open(cmd_warn_file, mode)
 	for cmd, job in jobs:
 		i += 1
 		out, err, status = job()
-		f_out.write('CMD_%s_STDOUT:\n' % i + out + cmd_sep)
+#		f_out.write('CMD_%s_STDOUT:\n' % i + out + cmd_sep)
+		f_out.write(out)
 		f_err.write('CMD_%s_STDERR:\n' % i + err + cmd_sep)
 		if not status == 0:
 			f_warn.write(cmd + cmd_sep)
 		else:
 			f.write(cmd + cmd_sep)
 	f.close()
-	f_out.close()
+#	f_out.close()
 	f_err.close()
 	f_warn.close()
 
@@ -363,28 +384,37 @@ def main():
 	parser.add_option("--grid-opts", action="store", type="string",\
 					dest="grid_opts", default='-tc {tc}', \
 					help='grid options [default="%default"]')
+	parser.add_option("--stdout", action="store_true", \
+                    dest="stdout", default=False, \
+                    help='collect grid output to stdout [default="%default"]')
+
 	(options,args)=parser.parse_args()
-	if not args:
-		parser.print_help()
-		sys.exit()
-	cmd_file = args[0]
-	processors = options.processors
 	separation = options.separation
+	if not args:
+#		parser.print_help()
+#		sys.exit()
+		cmd_list = file2list(sys.stdin, sep=separation)
+		cmd_file = '/share/tmp/RunCmdsMP.{}'.format(os.getpid())
+	else:
+		cmd_file = args[0]
+		cmd_list = None
+	processors = options.processors
 	mode = options.mode
 	grid_opts = options.grid_opts
 	retry = options.retry
 	to_be_continue = options.to_be_continue
+	stdout = options.stdout
 #	submit_pp(cmd_file, processors=processors, \
 #				cmd_sep=separation, cont=to_be_continue)
-	run_job(cmd_file, tc_tasks=processors, mode=mode, grid_opts=grid_opts,
-                cont=to_be_continue, retry=retry, cmd_sep=separation)
-def run_job(cmd_file, cmd_list=None, tc_tasks=8, mode='grid', grid_opts='', cont=1, fail_exit=True,
+	run_job(cmd_file, cmd_list, tc_tasks=processors, mode=mode, grid_opts=grid_opts,
+                cont=to_be_continue, retry=retry, cmd_sep=separation, stdout=stdout)
+def run_job(cmd_file, cmd_list=None, tc_tasks=8, mode='grid', grid_opts='-tc {tc}', cont=1, fail_exit=True,
             ckpt=None, retry=1, out_path=None, cmd_sep='\n', **kargs):
 	tc_tasks = int(tc_tasks)
 	if cmd_list is not None:
+		cmd_sep = '\n'+cmd_sep+'\n' if cmd_sep !='\n' else cmd_sep
 		with open(cmd_file, 'w') as fp:
-			for cmd in cmd_list:
-				print >> fp, cmd
+			print >> fp, cmd_sep.join(cmd_list)
 	if kargs.get('cpu') is None:
 		kargs['cpu'] = 1
 	if kargs.get('mem') is None:

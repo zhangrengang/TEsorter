@@ -71,7 +71,7 @@ def get_records(input_file, output_file, in_accnos,
 		else:
 			return True
 	if isinstance(in_accnos, file):
-		d_accnos = {line.strip().split(accnos_sep)[0] for line in in_accnos}
+		d_accnos = {line.strip().split(accnos_sep)[0] for line in in_accnos if line.strip()}
 	else: # list
 		d_accnos = set(in_accnos)
 
