@@ -14,10 +14,12 @@ def usage():
 	print '  -g STR            [get|remove] RECORD [default: get]'
 	print '  -k NUM            if a table RECORD, the column NUM of RECORD ID[default: 1]'
 	print '  -f NUM            if a table RECORD, retain the row NUM as header [default: 1]'
+	print '  -s SEP            if a table RECORD, seperation [default: "\\t"]'
+	print '  -d                remove duplicates when get table records'
 	print '  -h                show this help message and exit'
 
 def main():
-	opts, args = getopt.getopt(sys.argv[1:], 'hi:a:o:t:g:k:f:s:')
+	opts, args = getopt.getopt(sys.argv[1:], 'hi:a:o:t:g:k:f:s:x:d')
 	input_file = ''
 	output_file = ''
 	in_accnos = sys.stdin
@@ -26,7 +28,8 @@ def main():
 	col = 1
 	head = 1
 	accnos_sep = None
-
+	sep = "\t"
+	dedup = False
 	for op, value in opts:
 		if op == '-i':
 			input_file = value
@@ -42,8 +45,12 @@ def main():
 			col = int(value)
 		elif op == '-f':
 			head = int(value)
-		elif op == '-s':
+		elif op == '-x':
 			accnos_sep = value
+		elif op == '-s':
+			sep = value
+		elif op == '-d':
+			dedup = True
 		elif op == '-h':
 			usage()
 			sys.exit()
@@ -56,10 +63,10 @@ def main():
 		raise TypeError("process must be one of ['get','remove'], unexpected '%s'" % (process,))
 		usage()
 		sys.exit()
-	get_records(input_file, output_file, in_accnos, type=type, process=process, col=col, head=head, accnos_sep=accnos_sep)
+	get_records(input_file, output_file, in_accnos, type=type, process=process, col=col, head=head, accnos_sep=accnos_sep, sep=sep, dedup=dedup)
 def get_records(input_file, output_file, in_accnos, 
-				type='table', process='get', 
-				col=1, head=1, accnos_sep=None):
+				type='table', process='get', sep="\t",
+				col=1, head=1, accnos_sep=None, dedup=False):
 	def get_record(d_accnos, record_id):
 		if record_id in d_accnos: 
 			return True
@@ -75,7 +82,7 @@ def get_records(input_file, output_file, in_accnos,
 	else: # list
 		d_accnos = set(in_accnos)
 
-	lst_get = []
+	lst_get = set([])
 	f = open(output_file, 'w')
 	if type == 'table':
 		i = 0
@@ -84,19 +91,21 @@ def get_records(input_file, output_file, in_accnos,
 			if i == head:
 				f.write(line)
 			else:
-				temp = line.strip().split('\t')
+				temp = line.strip().split(sep)
 				record_id = temp[col-1]
 				if process == 'get':
 					if get_record(d_accnos, record_id):
+						if dedup and record_id in lst_get:
+							continue
 						f.write(line)
-						lst_get.append(record_id)
+						lst_get.add(record_id)
 					else:
 						continue
 				elif process == 'remove':
 					if remove_record(d_accnos, record_id):
 						f.write(line)
 					else:
-						lst_get.append(record_id)
+						lst_get.add(record_id)
 						continue
 
 	elif type == 'fasta' or type == 'fastq':
@@ -105,14 +114,14 @@ def get_records(input_file, output_file, in_accnos,
 			if process == 'get':
 				if get_record(d_accnos, record_id):
 					SeqIO.write(seq_record, f, type)
-					lst_get.append(record_id)
+					lst_get.add(record_id)
 				else:
 					continue
 			elif process == 'remove':
 				if remove_record(d_accnos, record_id):
 					SeqIO.write(seq_record, f, type)
 				else:
-					lst_get.append(record_id)
+					lst_get.add(record_id)
 					continue
 	elif type == 'hmm':
 		from HMMER import HMMParser

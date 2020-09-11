@@ -199,7 +199,7 @@ def pipeline(args):
 		assert raw_id in d_class
 		cl = d_class[raw_id]
 		cl = fmt_cls(cl.order, cl.superfamily, cl.clade)
-		d_desc = dict([pair.split('=')for pair in rc.description.split()[-1].split(';')])
+		d_desc = dict([pair.split('=', 1)for pair in rc.description.split()[-1].split(';')])
 		gene, clade = d_desc['gene'], d_desc['clade']
 		new_id = '{}#{}#{}|{}'.format(raw_id.split('#')[0], cl, gene, clade)
 		rc.id = new_id
@@ -581,7 +581,7 @@ class GffLine(object):
 		except: pass
 		self.attributes = self.parse(self.attributes)
 	def parse(self, attributes):
-		return dict(kv.split('=') for kv in attributes.split(';'))
+		return dict(kv.split('=', 1) for kv in attributes.split(';'))
 class LTRgffLine(GffLine):
 	def __init__(self, line):
 		super(LTRgffLine, self).__init__(line)

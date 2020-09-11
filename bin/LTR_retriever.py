@@ -172,30 +172,37 @@ class Retriever():
 				d[id] = INT
 		return d
 
+	def InsertionTime(self, type, mu=1.3e-8):
+		if type == 'intact':
+			records = self.intact_list()
+			typeStr = '{TE_type}/{SuperFamily}'
+			timeStr = 'Insertion_Time'
+		elif type == 'candidate':
+			records = slef.all_scn()
+			typeStr = '{superfamily}/{family}'
+			timeStr = 'ageya'
+		else:
+			raise ValueError('Unknown type: {}'.format(type))
+		for rc in records:
+			Type = typeStr.format(**rc.dict)
+			if rc.dict[timeStr] is None:
+				continue
+			Insertion_Time = rc.dict[timeStr] / 1e6 * (1.3e-8 / mu) # Mya
+			line = [Type, Insertion_Time]
+			line = map(str, line)
+			yield line
 def InsertionTimePlot(genome, type, mu=1.3e-8):
 	if type == 'intact':
 		outfig = genome + '.Intact.Insertion_Time.pdf'
-		records = Retriever(genome).intact_list()
-		typeStr = '{TE_type}/{SuperFamily}'
-		timeStr = 'Insertion_Time'
 	elif type == 'candidate':
 		outfig = genome + '.Candidate.Insertion_Time.pdf'
-		records = Retriever(genome).all_scn()
-		typeStr = '{superfamily}/{family}'
-		timeStr = 'ageya'
 	else:
 		raise ValueError('Unknown type: {}'.format(type))
 	tmpfile = genome + '.pass.insert_time'	
 	f = open(tmpfile, 'w')
 	line = ['TE_Type', 'Insertion_Time']
 	print >>f, '\t'.join(line)
-	for rc in records:
-		Type = typeStr.format(**rc.dict)
-		if rc.dict[timeStr] is None:
-			continue
-		Insertion_Time = rc.dict[timeStr] / 1e6 * (1.3e-8 / mu) # Mya
-		line = [Type, Insertion_Time]
-		line = map(str, line)
+	for line in Retriever(genome).InsertionTime(type, mu=mu):
 		print >>f, '\t'.join(line)
 	f.close()
 	
@@ -203,7 +210,7 @@ def InsertionTimePlot(genome, type, mu=1.3e-8):
 	r_src = '''
 data <- read.table('{}', head=T)
 library(ggplot2)
-p <- ggplot(data, aes(x=Insertion_Time, color=TE_Type)) + geom_line(stat="density")
+p <- ggplot(data, aes(x=Insertion_Time, color=TE_Type)) + geom_line(stat="density", size=1.5) + xlab('Insertion time (Mya)') + scale_colour_hue(l=45)
 ggsave('{}', p)
 '''.format(tmpfile, outfig)
 	r_file = tmpfile + '.r'
@@ -211,6 +218,69 @@ ggsave('{}', p)
 		print >>f, r_src
 	cmd = 'Rscript {}'.format(r_file)
 	os.system(cmd)
+	
+def PopInsertionTimePlot(genomes, type, labels=None, mu=1.3e-8):
+	if labels is None:
+		labels = get_labels(genomes)
+	if type == 'intact':
+		outfig = 'Intact.Insertion_Time.pdf'
+	elif type == 'candidate':
+		outfig = 'Candidate.Insertion_Time.pdf'
+	else:
+		raise ValueError('Unknown type: {}'.format(type))
+	genomes = map(get_genome, genomes)
+	tmpfile = 'pass.insert_time'	
+	f = open(tmpfile, 'w')
+	line = ['TE_Type', 'Insertion_Time', 'Label']
+	print >>f, '\t'.join(line)
+	for genome, label in zip(genomes, labels):
+		num = 0
+		for line in Retriever(genome).InsertionTime(type, mu=mu):
+			line = line + [label]
+			print >>f, '\t'.join(line)
+			num += 1
+		print >> sys.stderr, label, num
+	f.close()
+	# plot
+	r_src = '''
+data <- read.table('{}', head=T)
+library(ggplot2)
+p <- ggplot(data, aes(x=Insertion_Time, color=Label)) + geom_line(stat="density", size=1.25) + xlab('Insertion time (Mya)') + scale_colour_hue(l=45)
+ggsave('{}', p, width=10, height=7)
+for (label in unique(data$Label)){{
+	dat = data[data$Label==label,]
+	x = density(dat$Insertion_Time)
+	print(c(label, x$x[which(x$y==max(x$y))]))
+}}
+'''.format(tmpfile, outfig)
+	r_file = tmpfile + '.r'
+	with open(r_file, 'w') as f:
+		print >>f, r_src
+	cmd = 'Rscript {}'.format(r_file)
+	os.system(cmd)
+def get_genome(xdir):
+	lastdir = xdir.strip('/').split('/')[-1]
+	filename = 'genome.fa' #lastdir.replace('lai_', '')
+	return '{}/{}'.format(xdir, filename)
+	
+def get_labels2(genomes):
+	for i, cases in enumerate(zip(genomes)):
+		if not len(set(cases)) == 1:
+			break
+	genomes2 = map(reversed, genomes)
+	for j, cases in enumerate(zip(genomes2)):
+		if not len(set(cases)) == 1:
+			break
+	j = -j
+	if j == 0:
+		return [genome[i:] for genome in genomes]
+	else:
+		return [genome[i:j] for genome in genomes]
+		
+def get_labels(genomes):
+	return [re.compile(r'[/^]([A-Z][a-z]+_[^/\s]+)/').search(genome).groups()[0]
+			 for genome in genomes]
+			 
 class Classifier():
 	def __init__(self, gff, db='rexdb', fout=sys.stdout): # gff is sorted
 		self.gff = gff
@@ -617,6 +687,11 @@ def main():
 		try: mu = float(sys.argv[4])
 		except IndexError: mu=1.3e-8
 		InsertionTimePlot(genome, type, mu=mu)
+	if subcmd == 'PopInsertionTimePlot':
+		type = sys.argv[2]
+		mu = float(sys.argv[3])
+		genomes = sys.argv[4:]
+		PopInsertionTimePlot(genomes, type, mu=mu)
 	elif subcmd == 'LTRlibAnn': # hmmscan + HmmBest
 		ltrlib = sys.argv[2]	# input is LTR library (fasta)
 		try: 

@@ -97,8 +97,7 @@ class RMOutParser():
 		for rc in self._parse():
 			seqRecord = d_seqs[rc.query_id]
 			SeqIO.write(rc.get_seq(seqRecord), fout, 'fasta')
-
-def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=True, excludeSoft=True, soft=False,):
+def get_region(inRM, suffix=None):
 	if suffix is None:
 		suffix = os.path.splitext(inRM)[-1].lstrip('.')
 	if suffix in {'bed'}:
@@ -109,6 +108,32 @@ def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=True, exclud
 		kw = dict(chr_col=4, start_col=5, end_col=6, based=1)
 	else:
 		raise ValueError('un-recagnized suffix {}'.format(suffix))
+	return region2dict(inRM, **kw)
+def exclude_mask(inSeq, inRM, outSeq):
+	'''mask genome except spcified regions'''
+	d_mask = get_region(inRM)
+	for rc in SeqIO.parse(inSeq, 'fasta'):
+		regions = d_mask.get(rc.id, [])
+		seq = list(rc.seq)
+		last_end = 0
+		for start, end in sorted(regions):
+			if start <= last_end:
+				continue
+			seq[last_end:start] = ['N'] * (start-last_end)
+			last_end = end
+		slen = len(seq)
+		if last_end < slen:
+			seq[last_end:slen] = ['N'] * (slen-last_end)
+		d_counter = Counter(list(seq))
+		num_N = d_counter['n'] + d_counter['N']
+		print >> sys.stderr, rc.id, len(seq), num_N, 100.0*(len(seq)-num_N)/len(seq)
+		seq = ''.join(seq)
+		seq = Seq(seq)
+		assert len(seq) == len(rc.seq)
+		rc.seq = seq
+		SeqIO.write(rc, outSeq, 'fasta')
+
+def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=False, excludeSoft=True, soft=False,):
 	d_exclude = {}
 	if exclude is not None:
 		d_exclude = blast2dict(exclude, based=1)
@@ -120,7 +145,7 @@ def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=True, exclud
 		if excludeSoft:
 			#d_simple.update(d_exclude)
 			update(d_simple, d_exclude)
-	d_mask = region2dict(inRM, **kw)
+	d_mask = get_region(inRM, suffix=suffix)
 	all_n = 0
 	for rc in SeqIO.parse(inSeq, 'fasta'):
 		if rc.id not in d_mask:
@@ -172,7 +197,7 @@ def blast2dict(inBlast, based=1):
 	d_region = {}
 	for line in open(inBlast):
 		try: 
-			CHR, START, END = re.compile(r'(\S+):(\d+)[^d]+(\d+)').match(line).groups()
+			CHR, START, END = re.compile(r'(\S+).*?(\d+)[^\d\w]+(\d+)').match(line).groups()
 		except TypeError: pass
 		START, END = int(START)-based, int(END)
 		try: d_region[CHR] += [(START, END)]
@@ -244,6 +269,11 @@ def main():
 		try: exclude = sys.argv[4]
 		except IndexError: exclude = None
 		mask(genome, inRMout, outSeq, exclude=exclude)
+	elif subcmd == 'exclude_mask':
+		inSeq = sys.argv[2]
+		inRM = sys.argv[3]
+		outSeq = sys.stdout
+		exclude_mask(inSeq, inRM, outSeq)
 	else:
 		raise ValueError('Unknown command: {}'.format(subcmd))
 

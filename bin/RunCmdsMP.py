@@ -18,7 +18,7 @@ except ImportError as e:
 try: 
 	import drmaa    # for grid
 	from tempfile import NamedTemporaryFile
-except ImportError as e:
+except Exception as e:
 	logger.warn('{} && grid computing is not available'.format(e))
 
 __version__ = '1.0'
@@ -242,7 +242,7 @@ def file2list(cmd_file, sep="\n"):
 		else:
 			f = open(cmd_file, 'r')
 			cmd_list = f.read().split(sep)
-	return [cmd for cmd in cmd_list if cmd]
+	return [cmd for cmd in cmd_list if cmd.strip()]
 
 def run_cmd(cmd, logger=None, log=False):
 	if log and logger is None:
@@ -394,7 +394,7 @@ def main():
 #		parser.print_help()
 #		sys.exit()
 		cmd_list = file2list(sys.stdin, sep=separation)
-		cmd_file = '/share/tmp/RunCmdsMP.{}'.format(os.getpid())
+		cmd_file = '/io/tmp/share/RunCmdsMP.{}'.format(os.getpid())
 	else:
 		cmd_file = args[0]
 		cmd_list = None
@@ -408,11 +408,18 @@ def main():
 #				cmd_sep=separation, cont=to_be_continue)
 	run_job(cmd_file, cmd_list, tc_tasks=processors, mode=mode, grid_opts=grid_opts,
                 cont=to_be_continue, retry=retry, cmd_sep=separation, stdout=stdout)
-def run_job(cmd_file, cmd_list=None, tc_tasks=8, mode='grid', grid_opts='-tc {tc}', cont=1, fail_exit=True,
+def run_job(cmd_file=None, cmd_list=None, by_bin=1, tc_tasks=8, mode='grid', grid_opts='-tc {tc}', cont=1, fail_exit=True,
             ckpt=None, retry=1, out_path=None, cmd_sep='\n', **kargs):
 	tc_tasks = int(tc_tasks)
+	if cmd_file is None:
+		cmd_file = '/io/tmp/share/RunCmdsMP.{}'.format(os.getpid())
 	if cmd_list is not None:
-		cmd_sep = '\n'+cmd_sep+'\n' if cmd_sep !='\n' else cmd_sep
+		if by_bin > 1:
+			cmd_list2 = []
+			for i in range(0, len(cmd_list), by_bin):
+				cmd_list2 += ['\n'.join(cmd_list[i:i+by_bin])]
+			cmd_list = cmd_list2
+		cmd_sep = '\n'+cmd_sep+'\n' #if cmd_sep !='\n' else cmd_sep
 		with open(cmd_file, 'w') as fp:
 			print >> fp, cmd_sep.join(cmd_list)
 	if kargs.get('cpu') is None:
