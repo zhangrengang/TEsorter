@@ -17,10 +17,12 @@ except ImportError as e:
 	logger.warn('{}\nparallel computing is not available'.format(e))
 try: 
 	import drmaa    # for grid
+	GRID = True
 	from tempfile import NamedTemporaryFile
 except Exception as e:
+	GRID = False
 	logger.warn('{} && grid computing is not available'.format(e))
-
+	
 __version__ = '1.0'
 
 class Grid(object):
@@ -132,7 +134,7 @@ class Grid(object):
 			name = s.drmaaImplementation
 #		grid, version = name.split()
 #		if grid == 'OGS/GE':
-		if 'OGS/GE' in name:
+		if 'OGS/GE' in name or 'SGE' in name:
 			return 'sge'
 		elif 'Slurm' in name:
 			return 'slurm'
@@ -410,6 +412,8 @@ def main():
                 cont=to_be_continue, retry=retry, cmd_sep=separation, stdout=stdout)
 def run_job(cmd_file=None, cmd_list=None, by_bin=1, tc_tasks=8, mode='grid', grid_opts='-tc {tc}', cont=1, fail_exit=True,
             ckpt=None, retry=1, out_path=None, cmd_sep='\n', **kargs):
+	if not GRID and mode == 'grid':
+		mode = 'local'
 	tc_tasks = int(tc_tasks)
 	if cmd_file is None:
 		cmd_file = '/io/tmp/share/RunCmdsMP.{}'.format(os.getpid())
