@@ -31,6 +31,8 @@ DB = {
 	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0_plus_metazoa_v3.hmm',
 	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
 	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
+	'rexdb-tir': bindir + '/database/REXdb_v3_TIR.hmm',
+	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.hmm',
 	}
 BLASType = {
     'qseqid': str,
@@ -814,13 +816,14 @@ def translate_pp(inSeq, prefix=None, tmpdir='./tmp', processors=4):
 def hmmscan(inSeq, hmmdb='rexdb.hmm', hmmout=None, ncpu=4):
 	if hmmout is None:
 		hmmout = prefix + '.domtbl'
-	cmd = 'hmmscan --notextw -E 0.01 --domE 0.01 --noali --cpu {} --domtblout {} {} {} > /dev/null'.format(ncpu, hmmout, hmmdb, inSeq)
+	cmd = 'hmmscan --notextw --noali --cpu {} --domtblout {} {} {} > /dev/null'.format(ncpu, hmmout, hmmdb, inSeq)
 	run_cmd(cmd, logger=logger)
 	return hmmout
 def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors=4):
 	chunk_prefix = '{}/{}'.format(tmpdir, 'chunk_aaseq')
 	_, _, _, chunk_files = split_fastx_by_chunk_num(
 			inSeq, prefix=chunk_prefix, chunk_num=processors, seqfmt='fasta', suffix='')
+	chunk_files = [chunk_file for chunk_file in chunk_files if os.path.getsize(chunk_file)>0]
 	domtbl_files = [chunk_file + '.domtbl' for chunk_file in chunk_files]
 	cmds = [ 
 		'hmmscan --notextw -E 0.01 --domE 0.01 --noali --domtblout {} {} {}'.format(domtbl_file, hmmdb, chunk_file) \
