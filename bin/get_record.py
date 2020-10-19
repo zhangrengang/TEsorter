@@ -55,7 +55,7 @@ def main():
 			usage()
 			sys.exit()
 
-	if type not in ['table','fasta','fastq', 'hmm']:
+	if type not in {'table','fasta','fastq', 'hmm', 'genbank'}:
 		raise TypeError("type must be one of ['table','fasta','fastq'], unexpected '%s'" % (type,))
 		usage()
 		sys.exit()
@@ -108,7 +108,7 @@ def get_records(input_file, output_file, in_accnos,
 						lst_get.add(record_id)
 						continue
 
-	elif type == 'fasta' or type == 'fastq':
+	elif type in { 'fasta', 'fastq', 'genbank'}:
 		for seq_record in SeqIO.parse(open(input_file),type):
 			record_id = seq_record.id
 			if process == 'get':
@@ -126,14 +126,16 @@ def get_records(input_file, output_file, in_accnos,
 	elif type == 'hmm':
 		from HMMER import HMMParser
 		for rc in HMMParser(open(input_file)):
+			values = {getattr(rc, key, None) for key in ['NAME', 'ACC']}
+			values = {v for v in values if v}
 			if process == 'get':
-				if rc.NAME in d_accnos or rc.ACC in d_accnos:
+				if values & d_accnos:
 					rc.write(f)
-					lst_get += [rc.NAME, rc.ACC]
+					lst_get = lst_get | values
 			elif process == 'remove':
-				if not (rc.NAME in d_accnos or rc.ACC in d_accnos):
+				if not (values & d_accnos):
 					rc.write(f)
-					lst_get += [rc.NAME, rc.ACC]
+					lst_get = lst_get | values
 	f.close()
 
 	not_get = d_accnos-set(lst_get)
