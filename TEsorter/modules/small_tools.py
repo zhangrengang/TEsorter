@@ -24,32 +24,32 @@ def get_hex_colors(n):
 	import matplotlib.pyplot as plt
 	import matplotlib.colors as colors
 	import matplotlib.cm as cmx
-	values = range(n)
+	values = list(range(n))
 	jet = cm = plt.get_cmap('jet')
 	cNorm  = colors.Normalize(vmin=0, vmax=values[-1])
 	scalarMap = cmx.ScalarMappable(norm=cNorm, cmap=jet)
 	colorVal = [scalarMap.to_rgba(v) for v in values]
 	return [colors.to_hex(v) for v in colorVal]
 def getHtml(url):
-        import urllib2,socket
+        import urllib.request, urllib.error, urllib.parse,socket
         socket.setdefaulttimeout(5)
         socket.setdefaulttimeout(5)
         try:
-                page = urllib2.urlopen(url)
+                page = urllib.request.urlopen(url)
                 html = page.read()
                 return html
         except socket.timeout:
-                print 'time out, trying again!'
+                print('time out, trying again!')
                 time.sleep(5)
                 return getHtml(url)
-        except urllib2.HTTPError, e:
+        except urllib.error.HTTPError as e:
                 if e.code == 404:
                         return e.code
-                print 'HTTPError code: ', e.code, ', trying again!'
+                print('HTTPError code: ', e.code, ', trying again!')
                 time.sleep(5)
                 return getHtml(url)
-        except urllib2.URLError, e:
-                print 'URLError reason',e.reason,', trying again!'
+        except urllib.error.URLError as e:
+                print('URLError reason',e.reason,', trying again!')
                 time.sleep(5)
                 return getHtml(url)
         except:
@@ -159,14 +159,14 @@ def run_time(func):
 		start = time.time()
 		logFile = 'main.logfile'
 		f = open(logFile,'a')
-		print >>f, 'Start at %s ...' % time.strftime(ISOTIMEFORMAT, time.localtime())
-		print >>f, 'Runing commands:'
+		print('Start at %s ...' % time.strftime(ISOTIMEFORMAT, time.localtime()), file=f)
+		print('Runing commands:', file=f)
 
-		print >>f, '  %s' % func()
+		print('  %s' % func(), file=f)
 
-		print >>f, 'End   at %s .' % time.strftime(ISOTIMEFORMAT, time.localtime())
+		print('End   at %s .' % time.strftime(ISOTIMEFORMAT, time.localtime()), file=f)
 		end = time.time()
-		print >>f, 'Total Time Used: %s\n' % time_convert(end-start)
+		print('Total Time Used: %s\n' % time_convert(end-start), file=f)
 		f.close()
 	return _run_time
 
@@ -197,7 +197,7 @@ def count_record(inFile, format):
 					stderr=subprocess.PIPE,shell=True)
 	output = job.communicate()
 	try: return int(output[0])
-	except ValueError: print output
+	except ValueError: print(output)
 
 def flattern(nested):
 	try:

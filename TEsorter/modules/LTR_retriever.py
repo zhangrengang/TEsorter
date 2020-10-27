@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 # coding: utf-8
 '''# Author: zrg1989@qq.com
 # Version: 0.1
@@ -25,8 +25,8 @@ class IntactRecord():
 		self.dict['Identity'] = float(self.dict['Identity'])
 		self.dict['Insertion_Time'] = int(self.dict['Insertion_Time'])
 		self.dict['TE_type'] = self.dict['TE_type'] if self.dict['TE_type'] != 'NA' else 'LTR'
-		for key, value in self.dict.items():
-			try: exec 'self.{} = value'.format(key)
+		for key, value in list(self.dict.items()):
+			try: exec('self.{} = value'.format(key))
 			except SyntaxError: pass
 		self.chr, self.start, self.end = re.compile(r'(\S+?):(\d+)\.\.(\d+)').match(self.LTR_loc).groups()
 		self.start, self.end = int(self.start), int(self.end)
@@ -36,7 +36,7 @@ class CandidateRecord():
 		if len(temp) < len(title):
 			temp += [None] * (len(title)-len(temp))
 		self.dict = dict([(key, value) for key, value in zip(title, temp)])
-		for key, value in self.dict.items():
+		for key, value in list(self.dict.items()):
 			try: self.dict[key] = int(value)
 			except: continue
 		try: self.dict['similarity'] = float(self.dict['similarity'])
@@ -51,17 +51,19 @@ class CandidateRecord():
 				self.dict['ageya'] = None
 		except:
 			self.dict['ageya'] = None
-		for key, value in self.dict.items():
-			try: exec 'self.{} = value'.format(key)
+		for key, value in list(self.dict.items()):
+			try: exec('self.{} = value'.format(key))
 			except SyntaxError: pass
 		self.INT_str, self.INT_end = self.lLTR_end+1, self.rLTR_str-1
+
 	def write(self, fout):
-		self.line = [self.start, self.end, self.len, self.lLTR_str, self.lLTR_end, self.lLTR_len, 
-				self.rLTR_str, self.rLTR_end, self.rLTR_len, self.similarity, 
-				self.seqid, self.chr, self.direction, self.TSD, self.lTSD, self.rTSD, 
+		self.line = [self.start, self.end, self.len, self.lLTR_str, self.lLTR_end, self.lLTR_len,
+				self.rLTR_str, self.rLTR_end, self.rLTR_len, self.similarity,
+				self.seqid, self.chr, self.direction, self.TSD, self.lTSD, self.rTSD,
 				self.motif, self.superfamily, self.family, self.ageya]
 		self.line = ['' if value is None else str(value) for value in self.line]
-		print >> fout, '\t'.join(self.line)
+		print('\t'.join(self.line), file=fout)
+
 class Retriever():
 	def __init__(self, genome):
 		self.genome = genome
@@ -76,16 +78,18 @@ class Retriever():
 		self.retriever_all_scn2 = self.retriever_all_scn + '2'
 		if not (os.path.exists(self.retriever_all_scn2) \
 		   and os.path.getsize(self.retriever_all_scn2) > 1000):
-			print >>sys.stderr, 're-organize', self.retriever_all_scn
+			print('re-organize', self.retriever_all_scn, file=sys.stderr)
 			self.re_scn()
 		self.retriever_all_scn = self.retriever_all_scn2
+
 	def get_full_seqs(self, fout=sys.stdout):
 		d_seqs = seq2dict(self.genome)
 		for rc in self.intact_list():
 			ltr_seq = d_seqs[rc.chr].seq[rc.start-1:rc.end]
 			TE_type = rc.TE_type if rc.TE_type != 'NA' else 'LTR'
 			ltr_cls = '{}/{}'.format(TE_type, rc.SuperFamily)
-			print >> fout, '>{}#{}\n{}'.format(rc.LTR_loc, ltr_cls, ltr_seq)
+			print('>{}#{}\n{}'.format(rc.LTR_loc, ltr_cls, ltr_seq), file=fout)
+
 	def re_scn(self): # remove redundant
 		idmap = self.seqIdmap
 		lrt_set = set([])
@@ -115,7 +119,7 @@ class Retriever():
 			lrt_set.add(key)
 			rc.write(f)
 		f.close()
-		print >>sys.stderr, '{} total {}, {} without chr, {} discarded, {} retained'.format(self.retriever_all_scn, i, j, k, i-k)
+		print('{} total {}, {} without chr, {} discarded, {} retained'.format(self.retriever_all_scn, i, j, k, i-k), file=sys.stderr)
 	@property
 	def seqIdmap(self):
 		i = 0
@@ -124,6 +128,7 @@ class Retriever():
 			d[i] = rc.id
 			i += 1
 		return d
+
 	def intact_list(self):
 		ids = set([])
 		for pass_list in self.pass_lists:
@@ -139,6 +144,7 @@ class Retriever():
 					continue
 				ids.add(id)
 				yield IntactRecord(title, temp)
+
 	def all_scn(self):
 		for line in open(self.retriever_all_scn):
 			temp = line.strip().split()
@@ -149,6 +155,7 @@ class Retriever():
 			elif line.startswith('#'):
 				continue
 			yield CandidateRecord(title, temp)
+
 	def re_classify(self, seqtype='dna', db='rexdb'):
 		ltrlib = self.ltrlib
 		gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype, db=db)
@@ -161,6 +168,7 @@ class Retriever():
 		fann.close()
 		flib.close()
 	@property
+
 	def ltr_map(self):
 		d = {}
 		for rc in self.all_scn():
@@ -189,8 +197,9 @@ class Retriever():
 				continue
 			Insertion_Time = rc.dict[timeStr] / 1e6 * (1.3e-8 / mu) # Mya
 			line = [Type, Insertion_Time]
-			line = map(str, line)
+			line = list(map(str, line))
 			yield line
+
 def InsertionTimePlot(genome, type, mu=1.3e-8):
 	if type == 'intact':
 		outfig = genome + '.Intact.Insertion_Time.pdf'
@@ -198,14 +207,14 @@ def InsertionTimePlot(genome, type, mu=1.3e-8):
 		outfig = genome + '.Candidate.Insertion_Time.pdf'
 	else:
 		raise ValueError('Unknown type: {}'.format(type))
-	tmpfile = genome + '.pass.insert_time'	
+	tmpfile = genome + '.pass.insert_time'
 	f = open(tmpfile, 'w')
 	line = ['TE_Type', 'Insertion_Time']
-	print >>f, '\t'.join(line)
+	print('\t'.join(line), file=f)
 	for line in Retriever(genome).InsertionTime(type, mu=mu):
-		print >>f, '\t'.join(line)
+		print('\t'.join(line), file=f)
 	f.close()
-	
+
 	# plot
 	r_src = '''
 data <- read.table('{}', head=T)
@@ -215,10 +224,10 @@ ggsave('{}', p)
 '''.format(tmpfile, outfig)
 	r_file = tmpfile + '.r'
 	with open(r_file, 'w') as f:
-		print >>f, r_src
+		print(r_src, file=f)
 	cmd = 'Rscript {}'.format(r_file)
 	os.system(cmd)
-	
+
 def PopInsertionTimePlot(genomes, type, labels=None, mu=1.3e-8):
 	if labels is None:
 		labels = get_labels(genomes)
@@ -228,18 +237,18 @@ def PopInsertionTimePlot(genomes, type, labels=None, mu=1.3e-8):
 		outfig = 'Candidate.Insertion_Time.pdf'
 	else:
 		raise ValueError('Unknown type: {}'.format(type))
-	genomes = map(get_genome, genomes)
-	tmpfile = 'pass.insert_time'	
+	genomes = list(map(get_genome, genomes))
+	tmpfile = 'pass.insert_time'
 	f = open(tmpfile, 'w')
 	line = ['TE_Type', 'Insertion_Time', 'Label']
-	print >>f, '\t'.join(line)
+	print('\t'.join(line), file=f)
 	for genome, label in zip(genomes, labels):
 		num = 0
 		for line in Retriever(genome).InsertionTime(type, mu=mu):
 			line = line + [label]
-			print >>f, '\t'.join(line)
+			print('\t'.join(line), file=f)
 			num += 1
-		print >> sys.stderr, label, num
+		print(label, num, file=sys.stderr)
 	f.close()
 	# plot
 	r_src = '''
@@ -255,19 +264,19 @@ for (label in unique(data$Label)){{
 '''.format(tmpfile, outfig)
 	r_file = tmpfile + '.r'
 	with open(r_file, 'w') as f:
-		print >>f, r_src
+		print(r_src, file=f)
 	cmd = 'Rscript {}'.format(r_file)
 	os.system(cmd)
 def get_genome(xdir):
 	lastdir = xdir.strip('/').split('/')[-1]
 	filename = 'genome.fa' #lastdir.replace('lai_', '')
 	return '{}/{}'.format(xdir, filename)
-	
+
 def get_labels2(genomes):
 	for i, cases in enumerate(zip(genomes)):
 		if not len(set(cases)) == 1:
 			break
-	genomes2 = map(reversed, genomes)
+	genomes2 = list(map(reversed, genomes))
 	for j, cases in enumerate(zip(genomes2)):
 		if not len(set(cases)) == 1:
 			break
@@ -276,11 +285,11 @@ def get_labels2(genomes):
 		return [genome[i:] for genome in genomes]
 	else:
 		return [genome[i:j] for genome in genomes]
-		
+
 def get_labels(genomes):
 	return [re.compile(r'[/^]([A-Z][a-z]+_[^/\s]+)/').search(genome).groups()[0]
 			 for genome in genomes]
-			 
+
 class Classifier():
 	def __init__(self, gff, db='rexdb', fout=sys.stdout): # gff is sorted
 		self.gff = gff
@@ -290,8 +299,10 @@ class Classifier():
 			self.markers = {'GAG', 'PROT', 'INT', 'RT', 'RH'}
 		elif self.db == 'gydb':
 			self.markers = {'GAG', 'AP', 'INT', 'RT', 'RNaseH', 'ENV'}
+
 	def __iter__(self):
 		return self.classify()
+
 	def parse(self):
 		record = []
 		last_lid = ''
@@ -306,9 +317,10 @@ class Classifier():
 			record.append(line)
 			last_lid = lid
 		yield record
+
 	def classify(self, ):
 		line = ['#TE', 'Superfamily', 'Family', 'Clade', 'Code', 'Strand', 'hmmmatchs']
-		print >> self.fout, '\t'.join(line)
+		print('\t'.join(line), file=self.fout)
 		for rc in self.parse():
 			rc_flt = rc #[line for line in rc if line.gene in self.markers]
 			#if len(rc_flt) == 0:
@@ -331,9 +343,10 @@ class Classifier():
 			elif self.db == 'gydb':
 				order, superfamily, max_clade, coding = self.identify(genes, clades)
 			line = [lid, order, superfamily, max_clade, coding, strand, domains]
-			print >> self.fout, '\t'.join(line)
+			print('\t'.join(line), file=self.fout)
 			self.ltrid, self.order, self.superfamily, self.clade, self.code, self.strand, self.domains = line
 			yield self
+
 	def identify_rexdb(self, genes, clades):
 		perfect_structure = {
             ('LTR', 'Copia'): ['Ty1-GAG', 'Ty1-PROT', 'Ty1-INT', 'Ty1-RT', 'Ty1-RH'],
@@ -362,6 +375,7 @@ class Classifier():
 		except KeyError:
 			coding = 'unknown'
 		return order, superfamily, max_clade, coding
+
 	def _parse_rexdb(self, clade): # full clade name
 		if clade.startswith('Class_I/LTR/Ty1_copia'):
 			order, superfamily = 'LTR', 'Copia'
@@ -373,6 +387,7 @@ class Classifier():
 			try: order, superfamily = clade.split('/')[2:4]
 			except ValueError: order, superfamily = clade.split('/')[2], 'unknown'
 		return order, superfamily
+
 	def identify(self, genes, clades):
 		perfect_structure = {
 			('LTR', 'Copia')         : ['GAG', 'AP', 'INT', 'RT', 'RNaseH'],
@@ -385,9 +400,9 @@ class Classifier():
 		clade_count = Counter(clades)
 		max_clade = max(clade_count, key=lambda x: clade_count[x])
 		try: (order, superfamily) = d_map[max_clade]
-		except KeyError: 
+		except KeyError:
 			(order, superfamily) = ('Unknown', 'unknown')
-			print >>sys.stderr, 'unknown clade: {}'.format(max_clade)
+			print('unknown clade: {}'.format(max_clade), file=sys.stderr)
 		try:
 			ordered_genes = perfect_structure[(order, superfamily)]
 			my_genes = [gene for gene in genes if gene in set(ordered_genes)]
@@ -398,6 +413,7 @@ class Classifier():
 		except KeyError:
 			coding = 'unknown'
 		return order, superfamily, max_clade, coding
+
 	def replace_annotation(self, rawseq, fout=sys.stdout, idmap = None):
 		d_class = self.classification
 		i = 0
@@ -407,7 +423,7 @@ class Classifier():
 			else:
 				try: intid = idmap[rc.id.split('#')[0]]
 				except KeyError as e:	# this should be rare
-					print >>sys.stderr, '[Warning] skipped', e
+					print('[Warning] skipped', e, file=sys.stderr)
 			if intid in d_class:
 				neword, newfam = d_class[intid]
 				re_org = self.re_orgnize(rc.id, neword, newfam)
@@ -416,7 +432,8 @@ class Classifier():
 					rc.id = re_org
 #					print >>sys.stderr, rc.description, len(rc.seq)
 			SeqIO.write(rc, fout, 'fasta')
-		print >> sys.stderr, i, 'sequences re-classified'
+		 print(i, 'sequences re-classified', file=sys.stderr)
+
 	def re_orgnize(self, rawid, neword, newfam):
 		rawid, rawcls = rawid.split('#')
 		try: raword, rawfam = rawcls.split('/')[:2]
@@ -431,12 +448,14 @@ class Classifier():
 	@property
 	def clade_map(self):
 		return {rc.clade: (rc.order, rc.superfamily) for rc in CladeInfo()}
-			
+
 class CladeInfo():
 	def __init__(self, infile=DB['gydb']+'.info'):
 		self.infile = infile
+
 	def __iter__(self):
 		return self.parse()
+
 	def parse(self):
 		i = 0
 		for line in open(self.infile):
@@ -445,7 +464,7 @@ class CladeInfo():
 			if i == 1:
 				title = temp
 				continue
-			self.dict = dict(zip(title, temp))
+			self.dict = dict(list(zip(title, temp)))
 			if self.dict['Clade'] == 'NA':
 				self.clade = self.dict['Cluster_or_genus']
 			else:
@@ -459,7 +478,7 @@ class CladeInfo():
 				self.superfamily = 'Retroviridae'
 			self.order = 'LTR' if self.dict['System'] in {'LTR_retroelements', 'LTR_Retroelements', 'LTR_retroid_elements'} else self.dict['System']
 			self.clade = self.clade.replace('-', '_') # A-clade V-clade C-clade
-			
+
 			yield self
 			self.clade = self.clade.lower()
 			yield self
@@ -467,8 +486,8 @@ class CladeInfo():
 		yield self
 		for clade, order in zip(['retroelement', 'shadow', 'all'], ['LTR', 'Unknown', 'Unknown']): # CHR
 			self.order, self.superfamily, self.clade, self.dict = [order, 'unknown', clade, {}]  # CHR_retroelement
-			yield self	
-				
+			yield self
+
 class GffLine(object):
 	def __init__(self, line):
 		temp = line.strip().split('\t')
@@ -512,17 +531,19 @@ class HmmDomRecord():
 				= temp[:22]
 		self.tlen, self.qlen, self.domi, self.domn, \
 			self.hmmstart, self.hmmend, self.alnstart, self.alnend, self.envstart, self.envend = \
-			map(int, [self.tlen, self.qlen, self.domi, self.domn, \
-				self.hmmstart, self.hmmend, self.alnstart, self.alnend, self.envstart, self.envend])
+			list(map(int, [self.tlen, self.qlen, self.domi, self.domn, \
+				 self.hmmstart, self.hmmend, self.alnstart, self.alnend, self.envstart, self.envend]))
 		self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc = \
-			map(float, [self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc])
+			list(map(float, [self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc]))
 		self.tdesc = ' '.join(temp[22:])
 	@property
 	def hmmcov(self):
 		return round(1e2*(self.hmmend - self.hmmstart + 1) / self.tlen, 1)
+
 def seq2dict(inSeq):
 	from Bio import SeqIO
 	return dict([(rc.id, rc) for rc in SeqIO.parse(inSeq, 'fasta')])
+
 def parse_hmmname(hmmname, db='gydb'):
 	db = db.lower()
 	if db == 'gydb':
@@ -574,7 +595,7 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20
 #	print d_besthit
 	d_seqs = seq2dict(inSeq)
 	lines = []
-	for (qid, domain), rc in d_besthit.items():
+	for (qid, domain), rc in list(d_besthit.items()):
 		if rc.hmmcov < mincov or rc.evalue > maxeval:
 			continue
 #		gid = '{}|{}|{}'.format(qid, domain, rc.tname)
@@ -612,20 +633,21 @@ def hmm2best(inSeq, inHmmouts, prefix=None, db='rexdb', seqtype='dna', mincov=20
 	fgff = open(gff, 'w')
 	fseq = open(seq, 'w')
 	ftsv = open(tsv, 'w')
-	print >> ftsv, '\t'.join(['#id', 'length', 'evalue', 'coverge', 'probability'])
+	print('\t'.join(['#id', 'length', 'evalue', 'coverge', 'probability']), file=ftsv)
 	for line in sorted(lines, key=lambda x: (x[0], x[-3], x[3])):
 		gffline = line[:9]
-		gffline = map(str, gffline)
-		print >> fgff, '\t'.join(gffline)
+		gffline = list(map(str, gffline))
+		print('\t'.join(gffline), file=fgff)
 		gid, gseq = line[-2:]
 		gdesc = line[8]
-		print >> fseq, '>{} {}\n{}'.format(gid, gdesc, gseq)
+		print('>{} {}\n{}'.format(gid, gdesc, gseq), file=fseq)
 		evalue, hmmcov, acc = line[-6:-3]
 		line = [gid, len(gseq), evalue, hmmcov, acc]
-		print >> ftsv, '\t'.join(map(str, line))
+		print('\t'.join(map(str, line)), file=ftsv)
 	fgff.close()
 	fseq.close()
 	return gff, seq
+
 def translate(inSeq, prefix=None):
 	if prefix is None:
 		prefix = inSeq
@@ -634,6 +656,7 @@ def translate(inSeq, prefix=None):
 	cmd = '{} {} > {}'.format(prog, inSeq, outSeq)
 	os.system(cmd)
 	return outSeq
+
 def hmmscan(inSeq, hmmdb='rexdb', prefix=None):
 	if prefix is None:
 		prefix = inSeq
@@ -641,22 +664,24 @@ def hmmscan(inSeq, hmmdb='rexdb', prefix=None):
 	cmd = 'hmmscan --notextw -E 0.01 --domE 0.01 --noali --cpu 4 --domtblout {} {} {} > /dev/null'.format(outDomtbl, hmmdb, inSeq)
 	os.system(cmd)
 	return outDomtbl
+
 def LTRlibAnn(ltrlib, seqtype='dna', hmmdb='rexdb', prefix=None):
 #	ltrlib = Retriever(genome).ltrlib
 	if prefix is None:
 		prefix = '{}.{}'.format(ltrlib, hmmdb)
 	if seqtype == 'dna':
-		print >>sys.stderr, 'translating {} in six frames'.format(ltrlib)
+		print('translating {} in six frames'.format(ltrlib), file=sys.stderr)
 		aaSeq = translate(ltrlib)
 #		aaSeq = ltrlib + '.aa'
 	elif seqtype == 'prot':
 		aaSeq = ltrlib
-	print >>sys.stderr, 'HMM scanning against {}'.format(DB[hmmdb])
+	print('HMM scanning against {}'.format(DB[hmmdb]), file=sys.stderr)
 	domtbl = hmmscan(aaSeq, hmmdb=DB[hmmdb], prefix=prefix)
 #	domtbl = prefix + '.domtbl'
-	print >>sys.stderr, 'generating gene anntations'
+	print('generating gene annotations', file=sys.stderr)
 	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, prefix=prefix, seqtype=seqtype)
 	return gff, geneSeq, aaSeq
+
 def replaceCls(ltrlib, seqtype='dna', db='rexdb'):
 	gff = ltrlib + '.' + db + '.gff3'
 	if not os.path.exists(gff):
@@ -668,6 +693,7 @@ def replaceCls(ltrlib, seqtype='dna', db='rexdb'):
 	Classifier(gff, fout=fann).replace_annotation(ltrlib, fout=flib)
 	fann.close()
 	flib.close()
+
 def parse_frame(string):
 	if string.startswith('rev'):
 		strand = '-'
@@ -677,7 +703,7 @@ def parse_frame(string):
 		return '.', '.' #None,None
 	frame = int(string[-1]) -1
 	return strand, frame
-					
+
 def main():
 	subcmd = sys.argv[1]
 	if subcmd == 'InsertionTimePlot':
@@ -694,7 +720,7 @@ def main():
 		PopInsertionTimePlot(genomes, type, mu=mu)
 	elif subcmd == 'LTRlibAnn': # hmmscan + HmmBest
 		ltrlib = sys.argv[2]	# input is LTR library (fasta)
-		try: 
+		try:
 			hmmdb = sys.argv[3] # rexdb, gydb, pfam, etc.
 			try: seqtype = sys.argv[4]
 			except IndexError: seqtype = 'dna'
@@ -717,7 +743,7 @@ def main():
 		for line in Classifier(gff, db=db):
 			continue
 	elif subcmd == 'replaceCls':	# LTRlibAnn + Classifier
-		ltrlib = sys.argv[2]	    # input: LTR library (nucl fasta) 
+		ltrlib = sys.argv[2]	    # input: LTR library (nucl fasta)
 		replaceCls(ltrlib)
 	elif subcmd == 'replaceClsLR':
 		genome = sys.argv[2]		# input: genome input for LTR_retriever pipeline

@@ -66,14 +66,14 @@ class RMOutRecord():
 				'({})'.format(self.repeat_left), self.repeat_end, self.repeat_begin, self.repeat_id]
 		if self.overlap:
 			line += ['*']
-		line = map(str, line)
-		print >> fout, '\t'.join(line)
+		line = list(map(str, line))
+		print('\t'.join(line), file=fout)
 	def write_gff3(self, fout=sys.stdout):
 		attr = 'Target={target}'.format(self.__dict__)
 		line = [self.query_id, 'RepeatMasker', 'dispersed_repeat', self.query_begin, self.query_end, \
 				self.score, self.strand, '.', attr]
-		line = map(str, line)
-		print >> fout, '\t'.join(line)
+		line = list(map(str, line))
+		print('\t'.join(line), file=fout)
 	def get_seq(self, seqRecord):
 		id = '{}:{}..{}|{}#{}'.format(self.query_id, self.query_begin, self.query_end, self.repeat_family, self.super_class)
 		teRecord = seqRecord[self.query_begin-1:self.query_end]
@@ -126,7 +126,7 @@ def exclude_mask(inSeq, inRM, outSeq):
 			seq[last_end:slen] = ['N'] * (slen-last_end)
 		d_counter = Counter(list(seq))
 		num_N = d_counter['n'] + d_counter['N']
-		print >> sys.stderr, rc.id, len(seq), num_N, 100.0*(len(seq)-num_N)/len(seq)
+		print(rc.id, len(seq), num_N, 100.0*(len(seq)-num_N)/len(seq), file=sys.stderr)
 		seq = ''.join(seq)
 		seq = Seq(seq)
 		assert len(seq) == len(rc.seq)
@@ -155,28 +155,28 @@ def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=False, exclu
 		seq = list(rc.seq)
 		for start, end in sorted(regions):
 			if soft:
-				seq[start:end] = map(lower, seq[start:end])
+				seq[start:end] = list(map(lower, seq[start:end]))
 			else:
 				seq[start:end] = ['N'] * (end-start)
 		regions2 = d_simple.get(rc.id, [])
 		for start, end in sorted(regions2):
-			seq[start:end] = map(lower, seq[start:end])
-		print >> sys.stderr, 'total {}, exclude {}, hard {}, soft {}.'.format(len(set(d_mask[rc.id])), len(set(d_exclude.get(rc.id, []))), len(regions), len(regions2))
+			seq[start:end] = list(map(lower, seq[start:end]))
+		print('total {}, exclude {}, hard {}, soft {}.'.format(len(set(d_mask[rc.id])), len(set(d_exclude.get(rc.id, []))), len(regions), len(regions2)), file=sys.stderr)
 		d_counter = Counter(list(seq))
 		num_N = d_counter['n'] + d_counter['N']
 		seq = ''.join(seq)
 		seq = Seq(seq)
 		if not len(seq) == len(rc.seq):
-			print >> sys.stderr, '\tERROR', rc.id, len(seq), len(rc.seq), len(regions)
-		print >> sys.stderr, rc.id, len(seq), num_N, 100.0*(len(seq)-num_N)/len(seq)
+			print('\tERROR', rc.id, len(seq), len(rc.seq), len(regions), file=sys.stderr)
+		print(rc.id, len(seq), num_N, 100.0*(len(seq)-num_N)/len(seq), file=sys.stderr)
 		if len(seq) == num_N:
 			all_n += 1
 		assert len(seq) == len(rc.seq)
 		rc.seq = seq
 		SeqIO.write(rc, outSeq, 'fasta')
-	print >> sys.stderr, all_n, 'all N'
+	print(all_n, 'all N', file=sys.stderr)
 def update(dt, dq):
-	for key, value in dq.iteritems():
+	for key, value in dq.items():
 		dt[key] = set(dt.get(key, [])) | set(value)
 	return dt
 def lower(base):
@@ -227,14 +227,14 @@ def RMOut2mnd(inRMout, outMnd, binsize0=300, scale=1, mapq=20, minlen=1000):
 		try: d_family[rc.repeat_family] += [rc]
 		except KeyError: d_family[rc.repeat_family] = [rc]
 	i = 0
-	for repeat_family, records in d_family.iteritems():
+	for repeat_family, records in d_family.items():
 		for rc1, rc2 in combinations(records, 2):
 			binsize = int(binsize0 * scale)
 			bins = max(1, (rc1.query_match_length+rc2.query_match_length) / 2 / binsize)
 			interval1 = (rc1.query_end - rc1.query_begin) / bins
 			interval2 = (rc2.query_end - rc2.query_begin) / bins
-			bins1 = range(rc1.query_begin, rc1.query_end, interval1)
-			bins2 = range(rc2.query_begin, rc2.query_end, interval2)
+			bins1 = list(range(rc1.query_begin, rc1.query_end, interval1))
+			bins2 = list(range(rc2.query_begin, rc2.query_end, interval2))
 			if rc1.strand == '-':
 				bins1.reverse()
 			if rc2.strand == '-':
@@ -247,10 +247,10 @@ def RMOut2mnd(inRMout, outMnd, binsize0=300, scale=1, mapq=20, minlen=1000):
 			for bin1, bin2 in zip(bins1,bins2):
 				pos1, pos2 = bin1, bin2
 				line = [str1, chr1, pos1, frag1, str2, chr2, pos2, frag2, mapq1,cigar1,sequence1,mapq2,cigar2,sequence2,readname1,readname2]
-				line = map(str, line)
-				print >> outMnd, ' '.join(line)
+				line = list(map(str, line))
+				print(' '.join(line), file=outMnd)
 				i += 1
-	print >>sys.stderr, '{} links'.format(i)
+	print('{} links'.format(i), file=sys.stderr)
 
 def main():
 	subcmd = sys.argv[1]

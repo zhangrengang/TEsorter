@@ -1,15 +1,16 @@
-#!/bin/env python
+#!/usr/bin/env python
 import sys
 import os
 import shutil
 import argparse
+from io import IOBase
 from Bio import SeqIO
 
-from small_tools import open_file as open
+from TEsorter.modules.small_tools import open_file as open
 
 __version__ = '1.0'
 def split_sam_by_chunk_size(inSam, prefix, chunk_size):
-	if not isinstance(inSam, file):
+	if not isinstance(inSam, IOBase):
 		inSam = open(inSam)
 	i = 0
 	j = 0
@@ -26,21 +27,21 @@ def split_sam_by_chunk_size(inSam, prefix, chunk_size):
 		else:
 			last_hname = 'f%s' % (chunk_id-1,)
 			if last_hname in dir():
-				exec '%s.close()' % (last_hname, )
+				exec('%s.close()' % (last_hname, ))
 			outfile = '%s.%s.sam' % (prefix, chunk_id)
 			outfiles += [outfile]
-			exec '%s = open("%s", "w")' % (hname, outfile)
-			exec '%s.write(header)' % (hname, )
+			exec('%s = open("%s", "w")' % (hname, outfile))
+			exec('%s.write(header)' % (hname, ))
 			j += 1
-			
-		exec '%s.write(line)' % (hname, )
+
+		exec('%s.write(line)' % (hname, ))
 		i += 1
 	# close files
-	exec '%s.close()' % (hname, )
+	exec('%s.close()' % (hname, ))
 	return (i, j, chunk_size, outfiles)
-	
+
 def split_sam_by_chr(inSam, prefix):
-	if not isinstance(inSam, file):
+	if not isinstance(inSam, IOBase):
 		inSam = open(inSam)
 	header = ''
 	d_chr = {}
@@ -61,18 +62,18 @@ def split_sam_by_chr(inSam, prefix):
 			outfile = '%s.%s.sam' % (prefix, d_chr[chrom])
 			outfiles += [outfile]
 			hname = 'f%s' % (d_chr[chrom],)
-			exec '%s = open("%s", "w")' % (hname, outfile)
-			exec '%s.write(header)' % (hname, )
+			exec('%s = open("%s", "w")' % (hname, outfile))
+			exec('%s.write(header)' % (hname, ))
 			i += 1
-		exec '%s.write(line)' % (hname, )
+		exec('%s.write(line)' % (hname, ))
 	# close files
-	for chrom in d_chr.keys():
+	for chrom in list(d_chr.keys()):
 		hname = 'f%s' % (d_chr[chrom],)
-		exec '%s.close()' % (hname, )
+		exec('%s.close()' % (hname, ))
 	return (j, i, j/i, outfiles)
 
 def split_sam_by_chunk_num(inSam, prefix, chunk_num):
-	if not isinstance(inSam, file):
+	if not isinstance(inSam, IOBase):
 		inSam = open(inSam)
 	# open files
 	outfiles = []
@@ -81,8 +82,8 @@ def split_sam_by_chunk_num(inSam, prefix, chunk_num):
 		outfile = '%s.%s.sam' % (prefix, chunk_id)
 		outfiles += [outfile]
 		hname = 'f%s' % (chunk_id,)
-		exec '%s = open("%s", "w")' % (hname, outfile)
-		
+		exec('%s = open("%s", "w")' % (hname, outfile))
+
 	i = 0
 	header = ''
 	for line in inSam:
@@ -93,19 +94,19 @@ def split_sam_by_chunk_num(inSam, prefix, chunk_num):
 			for chunk_id in range(chunk_num):
 				chunk_id += 1
 				hname = 'f%s' % (chunk_id,)
-				exec '%s.write(header)' % (hname, )
+				exec('%s.write(header)' % (hname, ))
 		chunk_id = i % chunk_num + 1
 		hname = 'f%s' % (chunk_id,)
-		exec '%s.write(line)' % (hname, )
+		exec('%s.write(line)' % (hname, ))
 		i += 1
 	# close files
 	for chunk_id in range(chunk_num):
 		chunk_id += 1
-		exec 'f%s.close()' % (chunk_id, )
+		exec('f%s.close()' % (chunk_id, ))
 	return (i, chunk_num, i/chunk_num, outfiles)
 
-def split_paf_by_chr(inPaf, prefix, suffix=''):	
-	if not isinstance(inPaf, file):
+def split_paf_by_chr(inPaf, prefix, suffix=''):
+	if not isinstance(inPaf, IOBase):
 		inPaf = open(inPaf)
 	d_chr = {}
 	i = 0
@@ -122,17 +123,17 @@ def split_paf_by_chr(inPaf, prefix, suffix=''):
 			outfile = '%s.%s.paf%s' % (prefix, chrom, suffix)
 			outfiles += [outfile]
 			hname = 'f%s' % (d_chr[chrom],)
-			exec '%s = open("%s", "w")' % (hname, outfile)
+			exec('%s = open("%s", "w")' % (hname, outfile))
 			i += 1
-		exec '%s.write(line)' % (hname, )
+		exec('%s.write(line)' % (hname, ))
 	# close files
-	for chrom in d_chr.keys():
+	for chrom in list(d_chr.keys()):
 		hname = 'f%s' % (d_chr[chrom],)
-		exec '%s.close()' % (hname, )
+		exec('%s.close()' % (hname, ))
 	return (j, i, j/i, outfiles)
-	
+
 def split_fastx_by_chr(inFastx, prefix, seqfmt, suffix=''):
-	if not isinstance(inFastx, file):
+	if not isinstance(inFastx, IOBase):
 		inFastx = open(inFastx)
 	i = 0
 	j = 0
@@ -141,20 +142,20 @@ def split_fastx_by_chr(inFastx, prefix, seqfmt, suffix=''):
 		j += 1
 		last_hname = 'f%s' % (i-1,)
 		if last_hname in dir():
-			exec '%s.close()' % (last_hname, )
+			exec('%s.close()' % (last_hname, ))
 		chrom = rc.split()[0][1:]
 		outfile = '%s.%s.%s%s' % (prefix, chrom, seqfmt, suffix)
 		outfiles += [outfile]
 		hname = 'f%s' % (i,)
-		exec '%s = open("%s", "w")' % (hname, outfile)
+		exec('%s = open("%s", "w")' % (hname, outfile))
 		i += 1
-		exec '%s.write(rc)' % (hname, )
+		exec('%s.write(rc)' % (hname, ))
 	# close files
-	exec '%s.close()' % (hname, )	
+	exec('%s.close()' % (hname, ))
 	return (j, i, j/i, outfiles)
 
 def split_fastx_by_chunk_size(inFastx, prefix, chunk_size, seqfmt, suffix):
-	if not isinstance(inFastx, file):
+	if not isinstance(inFastx, IOBase):
 		inFastx = open(inFastx)
 	i = 0
 	j = 0
@@ -168,19 +169,19 @@ def split_fastx_by_chunk_size(inFastx, prefix, chunk_size, seqfmt, suffix):
 		else:
 			last_hname = 'f%s' % (chunk_id-1,)
 			if last_hname in dir():
-				exec '%s.close()' % (last_hname, )
+				exec('%s.close()' % (last_hname, ))
 			outfile = '%s.%s.%s%s' % (prefix, chunk_id, seqfmt, suffix)
 			outfiles += [outfile]
-			exec '%s = open("%s", "w")' % (hname, outfile)
+			exec('%s = open("%s", "w")' % (hname, outfile))
 			j += 1
-		exec '%s.write(rc)' % (hname, )
+		exec('%s.write(rc)' % (hname, ))
 		i += 1
 	# close files
-	exec '%s.close()' % (hname, )
+	exec('%s.close()' % (hname, ))
 	return (i, j, chunk_size, outfiles)
 
 def split_fastx_by_chunk_num(inFastx, prefix, chunk_num, seqfmt, suffix):
-	if not isinstance(inFastx, file):
+	if not isinstance(inFastx, IOBase):
 		inFastx = open(inFastx)
 	# open files
 	outfiles = []
@@ -189,18 +190,18 @@ def split_fastx_by_chunk_num(inFastx, prefix, chunk_num, seqfmt, suffix):
 		outfile = '%s.%s.%s%s' % (prefix, chunk_id, seqfmt, suffix)
 		outfiles += [outfile]
 		hname = 'f%s' % (chunk_id,)
-		exec '%s = open("%s", "w")' % (hname, outfile)
-		
+		exec('%s = open("%s", "w")' % (hname, outfile))
+
 	i = 0
 	for rc in parse_fastx(inFastx):
 		chunk_id = i % chunk_num + 1
 		hname = 'f%s' % (chunk_id,)
-		exec '%s.write(rc)' % (hname, )
+		exec('%s.write(rc)' % (hname, ))
 		i += 1
 	# close files
 	for chunk_id in range(chunk_num):
 		chunk_id += 1
-		exec 'f%s.close()' % (chunk_id, )
+		exec('f%s.close()' % (chunk_id, ))
 	return (i, chunk_num, i/chunk_num, outfiles)
 def cut_seqs(inSeq, outSeq, window_size=500000, window_ovl=100000, seqfmt='fasta'):
 	for rc in SeqIO.parse(inSeq, seqfmt):
@@ -214,7 +215,7 @@ def cut_seqs(inSeq, outSeq, window_size=500000, window_ovl=100000, seqfmt='fasta
 			sseq = rc.seq[s:e]
 			sid = '%s:%s-%s' % (rc.id, s+1, e)
 			sid += ' length=%s' % len(sseq)
-			print >>outSeq, '>%s\n%s' % (sid, sseq)
+			print('>%s\n%s' % (sid, sseq), file=outSeq)
 			if e == seq_len:
 				continue
 
@@ -244,7 +245,7 @@ def split_fastx_by_size(inFastx, prefix, chunk_num, seqfmt, suffix, out_random=T
 		out_file = '%s.%s.%s%s' % (prefix, chunk_id, seqfmt, suffix)
 		outfiles += [out_file]
 		f = open(out_file,'w')
-		for id in d_bin.keys():
+		for id in list(d_bin.keys()):
 			j +=1
 			SeqIO.write(d_seq[id], f, seqfmt)
 		f.close()
@@ -270,36 +271,36 @@ def parse_fastx(inFastx):
 			lines = []
 		lines.append(line)
 	yield ''.join(lines)
-	
+
 def main():
 	parser = argparse.ArgumentParser(version=__version__)
 	parser.add_argument("-i","--input", action="store",type=str,
-					dest="input", default=sys.stdin, 
+					dest="input", default=sys.stdin,
 					help="input [default=%(default)s]")
 	parser.add_argument("--prefix", action="store",
-					dest="prefix", default='chunk', 
+					dest="prefix", default='chunk',
 					help="output prefix [default=%(default)s]")
 	parser.add_argument("-n","--chunk-number", action="store",type=int,
-					dest="chunk_num", default=None, 
+					dest="chunk_num", default=None,
 					help="number of chunk [default=%(default)s]")
 	parser.add_argument("-s","--chunk-size", action="store", type=int,
-					dest="chunk_size", default=None, 
+					dest="chunk_size", default=None,
 					help='size of chunk [default=%(default)s]')
-	parser.add_argument("-f","--format", action="store", 
-					dest="rcfmt", default='fasta', 
-					choices=['fasta', 'fastq', 'fastx', 'sam', 'paf'], 
+	parser.add_argument("-f","--format", action="store",
+					dest="rcfmt", default='fasta',
+					choices=['fasta', 'fastq', 'fastx', 'sam', 'paf'],
 					help="record file format [default=%(default)s]")
 	parser.add_argument("--gzip-output", action="store_true",
-					dest="gzip_output", default=False, 
+					dest="gzip_output", default=False,
 					help="if gzip output [default=%(default)s]")
 	parser.add_argument("--by-size", action="store_true",
-					dest="by_size", default=False, 
+					dest="by_size", default=False,
 					help='split by size (binpacking, only for fastx format) [default=%(default)s]')
 	parser.add_argument("--by-chrom", action="store_true",
 					dest="by_chr", default=False,
 					help='split by mapped chromsome [default=%(default)s]')
 	parser.add_argument("-pfn", "--print-filenames", action="store_true",
-					dest="print_filenames", default=False, 
+					dest="print_filenames", default=False,
 					help='print filenames [default=%(default)s]')
 
 	#parser.print_help()
@@ -309,20 +310,20 @@ def main():
 		sys.exit()
 	if options.chunk_num and options.chunk_size:
 		parser.print_help(sys.stderr)
-		print >> sys.stderr, 'chunk-number and chunk-size is not compatible.'
+		print('chunk-number and chunk-size is not compatible.', file=sys.stderr)
 		sys.exit()
 	elif not (options.chunk_num or options.chunk_size) and not options.by_chr:
 		parser.print_help(sys.stderr)
-		print >> sys.stderr, 'either chunk-number or chunk-size must be speicfied.'
+		print('either chunk-number or chunk-size must be speicfied.', file=sys.stderr)
 		sys.exit()
 	if options.gzip_output:
 		suffix = '.gz'
-		print >>sys.stderr, 'Warning: for large dataset, gzip output is very slow. You may want to diable it.'
+		print('Warning: for large dataset, gzip output is very slow. You may want to diable it.', file=sys.stderr)
 	else:
 		suffix = ''
-	if not isinstance(options.input, file):
+	if not isinstance(options.input, IOBase):
 		options.input = open(options.input)
-	
+
 	#execute
 	if options.rcfmt == 'sam':
 		if options.chunk_num:
@@ -334,13 +335,13 @@ def main():
 	elif options.rcfmt in set(['fasta', 'fastq', 'fastx']):
 		if options.chunk_num:
 			if options.by_size:
-				stats = split_fastx_by_size(options.input, options.prefix, 
+				stats = split_fastx_by_size(options.input, options.prefix,
 				options.chunk_num, options.rcfmt, suffix)
 			else:
-				stats = split_fastx_by_chunk_num(options.input, options.prefix, 
+				stats = split_fastx_by_chunk_num(options.input, options.prefix,
 				options.chunk_num, options.rcfmt, suffix)
 		elif options.chunk_size:
-			stats = split_fastx_by_chunk_size(options.input, options.prefix, 
+			stats = split_fastx_by_chunk_size(options.input, options.prefix,
 			options.chunk_size, options.rcfmt, suffix)
 		elif options.by_chr:
 			stats = split_fastx_by_chr(options.input, options.prefix, options.rcfmt, suffix)
@@ -348,9 +349,9 @@ def main():
 		if options.by_chr:
 			stats = split_paf_by_chr(options.input, options.prefix, suffix)
 	n_records, n_chunks, per_chunk, outfiles = stats
-	print >> sys.stderr, 'total %s records, splited into %s chunks, %s per chunk' % (n_records, n_chunks, per_chunk)
+	print('total %s records, splited into %s chunks, %s per chunk' % (n_records, n_chunks, per_chunk), file=sys.stderr)
 	if options.print_filenames:
-		print >> sys.stdout, '\n'.join(outfiles)
+		print('\n'.join(outfiles), file=sys.stdout)
 
 if __name__ == '__main__':
 	main()
