@@ -1,7 +1,7 @@
 # This is a basic workflow to help you get started with Actions
 
 name: CI
-uses: s-weigand/setup-conda@v1.0.5 conda-channels
+uses: s-weigand/setup-conda@v1.0.5
 with:
   conda-channels: bioconda
 
