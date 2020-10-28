@@ -26,12 +26,13 @@ jobs:
           conda-channels: bioconda
       # Runs a single command using the runners shell
       - name: Install dependencies
-        run: conda install biopython
-        run: conda install pp
-        run: conda install hmmer
-        run: conda install blastpython setup.py install
+      - run: conda install biopython
+      - run: conda install pp
+      - run: conda install hmmer
+      - run: conda install blastpython setup.py install
 
       # Runs a set of commands using the runners shell
       - name: Install TEsorter
-        run: cd TEsorter
-        run: python setup.py install
+      - run: cd TEsorter
+      - run: python setup.py install
+      - run: TEsorter-test
