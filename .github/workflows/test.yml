@@ -32,6 +32,5 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Install TEsorter
         uses: actions/checkout@v2
-          run: cd TEsorter
           run: python setup.py install
           run: TEsorter-test
