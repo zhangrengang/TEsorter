@@ -24,14 +24,14 @@ jobs:
         uses: s-weigand/setup-conda@v1.0.5
         with:
           conda-channels: bioconda
-        run: conda install biopython
-        run: conda install pp
-        run: conda install hmmer
-        run: conda install blastpython setup.py install
+          run: conda install biopython
+          run: conda install pp
+          run: conda install hmmer
+          run: conda install blastpython setup.py install
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Install TEsorter
         uses: actions/checkout@v2
-        run: cd TEsorter
-        run: python setup.py install
-        run: TEsorter-test
+          run: cd TEsorter
+          run: python setup.py install
+          run: TEsorter-test
