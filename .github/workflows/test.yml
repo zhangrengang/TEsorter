@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master, ci ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -39,6 +39,7 @@ jobs:
     - name: run test TEsorter
     # run test 
       run: TEsorter-test
+      
     - name: test diff on outputs
     # run bash diff command on the protein output file avoiding headers that can be sliglty different according to blast version used
       run: diff -I '^>'  rice6.9.5.liban.rexdb.cls.pep TEsorter/test/rice6.9.5.liban.rexdb.cls.pep
