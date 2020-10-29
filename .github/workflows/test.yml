@@ -39,3 +39,5 @@ jobs:
     - name: test TEsorter
     # run test 
       run: TEsorter-test
+      # run bash diff command on the protein output file avoiding headers that can be sliglty different according to blast version used
+      run: diff -I '^>'  rice6.9.5.liban.rexdb.cls.pep TEsorter/test/rice6.9.5.liban.rexdb.cls.pep
