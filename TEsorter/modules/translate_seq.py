@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 import sys
 from Bio import SeqIO
 from Bio.Data import CodonTable
@@ -11,15 +11,15 @@ def six_frame_translate(inFa, fout=sys.stdout, seqfmt='fasta', transl_table=1):
 				try: aa_seq = translate_seq(nucl_seq, table=transl_table)
 				except CodonTable.TranslationError: continue   # Codon 'XGA' is invalid
 				suffix = '|{}{}'.format(suffix0, frame+1)
-				print >> fout, '>{}{}\n{}'.format(rc.id, suffix, aa_seq)
+				print('>{}{}\n{}'.format(rc.id, suffix, aa_seq), file=fout)
 		d_length[rc.id] = len(rc.seq)
 	return d_length
-			
+
 def translate_seq(inSeq, **kargs):
 	aa = inSeq.translate(**kargs)
 	return aa
 def translate_cds(inSeq, transl_table=1, **kargs):
-	for key in kargs.keys():
+	for key in list(kargs.keys()):
 		if not key in {'to_stop', 'stop_symbol', 'gap'}:
 			del kargs[key]
 	try:
@@ -30,7 +30,7 @@ def translate_cds(inSeq, transl_table=1, **kargs):
 
 def main(inFa, outSeq=sys.stdout):
 	for rc in SeqIO.parse(inFa, 'fasta'):
-		print >> outSeq, '>{}\n{}'.format(rc.id, translate_seq(rc.seq))
+		print('>{}\n{}'.format(rc.id, translate_seq(rc.seq)), file=outSeq)
 
 if __name__ == '__main__':
 	import sys

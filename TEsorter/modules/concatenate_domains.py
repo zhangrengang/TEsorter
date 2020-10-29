@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 import os
 import sys
 import re
@@ -15,15 +15,15 @@ def main(inSeq, domains, outSeq=sys.stdout, tmpdir='/tmp'):
 		if domain in d_domain:
 			raw_id = '#'.join(rc.id.split('#')[:-1])
 			d_domain[domain] += [raw_id]
-	
+
 	i = 0
-	for domain, rawids in d_domain.iteritems():
+	for domain, rawids in d_domain.items():
 		i += 1
 		if i == 1:
 			intersect = set(rawids)
 			continue
 		intersect = intersect & set(rawids)
-	print >>sys.stderr, '{} sequences contain {} domains'.format(len(intersect), domains)
+	print('{} sequences contain {} domains'.format(len(intersect), domains), file=sys.stderr)
 	# open files
 	d_file = {}
 	files = []
@@ -46,7 +46,7 @@ def main(inSeq, domains, outSeq=sys.stdout, tmpdir='/tmp'):
 		SeqIO.write(rc, fout, 'fasta')
 
 	# close files
-	for fout in d_file.values():
+	for fout in list(d_file.values()):
 		fout.close()
 
 	# align
@@ -71,9 +71,9 @@ def catAln(inALNs, outALN):
             except KeyError: d_seqs[sp] = [seq]
         lens += [len(seq)]
     description = 'genes:{} sites:{} blocks:{}'.format(len(lens), sum(lens), lens)
-    for sp, seqs in d_seqs.items():
+    for sp, seqs in list(d_seqs.items()):
         seqs = ''.join(seqs)
-        print >> outALN, '>{} {}\n{}'.format(sp, description, seqs)
+        print('>{} {}\n{}'.format(sp, description, seqs), file=outALN)
 
 if __name__ == '__main__':
 	inSeq = sys.argv[1]

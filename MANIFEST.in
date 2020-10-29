@@ -1,0 +1,3 @@
+include TEsorter/database/*
+include TEsorter/test/*
+include README.md
