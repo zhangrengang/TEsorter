@@ -28,8 +28,8 @@ jobs:
     - run: conda install biopython
     - run: conda install pp
     - run: conda install hmmer
-    - run: conda install blastpython setup.py install
-
+    - run: conda install blast
+      
     - name: Install TEsorter
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       uses: actions/checkout@v2
