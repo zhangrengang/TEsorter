@@ -36,8 +36,9 @@ jobs:
     # install TEsorter
     - run: python setup.py install
     
-    - name: test TEsorter
+    - name: run test TEsorter
     # run test 
       run: TEsorter-test
-      # run bash diff command on the protein output file avoiding headers that can be sliglty different according to blast version used
+    - name: test diff on outputs
+    # run bash diff command on the protein output file avoiding headers that can be sliglty different according to blast version used
       run: diff -I '^>'  rice6.9.5.liban.rexdb.cls.pep TEsorter/test/rice6.9.5.liban.rexdb.cls.pep
