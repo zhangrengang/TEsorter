@@ -10,9 +10,9 @@ with open('README.md') as f:
 setup(
     name='TEsorter',
     version=__version__,
-    description='Lineage-level classification of transposable elements using conserved protein domains',
+    description='TEsorter: clade-level classification of transposable elements reflecting phylogenies and diversities',
     url='https://github.com/zhangrengang/TEsorter',
-    download_url='https://github.com/zhangrengang/TEsorter/archive/v1.2.6.tar.gz',
+    download_url='https://github.com/zhangrengang/TEsorter/archive/v1.3.tar.gz',
     author='Zhang, Ren-Gang and Wang, Zhao-Xuan, Jacques Dainat',
     license='GPL-3.0',
 

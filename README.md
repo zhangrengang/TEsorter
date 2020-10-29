@@ -29,23 +29,25 @@ conda install -c bioconda tesorter
 Dependencies:
 +    [python >3](https://www.python.org/)  
 	+   [biopython](https://biopython.org/): quickly install by `pip install biopython` or `conda install biopython`  
-	+   [parallel python v1.6.4.4](https://www.parallelpython.com/): quickly install by `conda install pp`
+	+   [parallel python v1.6.4.4](https://www.parallelpython.com/): quickly install by `conda install -c bioconda pp`
 +   [hmmscan 3.1x or 3.2x](http://hmmer.org/): be compatible with HMMER3/f database format. quickly install by `conda install hmmer`
 +   [blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download): quickly install by `conda install blast`
 + TEsorter:
 ```
-git clone https://github.com/NBISweden/TEsorter
+git clone https://github.com/zhangrengang/TEsorter
 cd TEsorter
 python setup.py install
 ```
 ## Quick Start
 ```
-# run
+# run the example
 TEsorter-test
+# or
+TEsorter TEsorter/test/rice6.9.5.liban
 ```
 By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v3.0 + metazoa_v3](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended.
 
-For plants, it might be better to use only the plant database:
+For plants ([an example](https://raw.githubusercontent.com/oushujun/EDTA/master/database/rice6.9.5.liban)), it might be better to use only the plant database:
 ```
 TEsorter input_file -db rexdb-plant
 ```

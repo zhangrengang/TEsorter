@@ -1,1 +1,10 @@
 .DS_Store
+TEsorter/database/*.hmm.h3*
+*/*.pyc
+*/__pycache__/
+*/*/__pycache__/
+.gitignore
+dist/
+build/
+TEsorter.egg-info/
+rice*
