@@ -13,8 +13,8 @@ For more details of methods and benchmarking results, see the [preprint paper](h
    * [Usage](#usage)
    * [Outputs](#outputs)
    * [Limitations](#limitations)
-   * [Further phylogenetic analyses](further-phylogenetic-analyses)
-   * [Extracting TE sequences from genome for TEsorter](extracting-te-sequences-from-genome-for-tesorter)
+   * [Further phylogenetic analyses](#further-phylogenetic-analyses)
+   * [Extracting TE sequences from genome for TEsorter](#extracting-te-sequences-from-genome-for-tesorter)
 
 ## Installation
 
