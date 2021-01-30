@@ -20,6 +20,10 @@ logger = logging.getLogger(__name__)
 bindir = os.path.dirname(os.path.realpath(__file__))
 sys.path = [bindir + '/bin'] + sys.path
 
+import uuid
+uid = uuid.uuid1()
+default_tmpdir = './tmp-{}'.format(uid)
+
 from .modules.translate_seq import six_frame_translate
 # for multi-processing HMMScan
 from .modules.RunCmdsMP import run_cmd, pp_run
@@ -82,7 +86,7 @@ def Args():
 					default=4, type=int,
 					help="processors to use [default=%(default)s]")
 	parser.add_argument("-tmp", "--tmp-dir", action="store",
-					default='./tmp', type=str,
+					default=default_tmpdir, type=str,
 					help="directory for temporary files [default=%(default)s]")
 	parser.add_argument("-cov", "--min-coverage", action="store",
 					default=20, type=float,
