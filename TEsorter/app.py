@@ -270,13 +270,13 @@ def summary(d_class):
 	template = '{:<16}{:<16}{:>15}{:>15}{:>15}{:>15}'
 	line = ['Order', 'Superfamily', '# of Sequences', '# of Clade Sequences', '# of Clades', '# of full Domains']
 
-	print(template.format(*line), file=sys.stderr)
+	print(template.format(*line), file=sys.stdout)
 	for (order, superfamliy), summary in \
 			sorted(list(d_sum.items()), key=lambda x: (out_order.index(x[0][0]), x[0][1])):
 		line = [order, superfamliy, summary[0], summary[1], len(set(summary[2])), summary[3]]
 		line = list(map(str, line))
 		line = template.format(*line)
-		print(line, file=sys.stderr)
+		print(line, file=sys.stdout)
 
 def fmt_cls(*args):
 	values = []
@@ -296,6 +296,17 @@ class CommonClassification(object):
 		self.completed = completed
 		self.strand = strand
 		self.domains = domains
+class CommonClassifications:
+	def __init__(self, clsfile):
+		self.clsfile = clsfile
+	def __iter__(self):
+		return self._parse()
+	def _parse(self):
+		for i, line in enumerate(open(self.clsfile)):
+			if i == 0:
+				continue
+			line = line.strip().split()
+			yield CommonClassification(*line)
 
 def classify_by_blast(db_seq, qry_seq, blast_out=None, seqtype='nucl', ncpu=4,
 					  min_identtity=80, min_coverge=80, min_length=80):

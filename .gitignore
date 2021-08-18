@@ -8,3 +8,4 @@ dist/
 build/
 TEsorter.egg-info/
 rice*
+test*
