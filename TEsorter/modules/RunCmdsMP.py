@@ -32,7 +32,7 @@ except (RuntimeError,ImportError,AttributeError) as e:
 		logger.info('No DRMAA, Switching to local/cluster mode.')
 	GRID = False
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 class Grid(object):
 	def __init__(self, cmd_list=None,
