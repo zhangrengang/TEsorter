@@ -1,0 +1,585 @@
+#TE	Order	Superfamily	Clade	Complete	Strand	Domains
+Os0008_INT#LTR/Copia	LTR	Copia	SIRE	yes	+	GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE
+Os0014#DNAauto/CACTG	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0016_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os0019_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os0025_INT#LTR/Gypsy	LTR	Gypsy	Athila	no	+	GAG|Athila PROT|Athila
+Os0028_INT#LTR/Copia	LTR	Copia	TAR	yes	+	GAG|TAR PROT|TAR INT|TAR RT|TAR RH|TAR
+Os0030_INT_RIRE2#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os0032_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os0034_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0035#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os0039_INT_RIRE3#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0040_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand PROT|Retand RH|Retand INT|Retand
+Os0041_INT#LTR/Copia	LTR	Copia	Ale	no	+	INT|Ale RT|Ale RH|Ale
+Os0044#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os0052#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0057_INT#LTR/Copia	LTR	Copia	SIRE	yes	+	GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE
+Os0058_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0060_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM
+Os0076_INT#LTR/Copia	LTR	Copia	TAR	yes	+	GAG|TAR PROT|TAR INT|TAR RT|TAR RH|TAR
+Os0077_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0079_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0088_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0097_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0101_INT#LTR/Copia	LTR	Copia	Tork	yes	+	GAG|Tork PROT|Tork INT|Tork RT|Tork RH|Tork
+Os0107_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0110_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0111_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0119_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0128_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0129#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0130_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0133_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM PROT|CRM
+Os0137_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	PROT|CRM
+Os0139_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os0140_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0143_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0144#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0145#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0146_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0147#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os0148#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os0149_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0151_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0155_INT#LTR/Copia	LTR	Copia	Ale	no	+	GAG|Ale INT|Ale RT|Ale RH|Ale
+Os0156_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0157_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0158_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand
+Os0159_INT#LTR/Gypsy	LTR	Gypsy	Reina	no	+	GAG|Reina PROT|Reina CHD|Reina
+Os0160_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0162_INT#LTR/Gypsy	LTR	Gypsy	Athila	no	+	GAG|Athila RT|Athila RH|Athila INT|Athila
+Os0168_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0170_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0171_INT#LTR/Copia	LTR	Copia	SIRE	no	+	GAG|SIRE
+Os0175_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0176_INT#LTR/Copia	LTR	Copia	SIRE	yes	+	GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE
+Os0177#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os0178_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0183_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0189_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0190_INT#LTR/Copia	LTR	Copia	Ale	no	+	PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0195_INT_RIRE1#LTR/Copia	LTR	Copia	Angela	yes	+	GAG|Angela PROT|Angela INT|Angela RT|Angela RH|Angela
+Os0196_INT#LTR/Gypsy	LTR	Gypsy	Ogre	no	+	GAG|Ogre RH|Ogre INT|Ogre
+Os0199_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0200_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0203#DNAauto/CACTG	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os0210_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0211_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os0217_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0224#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0228#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os0232_INT#LTR/Gypsy	LTR	Gypsy	CRM	yes	+	GAG|CRM PROT|CRM RT|CRM RH|CRM INT|CRM CHDCR|CRM
+Os0232_LTR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os0233_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0234_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0235#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os0237_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0242_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina
+Os0245_INT#LTR/Copia	LTR	Copia	Tork	no	+	GAG|Tork PROT|Tork
+Os0253_INT#LTR/Copia	LTR	Copia	SIRE	yes	+	GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE
+Os0254_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0258_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0259_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0261_INT#LTR/Gypsy	LTR	Gypsy	Athila	no	+	GAG|Athila
+Os0262_INT#LTR/Gypsy	LTR	Gypsy	Athila	yes	+	GAG|Athila PROT|Athila RT|Athila RH|Athila INT|Athila
+Os0263_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0267_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0268_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand
+Os0272_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0272_LTR#LTR/Gypsy	LTR	Gypsy	chromo-unclass	no	-	CHD|chromo-unclass
+Os0274_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM
+Os0278_INT#LTR/Gypsy	LTR	Gypsy	CRM	yes	+	GAG|CRM PROT|CRM RT|CRM RH|CRM INT|CRM
+Os0278_LTR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os0282_INT#LTR/Copia	LTR	Copia	Ikeros	yes	+	GAG|Ikeros PROT|Ikeros INT|Ikeros RT|Ikeros RH|Ikeros
+Os0283_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0285_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0288_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0289_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0290_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0294#DNAauto/CACTG	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0295_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0305_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0311_INT#LTR/Gypsy	LTR	Gypsy	CRM	yes	+	GAG|CRM PROT|CRM RT|CRM RH|CRM INT|CRM
+Os0316_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0321_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0322_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand RT|Retand aRH|Retand INT|Retand
+Os0324_INT#LTR/Copia	LTR	Copia	Ale	no	+	GAG|Ale PROT|Ale RT|Ale RH|Ale
+Os0336_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0338_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0340_INT#LTR/Copia	LTR	Copia	Ale	no	+	PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0341_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand PROT|Retand aRH|Retand INT|Retand
+Os0350_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0351_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0353_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0356_INT#LTR/Copia	LTR	Copia	Tork	yes	+	GAG|Tork PROT|Tork INT|Tork RT|Tork RH|Tork
+Os0361#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os0365_INT_Truncator#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0366_INT_Truncator#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0371_INT_RIRE9#LTR/Copia	LTR	Copia	SIRE	no	+	GAG|SIRE
+Os0376_INT#LTR/Gypsy	LTR	Gypsy	Tekay	no	+	GAG|Tekay
+Os0385#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os0387_INT#LTR/Gypsy	LTR	Gypsy	Tekay	no	+	GAG|Tekay
+Os0391_INT_CRR#LTR/Gypsy	LTR	Gypsy	CRM	yes	+	GAG|CRM PROT|CRM RT|CRM RH|CRM INT|CRM CHDCR|CRM
+Os0391_LTR_CRR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os0395_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0405#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0409_INT#LTR/Copia	LTR	Copia	Bianca	no	+	INT|Bianca
+Os0411#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os0418#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os0419_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os0443_INT#LTR/Copia	LTR	Copia	Ikeros	yes	+	GAG|Ikeros PROT|Ikeros INT|Ikeros RT|Ikeros RH|Ikeros
+Os0458_INT#LTR/Copia	LTR	Copia	SIRE	no	+	GAG|SIRE PROT|SIRE RT|SIRE RH|SIRE
+Os0462_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0476_INT#LTR/Copia	LTR	Copia	Bianca	yes	+	GAG|Bianca PROT|Bianca INT|Bianca RT|Bianca RH|Bianca
+Os0483#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os0488#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0491#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0492_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0494#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	-	TPase|EnSpm_CACTA
+Os0503_INT#LTR/Gypsy	LTR	Gypsy	Ogre	no	+	GAG|Ogre
+Os0554#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os0576#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	-	TPase|PIF_Harbinger
+Os0591#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE RH|LINE
+Os0592_INT#LTR/Copia	LTR	Copia	TAR	yes	+	GAG|TAR PROT|TAR INT|TAR RT|TAR RH|TAR
+Os0618#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE RH|LINE
+Os0632_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os0651#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os0656_INT#LTR/Copia	LTR	Copia	SIRE	no	+	GAG|SIRE
+Os0678#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os0681#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0699_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0707#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os0712_INT#LTR/Copia	LTR	Copia	SIRE	no	+	GAG|SIRE
+Os0715_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0736_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0737#Evirus/ERTBV	LTR	Gypsy	unknown	no	+	PROT|Ty3_gypsy
+Os0744_INT#LTR/Copia	LTR	Copia	Ale	no	+	PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0748_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0762_INT#LTR/Copia	LTR	Copia	Bianca	no	+	GAG|Bianca
+Os0766#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os0789#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os0793#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os0801#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os0802#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0817#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE RH|LINE
+Os0823#DNAnona/Helitron	Helitron	unknown	unknown	unknown	+	HEL2|Helitron
+Os0830_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os0831_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0837#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os0842#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os0850_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os0854#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os0873_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os0875#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0893#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os0894#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os0896#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os0898#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os0906#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os0908#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os0915#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0934#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0935_INT#LTR/TRIM	LTR	Gypsy	Reina	no	+	GAG|Reina
+Os0948#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os0961_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os0975_INT#LTR/Copia	LTR	Copia	Bianca	no	+	RH|Bianca
+Os0984_INT#LTR/Copia	LTR	Copia	Ikeros	no	+	GAG|Ikeros
+Os0985_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os0988_INT#LTR/Copia	LTR	Copia	Bianca	yes	+	GAG|Bianca PROT|Bianca INT|Bianca RT|Bianca RH|Bianca
+Os0993_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0994_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os0995#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os1018_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand
+Os1031_INT#LTR/Copia	LTR	Copia	SIRE	yes	+	GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE
+Os1036_INT#LTR/Copia	LTR	Copia	Tork	no	+	GAG|Tork PROT|Tork
+Os1044_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	PROT|CRM
+Os1051#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os1061_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os1064_INT#LTR/Copia	LTR	Copia	TAR	yes	+	GAG|TAR PROT|TAR INT|TAR RT|TAR RH|TAR
+Os1073_INT#LTR/Gypsy	LTR	Gypsy	Ogre	no	+	GAG|Ogre
+Os1083_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os1100#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os1113_INT#LTR/Copia	LTR	Copia	Bianca	yes	+	GAG|Bianca PROT|Bianca INT|Bianca RT|Bianca RH|Bianca
+Os1115#DNAauto/Helitron	Helitron	unknown	unknown	unknown	-	HEL1|Helitron HEL2|Helitron
+Os1121#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os1144_INT#LTR/Copia	LTR	Copia	Ikeros	yes	+	GAG|Ikeros PROT|Ikeros INT|Ikeros RT|Ikeros RH|Ikeros
+Os1151#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os1153#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	-	TPase|PIF_Harbinger
+Os1156#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os1159#LINE/unknown	LINE	unknown	unknown	unknown	-	ENDO|LINE RT|LINE
+Os1192#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os1207_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os1214_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os1215#LINE/unknown	LINE	unknown	unknown	unknown	+	RH|LINE
+Os1219#LINE/unknown	LINE	unknown	unknown	unknown	+	RH|LINE
+Os1240#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os1242#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os1270#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os1279#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os1281_INT#LTR/Copia	LTR	Copia	TAR	yes	+	GAG|TAR PROT|TAR INT|TAR RT|TAR RH|TAR
+Os1285_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os1292#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os1294_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os1299_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os1300_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os1309#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os1322#DNAnona/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os1335_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os1347_IC#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL2|Helitron
+Os1353_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os1396#DNAnona/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os1399_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os1411#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os1412#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os1416_LTR#LTR/Solo	LTR	Gypsy	CRM	no	-	CHDCR|CRM
+Os1422#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os1434#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os1436#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	-	TPase|PIF_Harbinger
+Os1449#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os1458_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os1461#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE
+Os1466#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os1468_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os1494#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os1501_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os1510#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os1517#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os1520_Pong#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os1523#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os1525_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os1528_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os1536#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os1537_INT#LTR/Copia	LTR	Copia	SIRE	yes	+	GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE
+Os1550#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os1551#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os1561#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os1609#DNAauto/Helitron	Helitron	unknown	unknown	unknown	-	HEL1|Helitron HEL2|Helitron
+Os1610_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os1622#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os1638#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os1643#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os1675#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os1676#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os1695#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os1713_INT#LTR/Gypsy	LTR	Gypsy	CRM	yes	+	GAG|CRM PROT|CRM RT|CRM RH|CRM INT|CRM CHDCR|CRM
+Os1713_LTR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os1726#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os1736#LINE/unknown	LINE	unknown	unknown	unknown	-	RT|LINE
+Os1819#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os1831_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os1837#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os1839#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os1848#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE RH|LINE
+Os1864_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand PROT|Retand RT|Retand
+Os1882#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os1884_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os1887#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os1889#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os1895_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os1924#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os1926#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os1950_INT#LTR/Gypsy	LTR	Gypsy	Tekay	no	+	GAG|Tekay
+Os1960_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os2002_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os2007_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os2038_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM PROT|CRM
+Os2064#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os2069#DNAauto/Helitron	Helitron	unknown	unknown	unknown	+	HEL1|Helitron HEL2|Helitron
+Os2089#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os2091_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os2092#Evirus/ERTBV	mixture	mixture	unknown	unknown	+	RT|pararetrovirus RH|non-chromo-outgroup
+Os2096_INT#LTR/Copia	LTR	Copia	Ivana	no	+	GAG|Ivana
+Os2099#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os2100_LTR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os2106#DNAnona/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os2111#LINE/unknown	LINE	unknown	unknown	unknown	-	RT|LINE
+Os2125_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM
+Os2150#DNAauto/Helitron	Helitron	unknown	unknown	unknown	-	HEL1|Helitron HEL2|Helitron
+Os2158_INT#LTR/TRIM	LTR	Copia	Ale	no	+	RH|Ale
+Os2207#DNAnona/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os2240#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	-	TPase|EnSpm_CACTA
+Os2246#DNAauto/Helitron	Helitron	unknown	unknown	unknown	-	HEL1|Helitron HEL2|Helitron
+Os2253_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os2256_INT#LTR/Copia	LTR	Copia	Ale	no	+	PROT|Ale INT|Ale RT|Ale RH|Ale
+Os2270#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os2274#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os2280_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand PROT|Retand RT|Retand INT|Retand
+Os2298_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os2307#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os2312#DNAauto/Helitron	Helitron	unknown	unknown	unknown	-	HEL2|Helitron
+Os2326_INT#LTR/Copia	LTR	Copia	Ivana	no	+	GAG|Ivana
+Os2344_LTR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os2371_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os2430#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os2453#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os2475_INT#LTR/Gypsy	LTR	Gypsy	Tekay	no	+	GAG|Tekay
+Os2480#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	-	TPase|EnSpm_CACTA
+Os2530#DNAnona/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os2577_INT#LTR/Gypsy	LTR	Gypsy	Ogre	no	+	aRH|Ogre
+Os2585#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os2618_INT#LTR/Copia	LTR	Copia	Ivana	no	+	GAG|Ivana
+Os2623#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os2654_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand PROT|Retand RT|Retand aRH|Retand INT|Retand
+Os2675#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os2699#DNAnona/Helitron	Helitron	unknown	unknown	unknown	+	HEL2|Helitron
+Os2708_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os2719#DNAnona/CACTA	TIR	EnSpm_CACTA	unknown	unknown	-	TPase|EnSpm_CACTA
+Os2783#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os2788#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os2830_INT#LTR/Gypsy	LTR	Gypsy	Athila	no	+	GAG|Athila
+Os2835#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os2840_INT#LTR/Copia	LTR	Copia	TAR	yes	+	GAG|TAR PROT|TAR INT|TAR RT|TAR RH|TAR
+Os2911_INT#LTR/Copia	LTR	Copia	Bianca	no	+	GAG|Bianca INT|Bianca RT|Bianca RH|Bianca
+Os2947_ICL#DNAnona/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os2997#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os3087_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM
+Os3241#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3242#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3244#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	-	TPase|PIF_Harbinger
+Os3245#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3246#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3247#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3248_Ping#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3249#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3250#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3251#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	-	TPase|PIF_Harbinger
+Os3252#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3253#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3254#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3255#DNAauto/POLE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3256#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3257#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3258#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3259#DNAnona/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3260#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3261#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3262#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3263#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3264#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3265#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3267#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3268#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3280#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os3285#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	-	TPase|EnSpm_CACTA
+Os3287#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os3290_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3291_INT#LTR/Copia	LTR	Copia	Ale	no	+	PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3292#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3293#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os3294#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os3295#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3296#DNAauto/CACTG	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os3298_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3299_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3300_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3301_INT#LTR/Gypsy	LTR	Gypsy	CRM	yes	+	GAG|CRM PROT|CRM RT|CRM RH|CRM INT|CRM
+Os3301_LTR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os3302#DNAauto/MLE	TIR	Tc1_Mariner	unknown	unknown	+	TPase|Tc1_Mariner
+Os3303_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3304_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3305_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3306_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3307_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3308_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3309_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3310_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3311_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3312_INT#LTR/Gypsy	LTR	Gypsy	CRM	yes	+	GAG|CRM PROT|CRM RT|CRM RH|CRM INT|CRM CHDCR|CRM
+Os3312_LTR#LTR/Gypsy	LTR	Gypsy	CRM	no	+	CHDCR|CRM
+Os3313_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3314_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3315_INT#LTR/Gypsy	LTR	Gypsy	Reina	no	+	GAG|Reina PROT|Reina RT|Reina RH|Reina CHD|Reina
+Os3316_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3317_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3318_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3319_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3320_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3321#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os3324_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3329#Evirus/ERTBV-A	pararetrovirus	unknown	unknown	unknown	?	PROT|pararetrovirus RH|pararetrovirus RT|pararetrovirus
+Os3330#Evirus/ERTBV-B	pararetrovirus	unknown	unknown	unknown	+	PROT|pararetrovirus RT|pararetrovirus RH|pararetrovirus
+Os3331#Evirus/ERTBV-C	pararetrovirus	unknown	unknown	unknown	-	RT|pararetrovirus RH|pararetrovirus
+Os3333#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3334_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3335_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3339#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3342_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3344_INT#LTR/Gypsy	LTR	Gypsy	Retand	yes	+	GAG|Retand PROT|Retand RT|Retand RH|Retand INT|Retand
+Os3348_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3359_INT#LTR/Copia	LTR	Copia	Ivana	no	+	GAG|Ivana
+Os3360#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3361#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3362#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3363#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3364#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3365#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3366#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3367#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3368#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3369#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3370#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3371#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3372#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3373#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3374#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3375#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3376#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3377#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3378#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3379#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3380#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3381#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3382#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3383#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3384#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3385#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3386#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3387#DNAauto/MULE	mixture	mixture	unknown	unknown	-	TPase|MuDR_Mutator CHDCR|CRM
+Os3388#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3389#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3390#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3391#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3392#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3393#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3394#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3395#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3405#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3408_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os3410_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3413_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3414_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3415_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3416_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3417_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3418_INT#LTR/Copia	LTR	Copia	Ivana	no	+	GAG|Ivana
+Os3427_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3436#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3438#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	+	TPase|PIF_Harbinger
+Os3439#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os3440_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3441_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3443#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3445_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3446_INT#LTR/Copia	LTR	Copia	Ikeros	yes	+	GAG|Ikeros PROT|Ikeros INT|Ikeros RT|Ikeros RH|Ikeros
+Os3448_INT#LTR/Gypsy	LTR	Gypsy	Retand	no	+	GAG|Retand PROT|Retand RT|Retand RH|Retand
+Os3449_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3450_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3451_INT#LTR/Copia	LTR	Copia	Ale	no	+	GAG|Ale PROT|Ale RT|Ale RH|Ale
+Os3452_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3453_INT#LTR/Gypsy	LTR	Gypsy	Reina	no	+	GAG|Reina PROT|Reina RT|Reina RH|Reina CHD|Reina
+Os3454_INT#LTR/Copia	LTR	Copia	Ivana	no	+	GAG|Ivana RT|Ivana RH|Ivana
+Os3455_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3456_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3457_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3458_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3459_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3460_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3461_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3462_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3463_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3465_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os3466_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3467_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3469_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3471_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3472_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3473_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3474_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3475_INT#LTR/Gypsy	LTR	Gypsy	Tekay	yes	+	GAG|Tekay PROT|Tekay RT|Tekay RH|Tekay INT|Tekay CHD|Tekay
+Os3476_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3477_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3478_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3479_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3480_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3481_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3482_INT#LTR/Gypsy	LTR	Gypsy	Reina	no	+	GAG|Reina PROT|Reina RT|Reina INT|Reina CHD|Reina
+Os3483_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3484_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3485_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3486_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3487_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3488_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3489_INT#LTR/Copia	LTR	Copia	Ale	no	+	RT|Ale RH|Ale
+Os3490_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3491_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3492_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3493_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3494_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3495_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3497_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3498_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3499_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os3500_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3501_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3502_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3503_INT#LTR/Gypsy	LTR	Gypsy	Reina	no	+	GAG|Reina PROT|Reina RT|Reina RH|Reina CHD|Reina
+Os3504_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3505_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3506_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3507_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3509_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3510_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3511_INT#LTR/Gypsy	LTR	Gypsy	Reina	no	+	GAG|Reina PROT|Reina RH|Reina INT|Reina CHD|Reina
+Os3513_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3514_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3515_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3516_INT#LTR/Copia	LTR	Copia	Ale	no	+	PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3517_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3518_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3519#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os3522#DNAnona/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os3529_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3532#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os3534#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os3535_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina
+Os3536_INT#LTR/Gypsy	LTR	Gypsy	Ogre	yes	+	GAG|Ogre PROT|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os3540_INT_ICL#LTR/Copia	LTR	Copia	Ale	no	+	RT|Ale RH|Ale
+Os3544_INT#LTR/Copia	LTR	Copia	Ale	no	+	GAG|Ale PROT|Ale INT|Ale RT|Ale
+Os3546_INT#LTR/Gypsy	LTR	Gypsy	Tekay	no	+	GAG|Tekay
+Os3548_INT_ICR#LTR/Copia	LTR	Copia	Ale	no	+	GAG|Ale
+Os3554_INT#LTR/Copia	LTR	Copia	Ale	no	+	INT|Ale RT|Ale RH|Ale
+Os3556_INT#LTR/Copia	LTR	Copia	SIRE	yes	+	GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE
+Os3558_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3562_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3563_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM
+Os3567#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os3568#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os3572_INT#LTR/Gypsy	LTR	Gypsy	CRM	no	+	GAG|CRM PROT|CRM
+Os3573_INT#LTR/Copia	LTR	Copia	Ivana	no	+	GAG|Ivana
+Os3574#LINE/unknown	LINE	unknown	unknown	unknown	+	RT|LINE
+Os3598_INT#LTR/Gypsy	LTR	Gypsy	Ogre	no	+	GAG|Ogre RT|Ogre RH|Ogre INT|Ogre
+Os3635#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3636#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3640_INT#LTR/Copia	LTR	Copia	Ale	yes	+	GAG|Ale PROT|Ale INT|Ale RT|Ale RH|Ale
+Os3641_INT#LTR/Copia	LTR	Copia	Ivana	yes	+	GAG|Ivana PROT|Ivana INT|Ivana RT|Ivana RH|Ivana
+Os3642#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	unknown	+	TPase|EnSpm_CACTA
+Os3644#DNAauto/PILE	TIR	PIF_Harbinger	unknown	unknown	-	TPase|PIF_Harbinger
+Os3645#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os3646#DNAauto/hAT	TIR	hAT	unknown	unknown	-	TPase|hAT
+Os3647#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os3648#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3649#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	+	TPase|MuDR_Mutator
+Os3650#DNAauto/MULE	TIR	MuDR_Mutator	unknown	unknown	-	TPase|MuDR_Mutator
+Os3651#DNAauto/hAT	TIR	hAT	unknown	unknown	+	TPase|hAT
+Os3653_INT#LTR/Copia	LTR	Copia	Bianca	yes	+	GAG|Bianca PROT|Bianca INT|Bianca RT|Bianca RH|Bianca
+Os3654_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3655_INT#LTR/Copia	LTR	Copia	Ale	no	+	GAG|Ale
+Os3656_INT#LTR/Copia	LTR	Copia	Ale	no	+	GAG|Ale RT|Ale RH|Ale
+Os3657_INT#LTR/Gypsy	LTR	Gypsy	Reina	yes	+	GAG|Reina PROT|Reina RT|Reina RH|Reina INT|Reina CHD|Reina
+Os3659#LINE/unknown	LINE	unknown	unknown	unknown	+	ENDO|LINE RT|LINE
+Os0066#MITE/Tourist	TIR	PIF_Harbinger	unknown	none	?	none
+Os0152#DNAnona/Helitron	Helitron	unknown	unknown	none	?	none
+Os0251#DNAnona/unknown	LTR	Gypsy	unknown	none	?	none
+Os0625_mPing#MITE/Tourist	TIR	PIF_Harbinger	unknown	none	?	none
+Os0657#DNAnona/MULE	TIR	MuDR_Mutator	unknown	none	?	none
+Os1362#DNAnona/MULE	TIR	MuDR_Mutator	unknown	none	?	none
+Os1435#DNAnona/hAT	TIR	hAT	unknown	none	?	none
+Os1868#DNAnona/CACTA	TIR	EnSpm_CACTA	unknown	none	?	none
+Os1997#DNAnona/CACTA	TIR	EnSpm_CACTA	unknown	none	?	none
+Os2368#DNAauto/CACTA	TIR	EnSpm_CACTA	unknown	none	?	none
+Os2462#Evirus/ERTBV	pararetrovirus	unknown	unknown	none	?	none
+Os2537#DNAnona/MULEtir	TIR	MuDR_Mutator	unknown	none	?	none
+Os2754#DNAnona/MLE	TIR	Tc1_Mariner	unknown	none	?	none
+Os3357#DNAnona/MULEtir	TIR	MuDR_Mutator	unknown	none	?	none
+Os3552#DNAnona/CACTG	TIR	PIF_Harbinger	unknown	none	?	none
