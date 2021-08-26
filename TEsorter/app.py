@@ -305,7 +305,7 @@ class CommonClassifications:
 		for i, line in enumerate(open(self.clsfile)):
 			if i == 0:
 				continue
-			line = line.strip().split()
+			line = line.strip().split('\t')
 			yield CommonClassification(*line)
 
 def classify_by_blast(db_seq, qry_seq, blast_out=None, seqtype='nucl', ncpu=4,

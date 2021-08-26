@@ -339,8 +339,7 @@ imap: True for imap'''
 		pool_map = pool.imap
 	else:
 		pool_map = pool.imap_unordered
-	logger.info('Using pool method: {}'.format(pool_map))
-	#jobs = [pool.imap(func, add_args(value,args),) for value in lst]
+#	logger.info('Using pool method: {}'.format(pool_map))
 	for returned in pool_map(func, iterable, **kargs):
 		yield returned
 #	logger.info('Closing Pool')
