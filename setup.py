@@ -26,6 +26,7 @@ setup(
     entry_points={
         'console_scripts': ['TEsorter = TEsorter.app:main',
         'TEsorter-test = TEsorter.test.test_app:main',
+		'concatenate_domains.py = TEsorter.modules.concatenate_domains:main'
         ],
     }
 )

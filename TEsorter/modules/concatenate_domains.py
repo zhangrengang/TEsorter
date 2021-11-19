@@ -36,7 +36,8 @@ format_id: format seq id for compatibility with iqtree'''
 		if targets is not None and rid not in targets:
 			continue
 			
-		_order, _superfamily, *_ = cid.split('/')
+		_order, *_superfamily = cid.split('/')
+		_superfamily = _superfamily[0] if _superfamily else None
 		_clade, *_ = re.compile(r'clade=([^;\s]+)').search(rc.description).groups()
 		if order and order != _order:
 			continue
@@ -143,7 +144,10 @@ def catAln(inALNs, outALN, unique=False):
 def format_id_for_iqtree(id):
     return re.compile(r'[^\w]+').sub('_', id)
 
-if __name__ == '__main__':
+def main():
 	inSeq = sys.argv[1]
 	domains = sys.argv[2:]
 	concat_domains(inSeq=inSeq, domains=domains, outSeq=sys.stdout)
+
+if __name__ == '__main__':
+	main()
