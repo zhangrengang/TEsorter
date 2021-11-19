@@ -339,6 +339,7 @@ imap: True for imap'''
 		pool_map = pool.imap
 	else:
 		pool_map = pool.imap_unordered
+	logger.info('Start Pool with {} process(es)'.format(processors))
 #	logger.info('Using pool method: {}'.format(pool_map))
 	for returned in pool_map(func, iterable, **kargs):
 		yield returned

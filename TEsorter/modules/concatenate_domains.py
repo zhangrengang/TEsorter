@@ -28,7 +28,7 @@ format_id: format seq id for compatibility with iqtree'''
 	d_seqs = {}
 	d_idmap = {}
 	for rc in SeqIO.parse(inSeq, 'fasta'):
-		domain, = re.compile(r'gene=([^;\s]+)').search(rc.description).groups()
+		domain, *_ = re.compile(r'gene=([^;\s]+)').search(rc.description).groups()
 		if domain not in d_domain:
 			continue
 			
@@ -37,7 +37,7 @@ format_id: format seq id for compatibility with iqtree'''
 			continue
 			
 		_order, _superfamily, *_ = cid.split('/')
-		_clade, = re.compile(r'clade=([^;\s]+)').search(rc.description).groups()
+		_clade, *_ = re.compile(r'clade=([^;\s]+)').search(rc.description).groups()
 		if order and order != _order:
 			continue
 		elif superfamily and superfamily != _superfamily:
@@ -69,8 +69,8 @@ format_id: format seq id for compatibility with iqtree'''
 	logger.info('{} sequences contain all {} domains'.format(len(intersect), domains))
 	
 
-	if isinstance(subsample, int) and nseq > subsample:
-		logger.info('Subsample {} / {} {:.2%}'.format(subsample, nseq, subsample/nseq))
+	if isinstance(subsample, int) and subsample>0 and nseq > subsample:
+		logger.info('Subsample {} / {} ({:.2%})'.format(subsample, nseq, subsample/nseq))
 		intersect = random.sample(intersect, subsample)
 	
 	d_idmap = {raw_id: d_idmap[raw_id] for raw_id in intersect}
@@ -89,7 +89,7 @@ format_id: format seq id for compatibility with iqtree'''
 	# align
 	alnfiles = []
 	for seqfile in files:
-		alnfile = seqfile + '.algn'
+		alnfile = seqfile + '.alignment'
 		cmd = 'mafft --auto {} > {}'.format(seqfile, alnfile)
 #		os.system(cmd)
 		run_cmd(cmd, log=True)
@@ -105,7 +105,7 @@ format_id: format seq id for compatibility with iqtree'''
 	try:
 		outSeq.close()
 		return outSeqfile, d_idmap
-	except: return None, None
+	except: return None, d_idmap
 	
 
 def catAln(inALNs, outALN, unique=False):
@@ -119,7 +119,9 @@ def catAln(inALNs, outALN, unique=False):
 			
 			try: d_seqs[sp] += [seq]
 			except KeyError: d_seqs[sp] = [seq]
-		lens += [len(seq)]
+		try: _len = len(seq)
+		except UnboundLocalError: _len = 0
+		lens += [_len]
 	description = 'genes:{} sites:{} blocks:{}'.format(len(lens), sum(lens), lens)
 	
 	xseqs = set([])
@@ -133,8 +135,10 @@ def catAln(inALNs, outALN, unique=False):
 		if unique:
 			xseqs.add(seqs)
 		print('>{} {}\n{}'.format(sp, description, seqs), file=outALN)
-	if unique:
+	if unique and i > 0:
 		logger.info('{} ({:.1%}) unique alignments retained'.format(i-j, 1-j/i))
+	if i == 0:
+		logger.warn('0 sequences')
 
 def format_id_for_iqtree(id):
     return re.compile(r'[^\w]+').sub('_', id)
