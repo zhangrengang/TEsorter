@@ -81,13 +81,13 @@ TEsorter RepeatPeps.lib -st prot -p 20
 
 ## Citation
 If you use the `TEsorter` software, please cite:
-    * Zhang R, Li G, Wang X et. al. TEsorter: an accurate and fast method to classify LTR retrotransposons in plant genomes [J]. *Horticulture Research*, 2022 [https://doi.org/10.1093/hr/uhac017](https://doi.org/10.1093/hr/uhac017)
+> Zhang R, Li G, Wang X et. al. TEsorter: an accurate and fast method to classify LTR retrotransposons in plant genomes [J]. *Horticulture Research*, 2022 [https://doi.org/10.1093/hr/uhac017](https://doi.org/10.1093/hr/uhac017)
 
 If you the REXdb database (`-db rexdb*`), please cite:
-    * Neumann P, Novák P, Hoštáková N et. al. Systematic survey of plant LTR-retrotransposons elucidates phylogenetic relationships of their polyprotein domains and provides a reference for element classification [J]. *Mobile DNA*, 2019, 10: 1 [https://doi.org/10.1186/s13100-018-0144-1](https://doi.org/10.1186/s13100-018-0144-1)
+> Neumann P, Novák P, Hoštáková N et. al. Systematic survey of plant LTR-retrotransposons elucidates phylogenetic relationships of their polyprotein domains and provides a reference for element classification [J]. *Mobile DNA*, 2019, 10: 1 [https://doi.org/10.1186/s13100-018-0144-1](https://doi.org/10.1186/s13100-018-0144-1)
 
 If you use the GyDB database (`-db gydb`), please cite:
-    * Llorens C, Futami R, Covelli L et. al. The Gypsy Database (GyDB) of mobile genetic elements: release 2.0 [J]. *Nucleic Acids Research*, 2011, 39: 70–74 [https://doi.org/10.1093/nar/gkq1061](https://doi.org/10.1093/nar/gkq1061)
+> Llorens C, Futami R, Covelli L et. al. The Gypsy Database (GyDB) of mobile genetic elements: release 2.0 [J]. *Nucleic Acids Research*, 2011, 39: 70–74 [https://doi.org/10.1093/nar/gkq1061](https://doi.org/10.1093/nar/gkq1061)
 
 ## Usage  
 ```
