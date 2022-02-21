@@ -533,7 +533,8 @@ def run_job(cmd_file=None, cmd_list=None, by_bin=1, tc_tasks=8, mode='grid', gri
 	if fail_exit and not exit == 0:
 		raise ValueError('faild to run {}, see detail in {}'.format(cmd_file, out_path))
 	elif exit == 0:
-		os.mknod(ckpt)
+		try: os.mknod(ckpt)
+		except FileExistsError: pass
 	return exit
 
 if __name__ == '__main__':
