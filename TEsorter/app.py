@@ -37,7 +37,7 @@ DB = {
 	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0_plus_metazoa_v3.hmm',
 	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
 	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
-	'rexdb-tir': bindir + '/database/REXdb_v3_TIR.hmm',
+#	'rexdb-tir': bindir + '/database/REXdb_v3_TIR.hmm',
 #	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.hmm',
 	}
 BLASType = {

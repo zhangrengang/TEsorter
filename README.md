@@ -3,7 +3,7 @@
 # TEsorter
 It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify long terminal repeat retrotransposons (LTR-RTs) at first. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
 
-For more details of methods and benchmarking results, please see the [paper](https://doi.org/10.1093/hr/uhac017).
+For more details of methods and benchmarking results, please see [the paper in *Horticulture Research*](https://doi.org/10.1093/hr/uhac017).
 
 
 ## Table of Contents
@@ -80,10 +80,10 @@ TEsorter RepeatPeps.lib -st prot -p 20
 ```
 
 ## Citation
-If you use the `TEsorter` software, please cite:
+If you use the `TEsorter` tool, please cite:
 > Zhang RG, Li GL, Wang XL et. al. TEsorter: an accurate and fast method to classify LTR retrotransposons in plant genomes [J]. *Horticulture Research*, 2022 [https://doi.org/10.1093/hr/uhac017](https://doi.org/10.1093/hr/uhac017)
 
-If you the REXdb database (`-db rexdb*`), please cite:
+If you use the REXdb database (`-db rexdb*`), please cite:
 > Neumann P, Novák P, Hoštáková N et. al. Systematic survey of plant LTR-retrotransposons elucidates phylogenetic relationships of their polyprotein domains and provides a reference for element classification [J]. *Mobile DNA*, 2019, 10: 1 [https://doi.org/10.1186/s13100-018-0144-1](https://doi.org/10.1186/s13100-018-0144-1)
 
 If you use the GyDB database (`-db gydb`), please cite:
