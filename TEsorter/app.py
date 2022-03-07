@@ -39,6 +39,7 @@ DB = {
 	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
 #	'rexdb-tir': bindir + '/database/REXdb_v3_TIR.hmm',
 #	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.hmm',
+	'sine': bindir + '/database/AnnoSINE.hmm',
 	}
 BLASType = {
     'qseqid': str,
@@ -119,6 +120,8 @@ def Args():
 	if not args.disable_pass2:
 		for key, par in zip(['p2_identity', 'p2_coverage', 'p2_length'], args.pass2_rule.split('-')):
 			setattr(args, key, float(par))
+#	if args.hmm_database:
+#		args.seq_type = 'prot'
 	return args
 
 def check_db(db):
@@ -159,10 +162,11 @@ def pipeline(args):
 	seq_num = len([1 for rc in SeqIO.parse(args.sequence, 'fasta')])
 	logger.info('total {} sequences'.format(seq_num))
 	# search against DB and parse
+	seq_type = 'prot' if args.hmm_database == 'sine' else args.seq_type
 	gff, geneSeq = LTRlibAnn(
 			ltrlib = args.sequence,
 			hmmdb = args.hmm_database,
-			seqtype = args.seq_type,
+			seqtype = seq_type,
 			prefix = args.prefix,
 			force_write_hmmscan = args.force_write_hmmscan,
 			processors = args.processors,
@@ -266,7 +270,7 @@ def summary(d_class):
 			d_sum[key][2] += [clf.clade]
 		if clf.completed == 'yes':
 			d_sum[key][3] += 1
-	out_order = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown']
+	out_order = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'SINE', 'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown']
 	template = '{:<16}{:<16}{:>15}{:>15}{:>15}{:>15}'
 	line = ['Order', 'Superfamily', '# of Sequences', '# of Clade Sequences', '# of Clades', '# of full Domains']
 
@@ -429,6 +433,8 @@ class Classifier(object):
 				order, superfamily, max_clade, coding = self.identify_rexdb(genes, names)
 			elif self.db == 'gydb':
 				order, superfamily, max_clade, coding = self.identify_gydb(genes, clades)
+			elif self.db == 'sine':
+				order, superfamily, max_clade, coding = 'SINE', 'unknown','unknown','unknown'
 			line = [lid, order, superfamily, max_clade, coding, strand, domains]
 			print('\t'.join(line), file=self.fout)
 			yield CommonClassification(*line)
@@ -693,6 +699,9 @@ def parse_hmmname(hmmname, db='gydb'):
 	elif db.startswith('pfam'):
 		gene = hmmname
 		clade = hmmname
+	elif db.startswith('sine'):
+		gene = hmmname
+		clade = 'SINE'
 	return gene, clade
 class HmmCluster(object):
 	def __int__(self, hmmout, seqtype = 'nucl'): # only for nucl
@@ -911,7 +920,7 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 	if prefix is None:
 		prefix = '{}.{}'.format(ltrlib, hmmdb)
 
-	if seqtype == 'nucl':
+	if seqtype == 'nucl' :
 		logger.info( 'translating `{}` in six frames'.format(ltrlib) )
 		tmp_prefix = '{}/translated'.format(tmpdir)
 		aaSeq = translate(ltrlib, prefix=tmp_prefix)

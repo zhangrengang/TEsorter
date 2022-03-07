@@ -81,7 +81,7 @@ TEsorter RepeatPeps.lib -st prot -p 20
 
 ## Citation
 If you use the `TEsorter` tool, please cite:
-> Zhang RG, Li GL, Wang XL et. al. TEsorter: an accurate and fast method to classify LTR retrotransposons in plant genomes [J]. *Horticulture Research*, 2022 [https://doi.org/10.1093/hr/uhac017](https://doi.org/10.1093/hr/uhac017)
+> Zhang RG, Li GL, Wang XL et. al. TEsorter: an accurate and fast method to classify LTR retrotransposons in plant genomes [J]. *Horticulture Research*, 2022, 9: uhac017 [https://doi.org/10.1093/hr/uhac017](https://doi.org/10.1093/hr/uhac017)
 
 If you use the REXdb database (`-db rexdb*`), please cite:
 > Neumann P, Novák P, Hoštáková N et. al. Systematic survey of plant LTR-retrotransposons elucidates phylogenetic relationships of their polyprotein domains and provides a reference for element classification [J]. *Mobile DNA*, 2019, 10: 1 [https://doi.org/10.1186/s13100-018-0144-1](https://doi.org/10.1186/s13100-018-0144-1)
