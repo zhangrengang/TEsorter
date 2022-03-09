@@ -26,6 +26,7 @@ format_id <- function(x1, x2, x3, x4) {
 
 if (branch_color == 'Clade') {
 	clades = sort(unique(map$Clade))
+	head(tree)
 	print(clades)
 	grp = list()
 	for (clade in clades){
@@ -33,6 +34,7 @@ if (branch_color == 'Clade') {
 			labels = map[which(map$Clade==clade), ]
 			clade = paste(labels$Superfamily, labels$Clade, sep='/')[1]
 			labels = format_id(labels$X.TE, labels$Order, labels$Superfamily, labels$Clade)
+			if (! any(labels %in% tree$tip.label)) {next}
 	#		print(clade)
 			grp[[clade]] = labels
 	}
@@ -62,11 +64,11 @@ if (branch_color == 'Clade') {
 	  guides(colour=guide_legend(order = 1), fill=guide_legend(order = 2))
 
 }
-position = c(1.42,0.9)
+position = c(1.4,0.9)
 p = p + theme(plot.margin=margin(0,0,0,0)) +
 	theme(legend.position=position, legend.justification=position) +
 	theme(legend.background=element_blank(), legend.key=element_blank()) +
 	theme(legend.text=element_text(size=18), legend.title=element_text(size=20))
 
 
-ggsave(outfig, p, width=13, height=8.4, dpi=300, units="in")
+ggsave(outfig, p, width=13.5, height=8.4, dpi=300, units="in")
