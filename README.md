@@ -191,6 +191,12 @@ mafft --auto rice6.9.5.liban.rexdb.cls.pep.INT_TPase.faa > rice6.9.5.liban.rexdb
 ```
 Note: the domain names between rexdb and gydb are different: PROT (rexdb) = AP (gydb), RH (rexdb) = RNaseH (gydb). You should use the actual domain name.
 
+Here, a R script (depending on [ggtree](https://yulab-smu.top/treedata-book/)) is provided to fast visual a LTR tree. An example in `example_data/`:
+```
+../scripts/LTR_tree.R rice6.9.5.liban.rexdb.cls.pep_RT_RH_INT.aln.treefile rice6.9.5.liban.rexdb.cls.tsv rice6.9.5.liban.rexdb.cls.pep_RT_RH_INT.aln.treefile.png
+```
+![ltr_tree](example_data/rice6.9.5.liban.rexdb.cls.pep_RT_RH_INT.aln.treefile.png)
+
 ## Extracting TE sequences from genome for TEsorter  
 Here are examples to extract TE sequences from outputs of wide-used softwares, when you have only genome sequences.
 
