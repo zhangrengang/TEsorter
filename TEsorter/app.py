@@ -727,6 +727,7 @@ class HmmDomRecord(object):
 		self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc = \
 			list(map(float, [self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc]))
 		self.tdesc = ' '.join(temp[22:])
+		
 	@property
 	def hmmcov(self):
 		return round(1e2*(self.hmmend - self.hmmstart + 1) / self.tlen, 1)
@@ -877,6 +878,9 @@ def _hmm2best(inHmmouts, db='rexdb', seqtype='nucl', genome=False):
 			key = (qid,)
 			if genome:
 				key += (rc.envstart, rc.envend)
+				# normlize score
+				self.score = round(self.domscore / self.tlen, 2)
+				self.evalue = self.ievalue
 			if db.startswith('rexdb'):
 				cdomain = domain.split('-')[1]
 				if cdomain == 'aRH' and not genome:
@@ -965,7 +969,7 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 	
 	gff, seq, tsv = '{}.dom.gff3'.format(prefix), '{}.dom.faa'.format(prefix), '{}.dom.tsv'.format(prefix)
 	
-	with open(gff+'debug', 'w') as f:
+	with open(gff+'.debug', 'w') as f:
 		for line in sorted(lines, key=lambda x: (x[0], x[-3], x[3])):
 			gffline = line[:9]
 			gffline = list(map(str, gffline))
