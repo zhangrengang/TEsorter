@@ -204,6 +204,7 @@ def split_fastx_by_chunk_num(inFastx, prefix, chunk_num, seqfmt, suffix):
 		exec('f%s.close()' % (chunk_id, ))
 	return (i, chunk_num, i/chunk_num, outfiles)
 def cut_seqs(inSeq, outSeq, window_size=500000, window_ovl=100000, seqfmt='fasta'):
+	window_size, window_ovl = int(window_size) ,int(window_ovl)
 	for rc in SeqIO.parse(inSeq, seqfmt):
 		seq_len = len(rc.seq)
 		for s in range(0, seq_len+1, window_size):

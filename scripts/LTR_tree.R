@@ -64,7 +64,7 @@ if (branch_color == 'Clade') {
 	  guides(colour=guide_legend(order = 1), fill=guide_legend(order = 2))
 
 }
-position = c(1.4,0.9)
+position = c(1.35,0.9)
 p = p + theme(plot.margin=margin(0,0,0,0)) +
 	theme(legend.position=position, legend.justification=position) +
 	theme(legend.background=element_blank(), legend.key=element_blank()) +

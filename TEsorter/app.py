@@ -11,8 +11,10 @@ import shutil
 import glob
 import argparse
 import subprocess
+import itertools
 from collections import Counter, OrderedDict
 from Bio import SeqIO
+from xopen import xopen as open
 import logging
 logging.basicConfig(level = logging.INFO,format = '%(asctime)s -%(levelname)s- %(message)s')
 logger = logging.getLogger(__name__)
@@ -27,7 +29,7 @@ default_tmpdir = './tmp-{}'.format(uid)
 from .modules.translate_seq import six_frame_translate
 # for multi-processing HMMScan
 from .modules.RunCmdsMP import run_cmd, pp_run
-from .modules.split_records import split_fastx_by_chunk_num
+from .modules.split_records import split_fastx_by_chunk_num, cut_seqs
 # for pass-2 blast classifying
 from .modules.get_record import get_records
 from TEsorter.version import __version__
@@ -65,15 +67,16 @@ BLASType = {
 def Args():
 	parser = argparse.ArgumentParser(
 			prog='TEsorter',
-			description='lineage-level classification of transposable elements using conserved protein domains',
+			description='lineage-level classification of transposable elements using conserved protein domains.',
 			)
-	parser.add_argument('--version', action='version',
+	parser.add_argument('-v', '--version', action='version',
 					version='%(prog)s {version}'.format(version=__version__))
 	parser.add_argument("sequence", action="store",type=str,
-					help="input TE sequences in fasta format [required]")
+					help="input TE/LTR or genome sequences in fasta format [required]")
 	parser.add_argument("-db","--hmm-database", action="store",type=str,
 					default='rexdb', choices=list(DB.keys()),
 					help="the database used [default=%(default)s]")
+	
 	parser.add_argument("-st","--seq-type", action="store",type=str,
 					default='nucl', choices=['nucl', 'prot'],
 					help="'nucl' for DNA or 'prot' for protein [default=%(default)s]")
@@ -95,21 +98,30 @@ def Args():
 	parser.add_argument("-eval", "--max-evalue", action="store",
 					default=1e-3, type=float,
 					help="maxinum E-value for protein domains in HMMScan output [default=%(default)s]")
-	parser.add_argument("-dp2", "--disable-pass2", action="store_true",
-					default=False,
-					help="do not further classify the unclassified sequences [default=%(default)s for `nucl`, True for `prot`]")
-	parser.add_argument("-rule", "--pass2-rule", action="store",
-					default='80-80-80', type=str,
-					help="classifying rule [identity-coverage-length] in pass-2 based on similarity [default=%(default)s]")
-	parser.add_argument("-nolib", "--no-library", action="store_true",
-					default=False,
-					help="do not generate a library file for RepeatMasker [default=%(default)s]")
-	parser.add_argument("-norc", "--no-reverse", action="store_true",
-					default=False,
-					help="do not reverse complement sequences if they are detected in minus strand [default=%(default)s]")
+	
 	parser.add_argument("-nocln", "--no-cleanup", action="store_true",
 					default=False,
 					help="do not clean up the temporary directory [default=%(default)s]")
+	group_element = parser.add_argument_group('ElEMENT mode (default)', 
+					'Input TE/LTR sequences to classify them into clade-level.')
+	group_element.add_argument("-dp2", "--disable-pass2", action="store_true",
+					default=False,
+					help="do not further classify the unclassified sequences [default=%(default)s for `nucl`, True for `prot`]")
+	group_element.add_argument("-rule", "--pass2-rule", action="store",
+					default='80-80-80', type=str,
+					help="classifying rule [identity-coverage-length] in pass-2 based on similarity [default=%(default)s]")
+	group_element.add_argument("-nolib", "--no-library", action="store_true",
+					default=False,
+					help="do not generate a library file for RepeatMasker [default=%(default)s]")
+	group_element.add_argument("-norc", "--no-reverse", action="store_true",
+					default=False,
+					help="do not reverse complement sequences if they are detected in minus strand [default=%(default)s]")
+	group_genome = parser.add_argument_group('GENOME mode', 
+					'Input genome sequences to detect TE protein domains throughout whole genome.')
+	group_genome.add_argument("-genome", action="store_true",
+					default=False,
+					help="input is genome sequences [default=%(default)s]")
+					
 	args = parser.parse_args()
 	if args.prefix is None:
 		args.prefix = '{}.{}'.format(os.path.basename(args.sequence), args.hmm_database)
@@ -158,8 +170,28 @@ def pipeline(args):
 	logger.info( 'check database '+ args.hmm_database)
 	check_db(args.hmm_database)
 
-	logger.info( 'Start classifying pipeline' )
-	seq_num = len([1 for rc in SeqIO.parse(args.sequence, 'fasta')])
+	if args.genome:
+		logger.info( 'Start identifying pipeline (GENOME mode)' )
+		seq_type = 'nucl'
+		genomeAnn(genome=args.sequence, window_size=1e6, window_ovl=1e5, 
+			hmmdb = args.hmm_database,
+			seqtype = seq_type,
+			prefix = args.prefix,
+			force_write_hmmscan = args.force_write_hmmscan,
+			processors = args.processors,
+			tmpdir = args.tmp_dir,
+			mincov = args.min_coverage,
+			maxeval = args.max_evalue,
+			)
+		cleanup(args)
+		logger.info( 'Pipeline done.' )
+		return
+	logger.info( 'Start classifying pipeline (ELEMENT mode)' )
+	lens = [len(rc.seq) for rc in SeqIO.parse(open(args.sequence), 'fasta')]
+	if max(lens) > 1e6:
+		logger.warn('the longest sequence is {} bp, so it may be genome. If so, \
+please switch to the GENOME mode by specifiy `-genome`')
+	seq_num = len(lens)
 	logger.info('total {} sequences'.format(seq_num))
 	# search against DB and parse
 	seq_type = 'prot' if args.hmm_database == 'sine' else args.seq_type
@@ -250,8 +282,10 @@ def pipeline(args):
 	fout.close()
 	logger.info('Summary of classifications:')
 	summary(d_class)
+	cleanup(args)
 	logger.info( 'Pipeline done.' )
 
+def cleanup(args):
 	# clean up
 	if not args.no_cleanup:
 		logger.info( 'cleaning the temporary directory {}'.format(args.tmp_dir) )
@@ -385,7 +419,7 @@ class BlastOutRecord(object):
 		print('\t'.join(self.values), file=fout)
 
 class Classifier(object):
-	def __init__(self, gff, db='rexdb', fout=sys.stdout): # gff is sorted
+	def __init__(self, gff=None, db='rexdb', fout=sys.stdout): # gff is sorted
 		self.gff = gff
 		self.db = db
 		self.fout = fout
@@ -426,18 +460,21 @@ class Classifier(object):
 				rc_flt.reverse()
 			lid = rc_flt[0].ltrid
 			domains = ' '.join(['{}|{}'.format(line.gene, line.clade)  for line in rc])
-			genes  = [line.gene  for line in rc_flt]
-			clades = [line.clade for line in rc_flt]
-			names = [line.name for line in rc_flt]
-			if self.db.startswith('rexdb'):
-				order, superfamily, max_clade, coding = self.identify_rexdb(genes, names)
-			elif self.db == 'gydb':
-				order, superfamily, max_clade, coding = self.identify_gydb(genes, clades)
-			elif self.db == 'sine':
-				order, superfamily, max_clade, coding = 'SINE', 'unknown','unknown','unknown'
+			order, superfamily, max_clade, coding = self.classify_element(rc_flt)
 			line = [lid, order, superfamily, max_clade, coding, strand, domains]
 			print('\t'.join(line), file=self.fout)
 			yield CommonClassification(*line)
+	def classify_element(self, lines):
+		genes  = [line.gene  for line in lines]
+		clades = [line.clade for line in lines]
+		names = [line.name for line in lines]
+		if self.db.startswith('rexdb'):
+			order, superfamily, max_clade, coding = self.identify_rexdb(genes, names)
+		elif self.db == 'gydb':
+			order, superfamily, max_clade, coding = self.identify_gydb(genes, clades)
+		elif self.db == 'sine':
+			order, superfamily, max_clade, coding = 'SINE', 'unknown','unknown','unknown'
+		return order, superfamily, max_clade, coding
 	def identify_rexdb(self, genes, clades):
 		perfect_structure = {
 #            ('LTR', 'Copia'): ['Ty1-GAG', 'Ty1-PROT', 'Ty1-INT', 'Ty1-RT', 'Ty1-RH'],
@@ -487,7 +524,7 @@ class Classifier(object):
 			except ValueError: order, superfamily = clade.split('/')[2], 'unknown'
 		elif clade.startswith('NA'): # "NA:Retrovirus-RH"
 			order, superfamily = 'LTR', 'Retrovirus'
-		else:
+		else:	# not get it
 			logger.warning( 'unknown clade: {}'.format(max_clade) )
 		return order, superfamily
 	def identify_gydb(self, genes, clades):
@@ -626,6 +663,8 @@ class CladeInfo():
 			'GIN1': 'Unknown',
 			'shadow': 'Unknown',
 			'all': 'Unknown',
+			'pepsins_A1a': 'Unknown',
+			'pepsins_A1b': 'Unknown',
 			}
 		for clade, order in list(order_map.items()):
 			self.order, self.superfamily, self.clade, self.dict = [order, 'unknown', clade, {}]  # CHR_retroelement
@@ -633,16 +672,23 @@ class CladeInfo():
 
 class GffLine(object):
 	def __init__(self, line):
-		temp = line.strip().split('\t')
-		self.chr, self.source, self.type, self.start, self.end, self.score, self.strand, self.frame, self.attributes = temp
+		if isinstance(line, str):
+			temp = line.strip().split('\t')
+		else:
+			temp = line
+		if len(temp) == 8:
+			temp = list(temp) + ['']
+		self.chr, self.source, self.type, self.start, self.end, self.score, self.strand, \
+			self.frame, self.attributes = temp
 		self.start, self.end = int(self.start), int(self.end)
 		try: self.score = float(self.score)
 		except: pass
 		try: self.frame = int(self.frame)
 		except: pass
-		self.attributes = self.parse(self.attributes)
+		try: self.attributes = self.parse(self.attributes)
+		except: pass
 	def parse(self, attributes):
-		return dict(kv.split('=', 1) for kv in attributes.split(';'))
+		return dict(kv.split('=', 1) for kv in attributes.split(';') if kv)
 
 class LTRgffLine(GffLine):
 	def __init__(self, line):
@@ -774,11 +820,51 @@ def multi(*n):
 		result = result * i
 	return result
 
-def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='nucl', mincov=20, maxeval=1e-3):
-	if prefix is None:
-		prefix = inSeq
-	if nucl_len is None and seqtype=='nucl':
-		raise ValueError('Sequences length must provide for `{}` sequences'.format(seqtype))
+def group_resolve_overlaps(lines):
+	'''assume multiple chromsomes'''
+	resolved_lines = []
+	for chrom, items in itertools.groupby(lines, key=lambda x:x[0]):
+		logger.info('resolving overlaps in {}'.format(chrom))
+		resolved_lines += resolve_overlaps(list(items))
+	return resolved_lines
+def overlap(self, other):
+	# gff line: gffline = [qid, 'TEsorter', 'CDS', nuc_start, nuc_end, rc.score, strand, frame, attr
+	ovl = max(0, min(self[4], other[4]) - max(self[3], other[3]))
+	return 100*ovl/(min((self[4]-self[3]+1), (other[4]-other[3]+1)))
+	
+def resolve_overlaps(lines, max_ovl=20, ):
+	'''assume only one chromsome'''
+	last_line = None
+	discards = []
+	ie, io = 0, 0
+	for line in sorted(lines, key=lambda x:x[3]):
+		discard = None
+	#	print(last_line, line)
+		if last_line:
+			if line == last_line:	# equal
+				ie += 1
+				line_pair = [last_line, line]	# retain, discard
+			else:
+				if overlap(line, last_line) > max_ovl:
+					io += 1
+					if line[5] > last_line[5]:	# score is prior
+						line_pair = [line, last_line]
+					else: 
+						line_pair = [last_line, line]
+				else:	# no overlap or too short overlap
+					last_line = line
+					continue
+			
+			retain, discard = line_pair
+
+			discards += [discard]
+
+		if not last_line or discard != line:
+			last_line = line
+	logger.info('discard {} equal and {} overlapped hits; {} in total'.format(ie, io, ie+io))
+	return sorted(set(lines) - set(discards), key=lambda x:x[3])
+
+def _hmm2best(inHmmouts, db='rexdb', seqtype='nucl', genome=False):
 	d_besthit = {}
 	for inHmmout in inHmmouts:
 		for rc in HmmScan(inHmmout):
@@ -788,13 +874,16 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 			else:
 				qid = rc.qname
 			domain,clade = parse_hmmname(rc.tname, db=db)
+			key = (qid,)
+			if genome:
+				key += (rc.envstart, rc.envend)
 			if db.startswith('rexdb'):
 				cdomain = domain.split('-')[1]
-				if cdomain == 'aRH':
+				if cdomain == 'aRH' and not genome:
 					cdomain = 'RH'
-				if cdomain == 'TPase':
+				if cdomain == 'TPase' and not genome:
 					cdomain = 'INT'
-				key = (qid, cdomain)
+				key += (cdomain,)
 				if key in d_besthit:
 					best_rc = d_besthit[key]
 					if rc.score > best_rc.score:
@@ -806,15 +895,28 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 				else:
 					d_besthit[key] = rc
 			else: # gydb
-				key = (qid, domain)
+				key += (domain,)
 				if key in d_besthit:
 					if rc.score > d_besthit[key].score:
 						d_besthit[key] = rc
 				else:
 					d_besthit[key] = rc
+	return d_besthit
+def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='nucl', 
+			mincov=20, maxeval=1e-3, genome=False):
+	if prefix is None:
+		prefix = inSeq
+	if nucl_len is None and seqtype=='nucl':
+		raise ValueError('Sequences length must provide for `{}` sequences'.format(seqtype))
+	d_besthit = _hmm2best(inHmmouts, db=db, seqtype=seqtype, genome=genome)
+	
 	d_seqs = seq2dict(inSeq)
 	lines = []
-	for (qid, domain), rc in list(d_besthit.items()):
+	for key, rc in list(d_besthit.items()):
+		if genome:
+			qid, s, e, domain = key
+		else:
+			qid, domain = key
 		if rc.hmmcov < mincov or rc.evalue > maxeval:
 			continue
 		rawid = qid
@@ -840,19 +942,45 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 			nuc_start, nuc_end, = rc.envstart, rc.envend
 		match = re.compile(r'(\S+?):(\d+)[\.\-]+(\d+)').match(qid)
 		if match:
-			qid, ltrstart, ltrend = match.groups()
-			ltrstart = int(ltrstart)
-			nuc_start = ltrstart + nuc_start - 1
-			nuc_end = ltrstart + nuc_end -1
-		attr = 'ID={};gene={};clade={};evalue={};coverage={};probability={}'.format(gid, domain, clade, rc.evalue, rc.hmmcov, rc.acc)
-		gffline = [qid, 'TEsorter', 'CDS', nuc_start, nuc_end, rc.score, strand, frame, attr, rc.evalue, rc.hmmcov, rc.acc, rawid, gid, gseq]
+			qid, linestart, ltrend = match.groups()
+			linestart = int(linestart)
+			nuc_start = linestart + nuc_start - 1
+			nuc_end = linestart + nuc_end -1
+		_add = ''
+		gffline = (qid, 'TEsorter', 'CDS', nuc_start, nuc_end, rc.score, strand, frame, )
+		if genome:
+			gid = '{}:{}-{}|{}'.format(qid, nuc_start, nuc_end, rc.tname)
+			element = LTRgffLine(gffline + ({'ID':gid, 'gene':domain, 'clade':clade},))
+			order, superfamily, max_clade, coding = Classifier(db=db).classify_element([element])
+			if order == 'Unknown':
+				logger.warn('unknown element: {}, is excluded'.format(gid))
+				continue
+			cls = fmt_cls(order, superfamily, max_clade)
+			_add = 'Classification={};'.format(cls)
+		name = '{}-{}'.format(clade, domain)
+		attr = 'ID={};Name={};{}gene={};clade={};evalue={};coverage={};probability={}'.format(
+				gid, name, _add, domain, clade, rc.evalue, rc.hmmcov, rc.acc)
+		gffline = gffline + (attr, rc.evalue, rc.hmmcov, rc.acc, rawid, gid, gseq)
 		lines.append(gffline)
+	
 	gff, seq, tsv = '{}.dom.gff3'.format(prefix), '{}.dom.faa'.format(prefix), '{}.dom.tsv'.format(prefix)
+	
+	with open(gff+'debug', 'w') as f:
+		for line in sorted(lines, key=lambda x: (x[0], x[-3], x[3])):
+			gffline = line[:9]
+			gffline = list(map(str, gffline))
+			print('\t'.join(gffline), file=f)
+			
+	if genome:
+		lines = group_resolve_overlaps(sorted(lines, key=lambda x: x[0]))
+	else:
+		lines = sorted(lines, key=lambda x: (x[0], x[-3], x[3]))
+	
 	fgff = open(gff, 'w')
 	fseq = open(seq, 'w')
 	ftsv = open(tsv, 'w')
 	print('\t'.join(['#id', 'length', 'evalue', 'coverge', 'probability', 'score']), file=ftsv)
-	for line in sorted(lines, key=lambda x: (x[0], x[-3], x[3])):
+	for line in lines:
 		gffline = line[:9]
 		gffline = list(map(str, gffline))
 		print('\t'.join(gffline), file=fgff)
@@ -867,10 +995,14 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 	fseq.close()
 	return gff, seq
 
-def translate(inSeq, prefix=None):
+def translate(inSeq, prefix=None, overwrite=True):
 	if prefix is None:
 		prefix = inSeq
 	outSeq = prefix + '.aa'
+	if not overwrite:
+		logger.info( 'use existed non-empty `{}` and skip translating'.format(outSeq) )
+		return outSeq
+	logger.info( 'translating `{}` in six frames'.format(inSeq) )
 	with open(outSeq, 'w') as fp:
 		six_frame_translate(inSeq, fp)
 	return outSeq
@@ -883,21 +1015,23 @@ def translate_pp(inSeq, prefix=None, tmpdir='./tmp', processors=4):
 	_, _, _, chunk_files = split_fastx_by_chunk_num(
 			inSeq, prefix=chunk_prefix, chunk_num=processors, seqfmt='fasta', suffix='')
 
-def hmmscan(inSeq, hmmdb='rexdb.hmm', hmmout=None, ncpu=4):
+def hmmscan(inSeq, hmmdb='rexdb.hmm', hmmout=None, ncpu=4, bin='hmmscan'):
 	if hmmout is None:
 		hmmout = prefix + '.domtbl'
-	cmd = 'hmmscan --notextw --noali --cpu {} --domtblout {} {} {} > /dev/null'.format(ncpu, hmmout, hmmdb, inSeq)
+	cmd = '{} --notextw --noali --cpu {} --domtblout {} {} {} > /dev/null'.format(bin, 
+			ncpu, hmmout, hmmdb, inSeq)
 	run_cmd(cmd, logger=logger)
 	return hmmout
 
-def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors=4):
+def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors=4, bin='hmmscan'):
 	chunk_prefix = '{}/{}'.format(tmpdir, 'chunk_aaseq')
 	_, _, _, chunk_files = split_fastx_by_chunk_num(
 			inSeq, prefix=chunk_prefix, chunk_num=processors, seqfmt='fasta', suffix='')
 	chunk_files = [chunk_file for chunk_file in chunk_files if os.path.getsize(chunk_file)>0]
 	domtbl_files = [chunk_file + '.domtbl' for chunk_file in chunk_files]
 	cmds = [
-		'hmmscan --notextw -E 0.01 --domE 0.01 --noali --domtblout {} {} {}'.format(domtbl_file, hmmdb, chunk_file) \
+		'{} --notextw --noali --domtblout {} {} {}'.format(
+			bin, domtbl_file, hmmdb, chunk_file) \
 			for chunk_file, domtbl_file in zip(chunk_files, domtbl_files)]
 	jobs = pp_run(cmds, processors=processors)
 	for cmd, (stdout, stderr, status) in zip(cmds, jobs):
@@ -912,34 +1046,40 @@ def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors
 			for line in open(domtbl_file):
 				f.write(line)
 	return hmmout
-
+def genomeAnn(genome, tmpdir='./tmp', seqfmt='fasta',window_size=1e6, window_ovl=1e5, **kargs):
+	cutSeq = '{}/cut.{}'.format(tmpdir, seqfmt)
+	with open(cutSeq, 'w') as f:
+		cut_seqs(genome, f, window_size=window_size, window_ovl=window_ovl, seqfmt=seqfmt)
+	LTRlibAnn(ltrlib=cutSeq, genome=True, tmpdir=tmpdir, **kargs)
+	
 def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
-			force_write_hmmscan=False,
+			force_write_hmmscan=False, genome=False, 
 			processors=4, tmpdir='./tmp',
 			mincov=20, maxeval=1e-3):
 	if prefix is None:
 		prefix = '{}.{}'.format(ltrlib, hmmdb)
-
+	bin = 'hmmscan'
+	domtbl = prefix + '.domtbl'
+	overwrite = not (os.path.exists(domtbl) and os.path.getsize(domtbl) >0) or force_write_hmmscan
 	if seqtype == 'nucl' :
-		logger.info( 'translating `{}` in six frames'.format(ltrlib) )
 		tmp_prefix = '{}/translated'.format(tmpdir)
-		aaSeq = translate(ltrlib, prefix=tmp_prefix)
-		d_nucl_len = dict([(rc.id, len(rc.seq)) for rc in SeqIO.parse(ltrlib, 'fasta')])
+		aaSeq = translate(ltrlib, prefix=tmp_prefix, overwrite=overwrite)
+		d_nucl_len = dict([(rc.id, len(rc.seq)) for rc in SeqIO.parse(open(ltrlib), 'fasta')])
 	elif seqtype == 'prot':
 		aaSeq = ltrlib
 		d_nucl_len = None
 
 	logger.info( 'HMM scanning against `{}`'.format(DB[hmmdb]) )
-	domtbl = prefix + '.domtbl'
-	if not (os.path.exists(domtbl) and os.path.getsize(domtbl) >0) or force_write_hmmscan:
+	
+	if overwrite:
 		if processors > 1:
-			hmmscan_pp(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl, tmpdir=tmpdir, processors=processors)
+			hmmscan_pp(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl, tmpdir=tmpdir, processors=processors, bin=bin)
 		else:
-			hmmscan(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl)
+			hmmscan(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl, bin=bin)
 	else:
 		logger.info( 'use existed non-empty `{}` and skip hmmscan'.format(domtbl) )
 	logger.info( 'generating gene anntations' )
-	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, nucl_len=d_nucl_len,
+	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, nucl_len=d_nucl_len, genome=genome,
 				prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval)
 	return gff, geneSeq
 

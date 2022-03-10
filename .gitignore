@@ -9,3 +9,4 @@ TEsorter.egg-info/
 test.py
 *.domtbl
 tmp*
+mytest
