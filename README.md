@@ -174,6 +174,9 @@ GENOME mode:
   genome.
 
   -genome               input is genome sequences [default=False]
+  -win_size WIN_SIZE    window size of chunking genome sequences
+                        [default=1000000]
+  -win_ovl WIN_OVL      overlap size of windows [default=100000]
 ```
 
 

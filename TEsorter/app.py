@@ -121,6 +121,12 @@ def Args():
 	group_genome.add_argument("-genome", action="store_true",
 					default=False,
 					help="input is genome sequences [default=%(default)s]")
+	group_genome.add_argument("-win_size",  action="store",
+					default=int(1e6), type=int,
+					help="window size of chunking genome sequences [default=%(default)s]")
+	group_genome.add_argument("-win_ovl",  action="store",
+					default=int(1e5), type=int,
+					help="overlap size of windows [default=%(default)s]")
 					
 	args = parser.parse_args()
 	if args.prefix is None:
@@ -173,7 +179,8 @@ def pipeline(args):
 	if args.genome:
 		logger.info( 'Start identifying pipeline (GENOME mode)' )
 		seq_type = 'nucl'
-		genomeAnn(genome=args.sequence, window_size=1e6, window_ovl=1e5, 
+		genomeAnn(genome=args.sequence, 
+			window_size=args.win_size, window_ovl=args.win_ovl, 
 			hmmdb = args.hmm_database,
 			seqtype = seq_type,
 			prefix = args.prefix,
@@ -960,20 +967,21 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 				logger.warn('unknown element: {}, is excluded'.format(gid))
 				continue
 			cls = fmt_cls(order, superfamily, max_clade)
-			_add = 'Classification={};'.format(cls)
+			nstop = list(gseq).count('*')
+			_add = 'Classification={};stop={};'.format(cls, nstop)
 		name = '{}-{}'.format(clade, domain)
-		attr = 'ID={};Name={};{}gene={};clade={};evalue={};coverage={};probability={}'.format(
-				gid, name, _add, domain, clade, rc.evalue, rc.hmmcov, rc.acc)
+		attr = 'ID={};Name={};{}gene={};clade={};coverage={};evalue={};probability={}'.format(
+				gid, name, _add, domain, clade, rc.hmmcov, rc.evalue,  rc.acc)
 		gffline = gffline + (attr, rc.evalue, rc.hmmcov, rc.acc, rawid, gid, gseq)
 		lines.append(gffline)
 	
 	gff, seq, tsv = '{}.dom.gff3'.format(prefix), '{}.dom.faa'.format(prefix), '{}.dom.tsv'.format(prefix)
 	
-	with open(gff+'.debug', 'w') as f:
-		for line in sorted(lines, key=lambda x: (x[0], x[-3], x[3])):
-			gffline = line[:9]
-			gffline = list(map(str, gffline))
-			print('\t'.join(gffline), file=f)
+	# with open(gff+'.debug', 'w') as f:
+		# for line in sorted(lines, key=lambda x: (x[0], x[-3], x[3])):
+			# gffline = line[:9]
+			# gffline = list(map(str, gffline))
+			# print('\t'.join(gffline), file=f)
 			
 	if genome:
 		lines = group_resolve_overlaps(sorted(lines, key=lambda x: x[0]))

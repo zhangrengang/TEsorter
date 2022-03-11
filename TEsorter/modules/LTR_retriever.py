@@ -432,7 +432,7 @@ class Classifier():
 					rc.id = re_org
 #					print >>sys.stderr, rc.description, len(rc.seq)
 			SeqIO.write(rc, fout, 'fasta')
-		 print(i, 'sequences re-classified', file=sys.stderr)
+		print(i, 'sequences re-classified', file=sys.stderr)
 
 	def re_orgnize(self, rawid, neword, newfam):
 		rawid, rawcls = rawid.split('#')
