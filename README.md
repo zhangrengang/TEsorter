@@ -34,7 +34,7 @@ Dependencies:
 +    [python >3](https://www.python.org/)  
 	+   [biopython](https://biopython.org/): quickly install by `pip install biopython` or `conda install biopython`  
 	+   [xopen](https://pypi.org/project/xopen/): quickly install by `pip install xopen` or `conda install xopen`
-+   [hmmscan 3.1x or 3.2x](http://hmmer.org/): be compatible with HMMER3/f database format. quickly install by `conda install hmmer`
++   [hmmscan 3.3x](http://hmmer.org/): be compatible with HMMER3/f database format. quickly install by `conda install hmmer`
 +   [blast+](https://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastDocs&DOC_TYPE=Download): quickly install by `conda install blast`
 + TEsorter:
 ```

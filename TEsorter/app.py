@@ -879,8 +879,8 @@ def _hmm2best(inHmmouts, db='rexdb', seqtype='nucl', genome=False):
 			if genome:
 				key += (rc.envstart, rc.envend)
 				# normlize score
-				self.score = round(self.domscore / self.tlen, 2)
-				self.evalue = self.ievalue
+				rc.score = round(rc.domscore / rc.tlen, 2)
+				rc.evalue = rc.ievalue
 			if db.startswith('rexdb'):
 				cdomain = domain.split('-')[1]
 				if cdomain == 'aRH' and not genome:
@@ -1022,7 +1022,7 @@ def translate_pp(inSeq, prefix=None, tmpdir='./tmp', processors=4):
 def hmmscan(inSeq, hmmdb='rexdb.hmm', hmmout=None, ncpu=4, bin='hmmscan'):
 	if hmmout is None:
 		hmmout = prefix + '.domtbl'
-	cmd = '{} --notextw --noali --cpu {} --domtblout {} {} {} > /dev/null'.format(bin, 
+	cmd = '{} --nobias --notextw --noali --cpu {} --domtblout {} {} {} > /dev/null'.format(bin, 
 			ncpu, hmmout, hmmdb, inSeq)
 	run_cmd(cmd, logger=logger)
 	return hmmout
@@ -1034,7 +1034,7 @@ def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors
 	chunk_files = [chunk_file for chunk_file in chunk_files if os.path.getsize(chunk_file)>0]
 	domtbl_files = [chunk_file + '.domtbl' for chunk_file in chunk_files]
 	cmds = [
-		'{} --notextw --noali --domtblout {} {} {}'.format(
+		'{} --nobias --notextw --noali --domtblout {} {} {}'.format(
 			bin, domtbl_file, hmmdb, chunk_file) \
 			for chunk_file, domtbl_file in zip(chunk_files, domtbl_files)]
 	jobs = pp_run(cmds, processors=processors)

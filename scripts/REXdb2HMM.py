@@ -22,8 +22,7 @@ class REXdb:
 					SeqIO.write(rc, f, 'fasta')
 			alnSeqs = cladeSeqs + '.aln'
 			cmd = 'mafft --auto {} > {} 2> /dev/null'.format(cladeSeqs, alnSeqs)
-#			cmd = 'mafft --auto {} 2> /dev/null| prepareAlign | mafft --auto - > {} 2> /dev/null'.format(
-				cladeSeqs, alnSeqs)
+#			cmd = 'mafft --auto {} 2> /dev/null| prepareAlign | mafft --auto - > {} 2> /dev/null'.format(cladeSeqs, alnSeqs)
 			run_cmd(cmd)
 			alnHMM = cladeSeqs + '.hmm'
 			cmd = 'hmmbuild -n {} {} {} > /dev/null'.format(clade, alnHMM, alnSeqs)
