@@ -28,7 +28,7 @@ default_tmpdir = './tmp-{}'.format(uid)
 
 from .modules.translate_seq import six_frame_translate
 # for multi-processing HMMScan
-from .modules.RunCmdsMP import run_cmd, pp_run
+from .modules.RunCmdsMP import run_cmd, pp_run, pool_func
 from .modules.split_records import split_fastx_by_chunk_num, cut_seqs
 # for pass-2 blast classifying
 from .modules.get_record import get_records
@@ -739,8 +739,7 @@ class HmmDomRecord(object):
 	def hmmcov(self):
 		return round(1e2*(self.hmmend - self.hmmstart + 1) / self.tlen, 1)
 
-def seq2dict(inSeq):
-	return dict([(rc.id, rc) for rc in SeqIO.parse(inSeq, 'fasta')])
+
 
 def parse_hmmname(hmmname, db='gydb'):
 	db = db.lower()
@@ -885,9 +884,10 @@ def _hmm2best(inHmmouts, db='rexdb', seqtype='nucl', genome=False):
 			key = (qid,)
 			if genome:
 				key += (rc.envstart, rc.envend)
-				# normlize score
-				rc.score = round(rc.domscore / rc.tlen, 2)
-				rc.evalue = rc.ievalue
+			# normlize score
+			rc.score = round(rc.domscore / rc.tlen, 2)
+			rc.evalue = rc.ievalue
+				
 			if db.startswith('rexdb'):
 				cdomain = domain.split('-')[1]
 				if cdomain == 'aRH' and not genome:
@@ -913,15 +913,24 @@ def _hmm2best(inHmmouts, db='rexdb', seqtype='nucl', genome=False):
 				else:
 					d_besthit[key] = rc
 	return d_besthit
-def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='nucl', 
+	
+def seqs2dict(inSeqs):
+	d = {}
+	for inSeq in inSeqs:
+		for rc in SeqIO.parse(inSeq, 'fasta'):
+			d[rc.id] = rc
+	return d
+	#return dict([(rc.id, rc) for rc in SeqIO.parse(inSeq, 'fasta') for inSeq in inSeqs])
+
+def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='nucl', 
 			mincov=20, maxeval=1e-3, genome=False):
 	if prefix is None:
-		prefix = inSeq
+		prefix = inSeqs[0]
 	if nucl_len is None and seqtype=='nucl':
 		raise ValueError('Sequences length must provide for `{}` sequences'.format(seqtype))
 	d_besthit = _hmm2best(inHmmouts, db=db, seqtype=seqtype, genome=genome)
 	
-	d_seqs = seq2dict(inSeq)
+	d_seqs = seqs2dict(inSeqs)
 	lines = []
 	for key, rc in list(d_besthit.items()):
 		if genome:
@@ -936,6 +945,7 @@ def hmm2best(inSeq, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='
 			domain = gene.split('-')[1]
 		gid = '{}|{}'.format(qid, rc.tname)
 		gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
+		gseq = str(gseq)
 		if seqtype == 'nucl':
 			strand, frame = parse_frame(rc.qname.split('|')[-1])
 			if strand == '+':
@@ -1011,6 +1021,7 @@ def translate(inSeq, prefix=None, overwrite=True):
 	if prefix is None:
 		prefix = inSeq
 	outSeq = prefix + '.aa'
+	overwrite = not (os.path.exists(outSeq) and os.path.getsize(outSeq) >0) or overwrite
 	if not overwrite:
 		logger.info( 'use existed non-empty `{}` and skip translating'.format(outSeq) )
 		return outSeq
@@ -1034,12 +1045,32 @@ def hmmscan(inSeq, hmmdb='rexdb.hmm', hmmout=None, ncpu=4, bin='hmmscan'):
 			ncpu, hmmout, hmmdb, inSeq)
 	run_cmd(cmd, logger=logger)
 	return hmmout
+def _translate(arg):
+	inSeq, overwrite = arg
+	return translate(inSeq, overwrite=overwrite)
 
-def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors=4, bin='hmmscan'):
+def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors=4, 
+			bin='hmmscan',seqtype='nucl', force_write_hmmscan=False):
+	if hmmout is None:
+		hmmout = prefix + '.domtbl'
+	overwrite = not (os.path.exists(hmmout) and os.path.getsize(hmmout) >0) or force_write_hmmscan
+	
 	chunk_prefix = '{}/{}'.format(tmpdir, 'chunk_aaseq')
-	_, _, _, chunk_files = split_fastx_by_chunk_num(
-			inSeq, prefix=chunk_prefix, chunk_num=processors, seqfmt='fasta', suffix='')
-	chunk_files = [chunk_file for chunk_file in chunk_files if os.path.getsize(chunk_file)>0]
+	if processors > 1:
+		chunk_num = processors*2
+		_, _, _, chunk_files = split_fastx_by_chunk_num(
+			inSeq, prefix=chunk_prefix, chunk_num=chunk_num, seqfmt='fasta', suffix='')
+		chunk_files = [chunk_file for chunk_file in chunk_files if os.path.getsize(chunk_file)>0]
+	else:
+		chunk_files = [inSeq]
+	if seqtype == 'nucl':	#translate
+		iterable = ((chunk, overwrite) for chunk in chunk_files)
+		chunk_files = list(pool_func(_translate, iterable, processors=processors))
+	
+	if not overwrite:
+		logger.info( 'use existed non-empty `{}` and skip hmmscan'.format(hmmout) )
+		return chunk_files
+	
 	domtbl_files = [chunk_file + '.domtbl' for chunk_file in chunk_files]
 	cmds = [
 		'{} --nobias --notextw --noali --domtblout {} {} {}'.format(
@@ -1051,13 +1082,12 @@ def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors
 			logger.warning( "exit code {} for CMD '{}'".format(status, cmd) )
 			logger.warning('\n\tSTDOUT:\n{0}\n\tSTDERR:\n{1}\n\n'.format(stdout, stderr))
 	# cat files
-	if hmmout is None:
-		hmmout = prefix + '.domtbl'
+	
 	with open(hmmout, 'w') as f:
 		for domtbl_file in domtbl_files:
 			for line in open(domtbl_file):
 				f.write(line)
-	return hmmout
+	return chunk_files
 def genomeAnn(genome, tmpdir='./tmp', seqfmt='fasta',window_size=1e6, window_ovl=1e5, **kargs):
 	cutSeq = '{}/cut.{}'.format(tmpdir, seqfmt)
 	with open(cutSeq, 'w') as f:
@@ -1072,26 +1102,17 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 		prefix = '{}.{}'.format(ltrlib, hmmdb)
 	bin = 'hmmscan'
 	domtbl = prefix + '.domtbl'
-	overwrite = not (os.path.exists(domtbl) and os.path.getsize(domtbl) >0) or force_write_hmmscan
 	if seqtype == 'nucl' :
-		tmp_prefix = '{}/translated'.format(tmpdir)
-		aaSeq = translate(ltrlib, prefix=tmp_prefix, overwrite=overwrite)
 		d_nucl_len = dict([(rc.id, len(rc.seq)) for rc in SeqIO.parse(open(ltrlib), 'fasta')])
 	elif seqtype == 'prot':
-		aaSeq = ltrlib
 		d_nucl_len = None
 
 	logger.info( 'HMM scanning against `{}`'.format(DB[hmmdb]) )
 	
-	if overwrite:
-		if processors > 1:
-			hmmscan_pp(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl, tmpdir=tmpdir, processors=processors, bin=bin)
-		else:
-			hmmscan(aaSeq, hmmdb=DB[hmmdb], hmmout=domtbl, bin=bin)
-	else:
-		logger.info( 'use existed non-empty `{}` and skip hmmscan'.format(domtbl) )
+	chunk_files = hmmscan_pp(ltrlib, hmmdb=DB[hmmdb], hmmout=domtbl, tmpdir=tmpdir, 
+			processors=processors, bin=bin, seqtype=seqtype)
 	logger.info( 'generating gene anntations' )
-	gff, geneSeq = hmm2best(aaSeq, [domtbl], db=hmmdb, nucl_len=d_nucl_len, genome=genome,
+	gff, geneSeq = hmm2best(chunk_files, [domtbl], db=hmmdb, nucl_len=d_nucl_len, genome=genome,
 				prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval)
 	return gff, geneSeq
 
@@ -1187,6 +1208,7 @@ class Dependency(object):
 		return version
 
 def main():
+	logger.info('Command: {}'.format(' '.join(sys.argv)))
 	pipeline(Args())
 
 if __name__ == '__main__':
