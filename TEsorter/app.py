@@ -14,7 +14,6 @@ import subprocess
 import itertools
 from collections import Counter, OrderedDict
 from Bio import SeqIO
-from xopen import xopen as open
 import logging
 logging.basicConfig(level = logging.INFO,format = '%(asctime)s -%(levelname)s- %(message)s')
 logger = logging.getLogger(__name__)
@@ -30,6 +29,9 @@ from .modules.translate_seq import six_frame_translate
 # for multi-processing HMMScan
 from .modules.RunCmdsMP import run_cmd, pp_run, pool_func
 from .modules.split_records import split_fastx_by_chunk_num, cut_seqs
+#from .modules.small_tools import open_file as open
+from xopen import xopen as open
+
 # for pass-2 blast classifying
 from .modules.get_record import get_records
 from TEsorter.version import __version__
@@ -122,10 +124,10 @@ def Args():
 					default=False,
 					help="input is genome sequences [default=%(default)s]")
 	group_genome.add_argument("-win_size",  action="store",
-					default=int(1e6), type=int,
+					default=int(270e3), type=int,
 					help="window size of chunking genome sequences [default=%(default)s]")
 	group_genome.add_argument("-win_ovl",  action="store",
-					default=int(1e5), type=int,
+					default=int(30e3), type=int,
 					help="overlap size of windows [default=%(default)s]")
 					
 	args = parser.parse_args()
@@ -178,6 +180,8 @@ def pipeline(args):
 
 	if args.genome:
 		logger.info( 'Start identifying pipeline (GENOME mode)' )
+		#print(open(args.sequence))
+		#print([(rc.id, len(rc.seq)) for rc in SeqIO.parse(open(args.sequence), 'fasta')])
 		seq_type = 'nucl'
 		genomeAnn(genome=args.sequence, 
 			window_size=args.win_size, window_ovl=args.win_ovl, 
@@ -1055,7 +1059,7 @@ def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors
 		hmmout = prefix + '.domtbl'
 	overwrite = not (os.path.exists(hmmout) and os.path.getsize(hmmout) >0) or force_write_hmmscan
 	
-	chunk_prefix = '{}/{}'.format(tmpdir, 'chunk_aaseq')
+	chunk_prefix = '{}/{}'.format(tmpdir, 'chunk')
 	if processors > 1:
 		chunk_num = processors*2
 		_, _, _, chunk_files = split_fastx_by_chunk_num(

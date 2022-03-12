@@ -3,7 +3,6 @@ import sys
 from collections import OrderedDict
 from Bio import SeqIO
 from Bio.Data import CodonTable
-from xopen import xopen as open
 
 def six_frame_translate(inFa, fout=sys.stdout, seqfmt='fasta', transl_table=1):
 	d_length = OrderedDict()

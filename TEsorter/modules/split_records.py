@@ -6,7 +6,9 @@ import argparse
 from io import IOBase
 from Bio import SeqIO
 
-from TEsorter.modules.small_tools import open_file as open
+#from TEsorter.modules.small_tools import open_file as open
+#from .small_tools import open_file as open
+from xopen import xopen as open
 
 __version__ = '1.0'
 def split_sam_by_chunk_size(inSam, prefix, chunk_size):
@@ -205,8 +207,9 @@ def split_fastx_by_chunk_num(inFastx, prefix, chunk_num, seqfmt, suffix):
 	return (i, chunk_num, i/chunk_num, outfiles)
 def cut_seqs(inSeq, outSeq, window_size=500000, window_ovl=100000, seqfmt='fasta'):
 	window_size, window_ovl = int(window_size) ,int(window_ovl)
-	for rc in SeqIO.parse(inSeq, seqfmt):
+	for rc in SeqIO.parse(open(inSeq), seqfmt):
 		seq_len = len(rc.seq)
+	#	print(rc.id, seq_len)
 		for s in range(0, seq_len+1, window_size):
 			e = s + window_size + window_ovl
 			if e > seq_len:

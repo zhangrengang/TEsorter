@@ -26,7 +26,7 @@ jobs:
         conda-channels: bioconda
     # install dependencies
     - run: conda install biopython
-    - run: conda install pp
+    - run: conda install xopen
     - run: conda install hmmer
     - run: conda install blast
       
