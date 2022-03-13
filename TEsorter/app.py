@@ -45,6 +45,9 @@ DB = {
 #	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.hmm',
 	'sine': bindir + '/database/AnnoSINE.hmm',
 	}
+	
+ORDERS = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'SINE', 'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown']
+
 BLASType = {
     'qseqid': str,
     'sseqid': str,
@@ -315,13 +318,13 @@ def summary(d_class):
 			d_sum[key][2] += [clf.clade]
 		if clf.completed == 'yes':
 			d_sum[key][3] += 1
-	out_order = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'SINE', 'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown']
+	
 	template = '{:<16}{:<16}{:>15}{:>15}{:>15}{:>15}'
 	line = ['Order', 'Superfamily', '# of Sequences', '# of Clade Sequences', '# of Clades', '# of full Domains']
 
 	print(template.format(*line), file=sys.stdout)
 	for (order, superfamliy), summary in \
-			sorted(list(d_sum.items()), key=lambda x: (out_order.index(x[0][0]), x[0][1])):
+			sorted(list(d_sum.items()), key=lambda x: (ORDERS.index(x[0][0]), x[0][1])):
 		line = [order, superfamliy, summary[0], summary[1], len(set(summary[2])), summary[3]]
 		line = list(map(str, line))
 		line = template.format(*line)
@@ -1020,7 +1023,40 @@ def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype=
 	fgff.close()
 	fseq.close()
 	return gff, seq
-
+def summary_genome(gff, fout=sys.stdout):
+	last_chr, last_end = '', 0
+	d_stats = {}
+	for line in open(gff):
+		line = GffLine(line)
+		cls = line.attributes['Classification']
+		cls = tuple(cls.split('/'))
+		assert len(cls) <=3
+		assert cls[0] in set(ORDERS), 'Unknown order: {}'.format(cls)
+		if line.end < last_end:
+			continue
+		elif line.start < last_end:
+			start = last_end+1
+		else:
+			start = line.start
+		_len = line.end - start + 1
+		xcls = []
+		if len(cls) ==3:
+			xcls += [cls[:1], cls[:2]]
+		elif len(cls) ==2:
+			xcls += [cls[:1]]
+		xcls += [cls]
+		for cls in xcls:
+			try: d_stats[cls] += [_len]
+			except KeyError: d_stats[cls] = [_len]
+	line = ['Order', 'Superfamily', 'Clade', 'Number', 'Total_length', 'Mean_length']
+	fout.write('\t'.join(line)+'\n')
+	for cls, lens in sorted(d_stats.items(), key=lambda x:(ORDERS.index(x[0][0]), x[0])):
+		cls = ['']*(len(cls)-1) + [cls[-1]] + ['']* (3-len(cls))
+		n, total = len(lens), sum(lens)
+		mean = round(total/n, 1)
+		line = cls + [len(lens), n, total, mean]
+		line = map(str, line)
+		fout.write('\t'.join(line)+'\n')
 def translate(inSeq, prefix=None, overwrite=True):
 	if prefix is None:
 		prefix = inSeq
@@ -1096,7 +1132,9 @@ def genomeAnn(genome, tmpdir='./tmp', seqfmt='fasta',window_size=1e6, window_ovl
 	cutSeq = '{}/cut.{}'.format(tmpdir, seqfmt)
 	with open(cutSeq, 'w') as f:
 		cut_seqs(genome, f, window_size=window_size, window_ovl=window_ovl, seqfmt=seqfmt)
-	LTRlibAnn(ltrlib=cutSeq, genome=True, tmpdir=tmpdir, **kargs)
+	gff, geneSeq = LTRlibAnn(ltrlib=cutSeq, genome=True, tmpdir=tmpdir, **kargs)
+	logger.info('Summary of classifications:')
+	summary_genome(gff, fout=sys.stdout)
 	
 def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 			force_write_hmmscan=False, genome=False, 
