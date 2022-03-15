@@ -46,7 +46,8 @@ DB = {
 	'sine': bindir + '/database/AnnoSINE.hmm',
 	}
 	
-ORDERS = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'SINE', 'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown']
+ORDERS = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'SINE', 
+		  'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown', 'Total']
 
 BLASType = {
     'qseqid': str,
@@ -760,7 +761,7 @@ def parse_hmmname(hmmname, db='gydb'):
 		gene = hmmname
 		clade = hmmname
 	elif db.startswith('sine'):
-		gene = hmmname
+		gene = 'SINE' #hmmname
 		clade = 'SINE'
 	return gene, clade
 class HmmCluster(object):
@@ -1044,7 +1045,7 @@ def summary_genome(gff, fout=sys.stdout):
 			xcls += [cls[:1], cls[:2]]
 		elif len(cls) ==2:
 			xcls += [cls[:1]]
-		xcls += [cls]
+		xcls += [cls] + [('Total', )]
 		for cls in xcls:
 			try: d_stats[cls] += [_len]
 			except KeyError: d_stats[cls] = [_len]
@@ -1054,7 +1055,7 @@ def summary_genome(gff, fout=sys.stdout):
 		cls = ['']*(len(cls)-1) + [cls[-1]] + ['']* (3-len(cls))
 		n, total = len(lens), sum(lens)
 		mean = round(total/n, 1)
-		line = cls + [len(lens), n, total, mean]
+		line = cls + [n, total, mean]
 		line = map(str, line)
 		fout.write('\t'.join(line)+'\n')
 def translate(inSeq, prefix=None, overwrite=True):
