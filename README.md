@@ -72,7 +72,7 @@ To improve specificity, increase the criteria and disable the pass2 mode:
 ```
 TEsorter input_file -p 20 -cov 30 -eval 1e-5 -dp2
 ```
-To improve sensitivity of pass-2, reduce the rule:
+To improve sensitivity of pass-2, reduce the [80–80–80 rule](http://doi.org/10.1038/nrg2165-c3) which may be too strict for superfamily-level classification:
 ```
 TEsorter input_file -p 20 -rule 70-30-80
 ```
@@ -82,7 +82,7 @@ TEsorter RepeatPeps.lib -st prot -p 20
 ```
 Since version v1.4, a GENOME mode is supported to identify TE protein domains throughout whole genome:
 ```
-TEsorter genome.fasta -genome
+TEsorter genome.fasta -genome -p 20
 ```
 ## Citation
 If you use the `TEsorter` tool, please cite:
@@ -214,7 +214,7 @@ concatenate_domains.py rice6.9.5.liban.rexdb.cls.pep TPase > rice6.9.5.liban.rex
 cat rice6.9.5.liban.rexdb.cls.pep.INT.aln rice6.9.5.liban.rexdb.cls.pep.TPase.aln > rice6.9.5.liban.rexdb.cls.pep.INT_TPase.faa
 mafft --auto rice6.9.5.liban.rexdb.cls.pep.INT_TPase.faa > rice6.9.5.liban.rexdb.cls.pep.INT_TPase.aln
 ```
-Note: the domain names between rexdb and gydb are different: PROT (rexdb) = AP (gydb), RH (rexdb) = RNaseH (gydb). You should use the actual domain name.
+Note: the domain names between rexdb and gydb are somewhat different: PROT (rexdb) = AP (gydb), RH (rexdb) = RNaseH (gydb). Please use the actual domain name.
 
 Here, an R script (depending on [ggtree](https://yulab-smu.top/treedata-book/)) is provided to fast visualize the LTR tree. An example in `example_data/`:
 ```
