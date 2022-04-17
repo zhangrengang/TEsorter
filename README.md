@@ -1,7 +1,7 @@
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/tesorter/README.html) [![Anaconda-Server Badge](https://anaconda.org/bioconda/tesorter/badges/license.svg)](https://anaconda.org/bioconda/tesorter)
 =========================================
 # TEsorter
-It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify long terminal repeat retrotransposons (LTR-RTs) at first. It can also be used to classify any other TE sequences, including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
+It is coded for [LTR_retriever](https://github.com/oushujun/LTR_retriever) to classify long terminal repeat retrotransposons (LTR-RTs) at first. It can also be used to classify any other transposable elements (TEs), including Class I and Class II elements which are covered by the [REXdb](http://repeatexplorer.org/?page_id=918) database.
 
 Since version v1.4, a GENOME mode is supported to identify TE protein domains throughout whole genome.
 
@@ -175,8 +175,8 @@ GENOME mode:
 
   -genome               input is genome sequences [default=False]
   -win_size WIN_SIZE    window size of chunking genome sequences
-                        [default=1000000]
-  -win_ovl WIN_OVL      overlap size of windows [default=100000]
+                        [default=270000]
+  -win_ovl WIN_OVL      overlap size of windows [default=30000]
 ```
 
 

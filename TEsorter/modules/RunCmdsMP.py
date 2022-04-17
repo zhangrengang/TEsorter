@@ -292,7 +292,7 @@ def run_cmd(cmd, log=False, logger=None, ):
 	status = job.poll()
 	if logger is not None and status > 0:
 		 logger.warn("exit code {} for CMD `{}`: ".format(status, cmd))
-		 logger.warn('\n###STDOUT:{0}\n###STDERR:{1}'.format(*output))
+		 logger.warn('\n###STDOUT:<< {0} >>\n###STDERR:<< {1} >>'.format(*map(lambda x:x.decode(), output)))
 	return output + (status,)
 
 def _run_cmd(arg):

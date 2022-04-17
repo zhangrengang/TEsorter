@@ -34,7 +34,8 @@ from xopen import xopen as open
 
 # for pass-2 blast classifying
 from .modules.get_record import get_records
-from TEsorter.version import __version__
+from .modules.Blast import blast, BlastOut
+from .version import __version__
 
 DB = {
 	'gydb' : bindir + '/database/GyDB2.hmm',
@@ -48,26 +49,6 @@ DB = {
 	
 ORDERS = ['LTR', 'pararetrovirus', 'DIRS', 'Penelope', 'LINE', 'SINE', 
 		  'TIR', 'Helitron', 'Maverick', 'mixture', 'Unknown', 'Total']
-
-BLASType = {
-    'qseqid': str,
-    'sseqid': str,
-    'pident': float,
-    'length': int,
-    'mismatch': int,
-    'gapopen': int,
-    'qstart': int,
-    'qend': int,
-    'sstart': int,
-    'send': int,
-    'evalue': float,
-    'bitscore': float,
-    'qlen': int,
-    'slen': int,
-    'qcovs': float,
-    'qcovhsp': float,
-    'sstrand': str,
-	}
 
 
 def Args():
@@ -375,63 +356,6 @@ def classify_by_blast(db_seq, qry_seq, blast_out=None, seqtype='nucl', ncpu=4,
 	d_class = OrderedDict([(qseqid, rc.sseqid) for qseqid, rc in d_best_hit.items()])
 	return d_class
 
-def blast(db_seq, qry_seq, seqtype='nucl', blast_out=None, blast_outfmt=None, ncpu=4):
-	if seqtype == 'nucl':
-		blast_app = 'blastn'
-	elif seqtype == 'prot':
-		blast_app = 'blastp'
-	else:
-		raise ValueError('Unknown molecule type "{}" for blast'.format(seqtype))
-	if blast_out is None:
-		blast_out = qry_seq + '.blastout'
-	if blast_outfmt is None:
-		blast_outfmt = '6'
-	cmd = 'makeblastdb -in {} -dbtype {}'.format(db_seq, seqtype)
-	run_cmd(cmd, logger=logger)
-
-	cmd = '{} -query {} -db {} -out {} -outfmt {} -num_threads {}'.format(blast_app, qry_seq, db_seq, blast_out, blast_outfmt, ncpu)
-#	cmd += " " + blast_opts
-	run_cmd(cmd, logger=logger)
-	return blast_out
-
-class BlastOut(object):
-	def __init__(self, blast_out, outfmt=None):
-		self.blast_out = blast_out
-		if outfmt is not None:
-			outfmt = outfmt.strip(''''"''')
-		if outfmt is None:
-			self.outfmt = 'qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore'.split()
-		elif outfmt[0] == '6':
-			self.outfmt = outfmt.split()[1:]
-		else:
-			raise ValueError('Only support for blast outfmt 6 = tabular, but {} input'.format(outfmt))
-	def __iter__(self):
-		return self.parse()
-	def parse(self):
-		for line in open(self.blast_out):
-			values = line.strip().split('\t')
-			yield BlastOutRecord(self.outfmt, values)
-	def filter_besthit(self, fout=sys.stdout):
-		d_best_hit = OrderedDict()
-		for rc in self.parse():
-			if rc.qseqid in d_best_hit:
-				if rc.bitscore > d_best_hit[rc.qseqid].bitscore:
-					d_best_hit[rc.qseqid] = rc
-			else:
-				d_best_hit[rc.qseqid] = rc
-		if fout is None:
-			return d_best_hit
-		for qseqid, rc in d_best_hit.items():
-			rc.write(fout)
-		return d_best_hit
-
-class BlastOutRecord(object):
-	def __init__(self, outfmt, values):
-		self.values = values
-		for key, value in zip(outfmt, values):
-			setattr(self, key, BLASType[key](value))
-	def write(self, fout=sys.stdout):
-		print('\t'.join(self.values), file=fout)
 
 class Classifier(object):
 	def __init__(self, gff=None, db='rexdb', fout=sys.stdout): # gff is sorted
