@@ -4,6 +4,8 @@ import time
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
+from xopen import xopen as open
+
 in_ref_fa = sys.argv[1]
 in_gtf = sys.argv[2]
 

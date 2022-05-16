@@ -36,7 +36,7 @@ def blast(db_seq, qry_seq, seqtype='nucl', db_name=None, blast_out=None, blast_o
 		blast_out = qry_seq + '.blastout'
 
 	cmd = 'makeblastdb -in {} -dbtype {} -out {}'.format(db_seq, seqtype, db_name)
-	run_cmd(cmd, logger=logger)
+	run_cmd(cmd, logger=logger, fail_exit=True)
 
 	cmd = '{} -query {} -db {} -out {} -outfmt {} -num_threads {} {}'.format(
 			blast_app, qry_seq, db_name, blast_out, blast_outfmt, ncpu, blast_opts)

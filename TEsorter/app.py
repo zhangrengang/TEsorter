@@ -222,8 +222,8 @@ please switch to the GENOME mode by specifiy `-genome`')
 		logger.info('classifying the unclassified sequences by searching against the classified ones')
 		classified_seq = '{}/pass1_classified.fa'.format(args.tmp_dir)
 		unclassified_seq = '{}/pass1_unclassified.fa'.format(args.tmp_dir)
-		get_records(args.sequence, classified_seq, list(d_class.keys()), type='fasta', process='get')
-		get_records(args.sequence, unclassified_seq, list(d_class.keys()), type='fasta', process='remove')
+		get_records(args.sequence, classified_seq, list(d_class.keys()), type='fasta', process='get', format_id=format_gff_id)
+		get_records(args.sequence, unclassified_seq, list(d_class.keys()), type='fasta', process='remove',format_id=format_gff_id)
 
 		logger.info('using the {} rule'.format(args.pass2_rule))
 		d_class2 = classify_by_blast(classified_seq, unclassified_seq,
@@ -267,7 +267,7 @@ please switch to the GENOME mode by specifiy `-genome`')
 	fout = open(pep_lib, 'w')
 	for rc in SeqIO.parse(geneSeq, 'fasta'):
 		raw_id = '|'.join(rc.id.split('|')[:-1])
-		assert raw_id in d_class
+		#assert raw_id in d_class
 		cl = d_class[raw_id]
 		cl = fmt_cls(cl.order, cl.superfamily, cl.clade)
 		d_desc = dict([pair.split('=', 1)for pair in rc.description.split()[-1].split(';')])
@@ -345,6 +345,9 @@ class CommonClassifications:
 def classify_by_blast(db_seq, qry_seq, blast_out=None, seqtype='nucl', ncpu=4,
 					  min_identtity=80, min_coverge=80, min_length=80):
 	'''pass-2 classify'''
+	if os.path.getsize(db_seq) == 0:
+		return {}
+
 	blast_outfmt = "'6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen qcovs qcovhsp sstrand'"
 	blast_out = blast(db_seq, qry_seq, seqtype=seqtype, blast_out=blast_out, blast_outfmt=blast_outfmt, ncpu=ncpu)
 	with open(blast_out+'.best', 'w') as fb:
@@ -854,6 +857,10 @@ def seqs2dict(inSeqs):
 	return d
 	#return dict([(rc.id, rc) for rc in SeqIO.parse(inSeq, 'fasta') for inSeq in inSeqs])
 
+def format_gff_id(id):
+#	return id.replace(';', '_').replace('=', '_')
+	return re.compile(r'[;=\|]').sub("_", id)
+
 def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='nucl', 
 			mincov=20, maxeval=1e-3, genome=False):
 	if prefix is None:
@@ -875,7 +882,8 @@ def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype=
 		gene,clade = parse_hmmname(rc.tname, db=db)
 		if db.startswith('rexdb'):
 			domain = gene.split('-')[1]
-		gid = '{}|{}'.format(qid, rc.tname)
+		gid = '{}|{}'.format(format_gff_id(qid), rc.tname)
+		#gid = '{}|{}'.format(qid, rc.tname)
 		gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
 		gseq = str(gseq)
 		if seqtype == 'nucl':

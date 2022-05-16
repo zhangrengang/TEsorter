@@ -65,8 +65,11 @@ def main():
 		usage()
 		sys.exit()
 	get_records(input_file, output_file, in_accnos, type=type, process=process, col=col, head=head, accnos_sep=accnos_sep, sep=sep, dedup=dedup)
+
+def _format_id(id):
+	return id
 def get_records(input_file, output_file, in_accnos,
-				type='table', process='get', sep="\t",
+				type='table', process='get', sep="\t", format_id=_format_id,
 				col=1, head=1, accnos_sep=None, dedup=False):
 	def get_record(d_accnos, record_id):
 		if record_id in d_accnos:
@@ -93,7 +96,8 @@ def get_records(input_file, output_file, in_accnos,
 				f.write(line)
 			else:
 				temp = line.strip().split(sep)
-				record_id = temp[col-1]
+				record_id = format_id(temp[col-1])
+				temp[col-1] = record_id
 				if process == 'get':
 					if get_record(d_accnos, record_id):
 						if dedup and record_id in lst_get:
@@ -111,7 +115,8 @@ def get_records(input_file, output_file, in_accnos,
 
 	elif type in { 'fasta', 'fastq', 'genbank'}:
 		for seq_record in SeqIO.parse(open(input_file),type):
-			record_id = seq_record.id
+			record_id = format_id(seq_record.id)
+			seq_record.id = record_id
 			if process == 'get':
 				if get_record(d_accnos, record_id):
 					SeqIO.write(seq_record, f, type)

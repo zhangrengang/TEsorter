@@ -25,11 +25,11 @@ try:
 	GRID = True
 	from tempfile import NamedTemporaryFile
 except (RuntimeError,ImportError,AttributeError) as e:
-	if "DRMAA_LIBRARY_PATH" in format(e):
-		logger.warning('Grid computing is not available because DRMAA not configured properly: {}'.format(e))
-	else:
-		logger.warning('Grid computing is not available because DRMAA not installed: {}'.format(e))
-		logger.info('No DRMAA, Switching to local/cluster mode.')
+#	if "DRMAA_LIBRARY_PATH" in format(e):
+#		logger.warning('Grid computing is not available because DRMAA not configured properly: {}'.format(e))
+#	else:
+#		logger.warning('Grid computing is not available because DRMAA not installed: {}'.format(e))
+#		logger.info('No DRMAA, Switching to local/cluster mode.')
 	GRID = False
 
 __version__ = '1.1'
@@ -192,7 +192,7 @@ def run_tasks(cmd_list, tc_tasks=None, mode='grid', grid_opts='', cpu=1, mem='1g
 			#f = sys.stdout
 			for (stdout, stderr, status) in job_status:
 				if fout is not None:
-					print('>>STATUS:\t{}\n>>STDOUT:\n{}\n>>STDERR:\n{}'.format(status, stdout, stderr), file=fout)
+					print('>>STATUS:\t{}\n>>STDOUT:\n{}\n>>STDERR:\n{}'.format(status, stdout.decode(), stderr.decode()), file=fout)
 			#		print('>>STATUS:\t{}\n>>STDERR:\n{}'.format(status, stderr), file=fout)
 			#	f.write(stdout)
 				exit_codes += [status]
@@ -280,7 +280,7 @@ def file2list(cmd_file, sep="\n"):
 			cmd_list = f.read().split(sep)
 	return [cmd for cmd in cmd_list if cmd.strip()]
 
-def run_cmd(cmd, log=False, logger=None, ):
+def run_cmd(cmd, log=False, logger=None, fail_exit=True):
 	if log and logger is None:
 		logger = LOGGER
 	if logger is not None:
@@ -291,8 +291,10 @@ def run_cmd(cmd, log=False, logger=None, ):
 	output = job.communicate()
 	status = job.poll()
 	if logger is not None and status > 0:
-		 logger.warn("exit code {} for CMD `{}`: ".format(status, cmd))
-		 logger.warn('\n###STDOUT:<< {0} >>\n###STDERR:<< {1} >>'.format(*map(lambda x:x.decode(), output)))
+		logger.warn("exit code {} for CMD `{}`: ".format(status, cmd))
+		logger.warn('\n###STDOUT:<< {0} >>\n###STDERR:<< {1} >>'.format(*map(lambda x:x.decode(), output)))
+		if fail_exit:
+			raise ValueError('Failed to run CMD, see details above.')
 	return output + (status,)
 
 def _run_cmd(arg):
