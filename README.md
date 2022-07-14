@@ -191,9 +191,6 @@ You may want to use the RT domains to analysis relationships among retrotranspos
 # to extract RT domain sequences
 concatenate_domains.py rice6.9.5.liban.rexdb.cls.pep RT > rice6.9.5.liban.rexdb.cls.pep.RT.aln
 
-# to align with MAFFT or other tools
-mafft --auto rice6.9.5.liban.rexdb.dom.RT.faa > rice6.9.5.liban.rexdb.dom.RT.aln
-
 # to reconduct the phylogenetic tree with IQTREE or other tools
 iqtree -s rice6.9.5.liban.rexdb.dom.RT.aln -bb 1000 -nt AUTO
 
