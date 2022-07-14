@@ -19,8 +19,8 @@ split_id <- function(x) {
 }
 format_id <- function(x1, x2, x3, x4) {
 	x1 = sapply(x1, split_id)	
-	x1 = gsub('\\W+', '_', x1)
-	x = paste(x1, x2, x3, x4, sep='_')
+	x1 = gsub('[#:]', '_', x1)
+	x = paste0(x1, '_', x2, '/', x3, '/',  x4)
 	return(x)
 }
 
