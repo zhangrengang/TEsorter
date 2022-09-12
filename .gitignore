@@ -11,3 +11,4 @@ test.py
 tmp*
 mytest
 changelog
+makedb

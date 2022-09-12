@@ -43,7 +43,8 @@ DB = {
 	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
 	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
 #	'rexdb-tir': bindir + '/database/REXdb_v3_TIR.hmm',
-#	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.hmm',
+#	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.TIR.hmm',
+	'rexdb-line': bindir + '/database/Kapitonov_et_al.GENE.LINE.hmm',
 	'sine': bindir + '/database/AnnoSINE.hmm',
 	}
 	
@@ -460,7 +461,8 @@ class Classifier(object):
 		elif clade.startswith('Class_I/LTR/'): # LTR/Bel-Pao, LTR/Retrovirus
 			order, superfamily = clade.split('/')[1:3]
 		elif clade.startswith('Class_I/'): # LINE, pararetrovirus, Penelope, DIRS
-			order, superfamily = clade.split('/')[1], 'unknown'
+			try: order, superfamily = clade.split('/')[1:3]
+			except ValueError: order, superfamily = clade.split('/')[1], 'unknown'
 		elif clade.startswith('Class_II/'): # TIR/hAT, Helitro, Maverick
 			try: order, superfamily = clade.split('/')[2:4]
 			except ValueError: order, superfamily = clade.split('/')[2], 'unknown'
