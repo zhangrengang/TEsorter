@@ -63,8 +63,10 @@ def Args():
 					help="input TE/LTR or genome sequences in fasta format [required]")
 	parser.add_argument("-db","--hmm-database", action="store",type=str,
 					default='rexdb', choices=list(DB.keys()),
-					help="the database used [default=%(default)s]")
-	
+					help="the database name used [default=%(default)s]")
+	parser.add_argument("--db-hmm", action="store",type=str,
+					default=None,
+					help="the database HMM file used (prior to `-db`) [default=%(default)s]")
 	parser.add_argument("-st","--seq-type", action="store",type=str,
 					default='nucl', choices=['nucl', 'prot'],
 					help="'nucl' for DNA or 'prot' for protein [default=%(default)s]")
@@ -117,8 +119,8 @@ def Args():
 					help="overlap size of windows [default=%(default)s]")
 					
 	args = parser.parse_args()
-	if args.prefix is None:
-		args.prefix = '{}.{}'.format(os.path.basename(args.sequence), args.hmm_database)
+#	if args.prefix is None:
+#		args.prefix = '{}.{}'.format(os.path.basename(args.sequence), args.hmm_database)
 
 	if args.seq_type == 'prot':
 		args.disable_pass2 = True
@@ -130,15 +132,14 @@ def Args():
 #		args.seq_type = 'prot'
 	return args
 
-def check_db(db):
-	full_path = DB[db]
+def check_db(full_path):
 	folder_path = os.path.dirname(full_path)
 	data_file = os.path.basename(full_path)
 	logger.info( 'db path: '+folder_path )
 	logger.info( 'db file: '+data_file )
 
-	if not os.path.exists(DB[db]):
-		logger.error( 'db '+db+' does not exist!' )
+	if not os.path.exists(full_path):
+		logger.error( 'db file: '+full_path+' does not exist!' )
 		sys.exit()
 	else:
 		for root, dirs, files in os.walk(folder_path):
@@ -155,14 +156,23 @@ def check_db(db):
 def pipeline(args):
 	logger.info( 'VARS: {}'.format(vars(args)))
 	logger.info( 'checking dependencies:' )
-	Dependency().check_hmmer(db=DB[args.hmm_database])
+	db_name = args.hmm_database
+	db_file = DB[args.hmm_database]
+	if args.db_hmm is not None:
+		db_file = args.db_hmm
+		db_name = os.path.splitext(os.path.basename(db_file))[0]
+#	if args.db_name is not None:
+#		db_name = args.db_name
+	if args.prefix is None:
+		args.prefix = '{}.{}'.format(os.path.basename(args.sequence), db_name)
+	Dependency().check_hmmer(db=db_file)
 	if not args.disable_pass2:
 		Dependency().check_blast()
 	if not os.path.exists(args.tmp_dir):
 		os.makedirs(args.tmp_dir)
 
-	logger.info( 'check database '+ args.hmm_database)
-	check_db(args.hmm_database)
+	logger.info( 'check database '+ db_file)
+	check_db(db_file)
 
 	if args.genome:
 		logger.info( 'Start identifying pipeline (GENOME mode)' )
@@ -171,7 +181,8 @@ def pipeline(args):
 		seq_type = 'nucl'
 		genomeAnn(genome=args.sequence, 
 			window_size=args.win_size, window_ovl=args.win_ovl, 
-			hmmdb = args.hmm_database,
+			hmmdb = db_file,
+			db_name = db_name,
 			seqtype = seq_type,
 			prefix = args.prefix,
 			force_write_hmmscan = args.force_write_hmmscan,
@@ -191,10 +202,11 @@ please switch to the GENOME mode by specifiy `-genome`')
 	seq_num = len(lens)
 	logger.info('total {} sequences'.format(seq_num))
 	# search against DB and parse
-	seq_type = 'prot' if args.hmm_database == 'sine' else args.seq_type
+	seq_type = 'prot' if db_name == 'sine' else args.seq_type
 	gff, geneSeq = LTRlibAnn(
 			ltrlib = args.sequence,
-			hmmdb = args.hmm_database,
+			hmmdb = db_file,
+			db_name = db_name,
 			seqtype = seq_type,
 			prefix = args.prefix,
 			force_write_hmmscan = args.force_write_hmmscan,
@@ -208,7 +220,7 @@ please switch to the GENOME mode by specifiy `-genome`')
 	classify_out = args.prefix + '.cls.tsv'
 	fc = open(classify_out, 'w')
 	d_class = OrderedDict()
-	for rc in Classifier(gff, db=args.hmm_database, fout=fc):
+	for rc in Classifier(gff, db=db_name, fout=fc):
 		d_class[rc.id] = rc
 	fc.close()
 	classfied_num = len(d_class)
@@ -417,6 +429,8 @@ class Classifier(object):
 			order, superfamily, max_clade, coding = self.identify_gydb(genes, clades)
 		elif self.db == 'sine':
 			order, superfamily, max_clade, coding = 'SINE', 'unknown','unknown','unknown'
+		else:
+			order, superfamily, max_clade, coding = 'Unknown', 'unknown','unknown','unknown'
 		return order, superfamily, max_clade, coding
 	def identify_rexdb(self, genes, clades):
 		perfect_structure = {
@@ -692,6 +706,8 @@ def parse_hmmname(hmmname, db='gydb'):
 	elif db.startswith('sine'):
 		gene = 'SINE' #hmmname
 		clade = 'SINE'
+	else:
+		gene, clade = hmmname, hmmname
 	return gene, clade
 class HmmCluster(object):
 	def __int__(self, hmmout, seqtype = 'nucl'): # only for nucl
@@ -915,9 +931,9 @@ def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype=
 			gid = '{}:{}-{}|{}'.format(qid, nuc_start, nuc_end, rc.tname)
 			element = LTRgffLine(gffline + ({'ID':gid, 'gene':domain, 'clade':clade},))
 			order, superfamily, max_clade, coding = Classifier(db=db).classify_element([element])
-			if order == 'Unknown':
-				logger.warn('unknown element: {}, is excluded'.format(gid))
-				continue
+#			if order == 'Unknown':
+#				logger.warn('unknown element: {}, is excluded'.format(gid))
+#				continue
 			cls = fmt_cls(order, superfamily, max_clade)
 			nstop = list(gseq).count('*')
 			_add = 'Classification={};stop={};'.format(cls, nstop)
@@ -1048,7 +1064,7 @@ def hmmscan_pp(inSeq, hmmdb='rexdb.hmm', hmmout=None, tmpdir='./tmp', processors
 	
 	domtbl_files = [chunk_file + '.domtbl' for chunk_file in chunk_files]
 	cmds = [
-		'{} --nobias --notextw --noali --domtblout {} {} {}'.format(
+		'{} --nobias --notextw --noali --domtblout {} {} {} > /dev/null'.format(
 			bin, domtbl_file, hmmdb, chunk_file) \
 			for chunk_file, domtbl_file in zip(chunk_files, domtbl_files)]
 	jobs = pp_run(cmds, processors=processors)
@@ -1071,7 +1087,7 @@ def genomeAnn(genome, tmpdir='./tmp', seqfmt='fasta',window_size=1e6, window_ovl
 	logger.info('Summary of classifications:')
 	summary_genome(gff, fout=sys.stdout)
 	
-def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
+def LTRlibAnn(ltrlib, hmmdb='rexdb', db_name='rexdb',  seqtype='nucl', prefix=None,
 			force_write_hmmscan=False, genome=False, 
 			processors=4, tmpdir='./tmp',
 			mincov=20, maxeval=1e-3):
@@ -1084,12 +1100,12 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', seqtype='nucl', prefix=None,
 	elif seqtype == 'prot':
 		d_nucl_len = None
 
-	logger.info( 'HMM scanning against `{}`'.format(DB[hmmdb]) )
+	logger.info( 'HMM scanning against `{}`'.format(hmmdb) )
 	
-	chunk_files = hmmscan_pp(ltrlib, hmmdb=DB[hmmdb], hmmout=domtbl, tmpdir=tmpdir, 
-			processors=processors, bin=bin, seqtype=seqtype)
+	chunk_files = hmmscan_pp(ltrlib, hmmdb=hmmdb, hmmout=domtbl, tmpdir=tmpdir, 
+			processors=processors, bin=bin, seqtype=seqtype, force_write_hmmscan=force_write_hmmscan)
 	logger.info( 'generating gene anntations' )
-	gff, geneSeq = hmm2best(chunk_files, [domtbl], db=hmmdb, nucl_len=d_nucl_len, genome=genome,
+	gff, geneSeq = hmm2best(chunk_files, [domtbl], db=db_name, nucl_len=d_nucl_len, genome=genome,
 				prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval)
 	return gff, geneSeq
 
