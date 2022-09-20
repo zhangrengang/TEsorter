@@ -82,7 +82,7 @@ TEsorter RepeatPeps.lib -st prot -p 20
 ```
 Since version v1.4, a GENOME mode is supported to identify TE protein domains throughout whole genome:
 ```
-TEsorter genome.fasta -genome -p 20
+TEsorter genome.fasta -genome -p 20 -prob 0.9
 ```
 ## Citation
 If you use the `TEsorter` tool, please cite:
