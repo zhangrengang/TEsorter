@@ -88,7 +88,9 @@ def Args():
 	parser.add_argument("-eval", "--max-evalue", action="store",
 					default=1e-3, type=float,
 					help="maxinum E-value for protein domains in HMMScan output [default=%(default)s]")
-	
+	parser.add_argument("-prob", "--min-probability", action="store",
+					default=0.5, type=float,
+					help="mininum posterior probability for protein domains in HMMScan output [default=%(default)s]")	
 	parser.add_argument("-nocln", "--no-cleanup", action="store_true",
 					default=False,
 					help="do not clean up the temporary directory [default=%(default)s]")
@@ -133,25 +135,27 @@ def Args():
 	return args
 
 def check_db(full_path):
-	folder_path = os.path.dirname(full_path)
+#	folder_path = os.path.dirname(full_path)
+#	if folder_path == '':
+#		folder_path = '.'
 	data_file = os.path.basename(full_path)
-	logger.info( 'db path: '+folder_path )
-	logger.info( 'db file: '+data_file )
+#	logger.info( 'db path: '+folder_path )
+	logger.info( 'db file: '+ full_path )
 
 	if not os.path.exists(full_path):
 		logger.error( 'db file: '+full_path+' does not exist!' )
 		sys.exit()
 	else:
-		for root, dirs, files in os.walk(folder_path):
-			if os.path.exists(full_path+".h3i"):
-				logger.info(data_file+'\tOK')
-			else:
-				logger.info( 'db '+data_file+' not yet ready, building db!' )
-				command = "hmmpress -f "+full_path
-				#Execute the command
-				process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-				stdout, stderr = process.communicate()
-				logger.info(stdout.decode('utf-8'))
+#		for root, dirs, files in os.walk(folder_path):
+		if os.path.exists(full_path+".h3i"):
+			logger.info(data_file+'\tOK')
+		else:
+			logger.info( 'db '+data_file+' not yet ready, building db!' )
+			command = "hmmpress -f "+full_path
+			#Execute the command
+			process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+			stdout, stderr = process.communicate()
+			logger.info(stdout.decode('utf-8'))
 
 def pipeline(args):
 	logger.info( 'VARS: {}'.format(vars(args)))
@@ -190,6 +194,7 @@ def pipeline(args):
 			tmpdir = args.tmp_dir,
 			mincov = args.min_coverage,
 			maxeval = args.max_evalue,
+			minprob = args.min_probability,
 			)
 		cleanup(args)
 		logger.info( 'Pipeline done.' )
@@ -214,6 +219,7 @@ please switch to the GENOME mode by specifiy `-genome`')
 			tmpdir = args.tmp_dir,
 			mincov = args.min_coverage,
 			maxeval = args.max_evalue,
+			minprob = args.min_probability,
 			)
 
 	# classify
@@ -880,7 +886,7 @@ def format_gff_id(id):
 	return re.compile(r'[;=\|]').sub("_", id)
 
 def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype='nucl', 
-			mincov=20, maxeval=1e-3, genome=False):
+			mincov=20, maxeval=1e-3, minprob=0.6, genome=False):
 	if prefix is None:
 		prefix = inSeqs[0]
 	if nucl_len is None and seqtype=='nucl':
@@ -894,7 +900,7 @@ def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype=
 			qid, s, e, domain = key
 		else:
 			qid, domain = key
-		if rc.hmmcov < mincov or rc.evalue > maxeval:
+		if rc.hmmcov < mincov or rc.evalue > maxeval or rc.acc < minprob:
 			continue
 		rawid = qid
 		gene,clade = parse_hmmname(rc.tname, db=db)
@@ -936,7 +942,8 @@ def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype=
 #				continue
 			cls = fmt_cls(order, superfamily, max_clade)
 			nstop = list(gseq).count('*')
-			_add = 'Classification={};stop={};'.format(cls, nstop)
+			match = '{} {} {}'.format(rc.tname, rc.hmmstart, rc.hmmend)
+			_add = 'Classification={};Target={};nstop={};'.format(cls, match, nstop)
 		name = '{}-{}'.format(clade, domain)
 		attr = 'ID={};Name={};{}gene={};clade={};coverage={};evalue={};probability={}'.format(
 				gid, name, _add, domain, clade, rc.hmmcov, rc.evalue,  rc.acc)
@@ -1090,7 +1097,7 @@ def genomeAnn(genome, tmpdir='./tmp', seqfmt='fasta',window_size=1e6, window_ovl
 def LTRlibAnn(ltrlib, hmmdb='rexdb', db_name='rexdb',  seqtype='nucl', prefix=None,
 			force_write_hmmscan=False, genome=False, 
 			processors=4, tmpdir='./tmp',
-			mincov=20, maxeval=1e-3):
+			mincov=20, maxeval=1e-3, minprob=0.5):
 	if prefix is None:
 		prefix = '{}.{}'.format(ltrlib, hmmdb)
 	bin = 'hmmscan'
@@ -1106,13 +1113,14 @@ def LTRlibAnn(ltrlib, hmmdb='rexdb', db_name='rexdb',  seqtype='nucl', prefix=No
 			processors=processors, bin=bin, seqtype=seqtype, force_write_hmmscan=force_write_hmmscan)
 	logger.info( 'generating gene anntations' )
 	gff, geneSeq = hmm2best(chunk_files, [domtbl], db=db_name, nucl_len=d_nucl_len, genome=genome,
-				prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval)
+				prefix=prefix, seqtype=seqtype, mincov=mincov, maxeval=maxeval, minprob=minprob)
 	return gff, geneSeq
 
 def replaceCls(ltrlib, seqtype='nucl', db='rexdb'):
 	gff = ltrlib + '.' + db + '.gff3'
 	if not os.path.exists(gff):
 		gff, geneSeq, aaSeq = LTRlibAnn(ltrlib, seqtype=seqtype, hmmdb=db)
+
 	annout = '{}.anno'.format(gff)
 	newlib = '{}.reclassified'.format(ltrlib)
 	fann = open(annout, 'w')
