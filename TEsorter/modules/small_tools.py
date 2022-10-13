@@ -9,6 +9,12 @@ import subprocess
 from Bio import SeqIO
 ISOTIMEFORMAT='%Y-%m-%d %X'
 
+def tr_numeric(val):
+    try: return int(val)
+    except:
+        try: return float(val)
+        except: return val
+
 def open_file(infile, mode='r'):
 	suffix = os.path.splitext(infile)[-1]
 	if suffix == '.gz':

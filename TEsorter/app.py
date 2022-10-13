@@ -29,6 +29,7 @@ from .modules.translate_seq import six_frame_translate
 # for multi-processing HMMScan
 from .modules.RunCmdsMP import run_cmd, pp_run, pool_func
 from .modules.split_records import split_fastx_by_chunk_num, cut_seqs
+from .modules.small_tools import tr_numeric
 #from .modules.small_tools import open_file as open
 from xopen import xopen as open
 
@@ -267,7 +268,7 @@ please switch to the GENOME mode by specifiy `-genome`')
 		out_lib = args.prefix + '.cls.lib'
 		logger.info( 'writing library for RepeatMasker in `{}`'.format(out_lib) )
 		fout = open(out_lib, 'w')
-		for rc in SeqIO.parse(args.sequence, 'fasta'):
+		for rc in SeqIO.parse(open(args.sequence), 'fasta'):
 			if rc.id in d_class:
 				cl = d_class[rc.id]
 				strand = cl.strand
@@ -686,10 +687,10 @@ class HmmDomRecord(object):
 				= temp[:22]
 		self.tlen, self.qlen, self.domi, self.domn, \
 			self.hmmstart, self.hmmend, self.alnstart, self.alnend, self.envstart, self.envend = \
-			list(map(int, [self.tlen, self.qlen, self.domi, self.domn, \
+			list(map(tr_numeric, [self.tlen, self.qlen, self.domi, self.domn, \
 					self.hmmstart, self.hmmend, self.alnstart, self.alnend, self.envstart, self.envend]))
 		self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc = \
-			list(map(float, [self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc]))
+			list(map(tr_numeric, [self.evalue, self.score, self.bias, self.cevalue, self.ievalue, self.domscore, self.dombias, self.acc]))
 		self.tdesc = ' '.join(temp[22:])
 		
 	@property
@@ -831,6 +832,7 @@ def resolve_overlaps(lines, max_ovl=20, ):
 	return sorted(set(lines) - set(discards), key=lambda x:x[3])
 
 def _hmm2best(inHmmouts, db='rexdb', seqtype='nucl', genome=False):
+	'''best HMM hit based on score'''
 	d_besthit = {}
 	for inHmmout in inHmmouts:
 		for rc in HmmScan(inHmmout):
@@ -908,7 +910,9 @@ def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype=
 			domain = gene.split('-')[1]
 		gid = '{}|{}'.format(format_gff_id(qid), rc.tname)
 		#gid = '{}|{}'.format(qid, rc.tname)
-		gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
+		try: gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
+		except KeyError as e:
+			raise KeyError('{}\nIt seems that the HMM domtbl file is not consist with the sequence file. Please try with `-fw`.')
 		gseq = str(gseq)
 		if seqtype == 'nucl':
 			strand, frame = parse_frame(rc.qname.split('|')[-1])
@@ -1210,6 +1214,7 @@ class Dependency(object):
 
 def main():
 	logger.info('Command: {}'.format(' '.join(sys.argv)))
+	logger.info('Version: {}'.format(' '.join(__version__)))
 	pipeline(Args())
 
 if __name__ == '__main__':
