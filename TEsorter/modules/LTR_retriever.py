@@ -143,7 +143,8 @@ class Retriever():
 				if id in ids:
 					continue
 				ids.add(id)
-				yield IntactRecord(title, temp)
+				try: yield IntactRecord(title, temp)
+				except ValueError: continue
 
 	def all_scn(self):
 		for line in open(self.retriever_all_scn):
