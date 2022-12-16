@@ -94,6 +94,15 @@ If you use the REXdb database (`-db rexdb*`), please cite:
 If you use the GyDB database (`-db gydb`), please cite:
 > Llorens C, Futami R, Covelli L et. al. The Gypsy Database (GyDB) of mobile genetic elements: release 2.0 [J]. *Nucleic Acids Research*, 2011, 39: 70–74 [https://doi.org/10.1093/nar/gkq1061](https://doi.org/10.1093/nar/gkq1061)
 
+If you use the AnnoSINE database (`-db sine`), please cite:
+> Li Y, Jiang N, Sun Y. AnnoSINE: a short interspersed nuclear elements annotation tool for plant genomes [J]. Plant Physiology, 2022, 188: 955–970 [http://doi.org/10.1093/plphys/kiab524](http://doi.org/10.1093/plphys/kiab524)
+
+If you use the LINE/RT database (`-db rexdb-line`), please cite:
+> Kapitonov VV, Tempel S, Jurka J. Simple and fast classification of non-LTR retrotransposons based on phylogeny of their RT domain protein sequences [J]. Gene, 2009, 448: 207–213 [http://doi.org/10.1016/j.gene.2009.07.019](http://doi.org/10.1016/j.gene.2009.07.019)
+
+If you use the DNA/TIR database (`-db rexdb-pnas`), please cite:
+> Yuan YW, Wessler SR. The catalytic domain of all eukaryotic cut-and-paste transposase superfamilies [J]. Proceedings of the National Academy of Sciences, 2011, 108: 7884–7889 [http://doi.org/10.1073/pnas.1104208108](http://doi.org/10.1073/pnas.1104208108)
+
 ## Outputs  
 ```
 rice6.9.5.liban.rexdb.domtbl        HMMScan raw output

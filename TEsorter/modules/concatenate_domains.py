@@ -143,8 +143,16 @@ def catAln(inALNs, outALN, unique=False):
 
 def format_id_for_iqtree(id):
     return re.compile(r'[^\w]+').sub('_', id)
+def print_help():
+	print('''Usage: concatenate_domains.py <pepSeq> <domain1> [<domain2> ...]
+Example: concatenate_domains.py rice6.9.5.liban.rexdb.cls.pep RT RH INT > rice6.9.5.liban.rexdb.cls.pep_RT_RH_INT.aln
+
+Error: no input (see above usage)''')
 
 def main():
+	if len(sys.argv) == 1 or sys.argv[1] in {'-h', '-help', '--help'}:
+		print_help()
+		sys.exit()
 	inSeq = sys.argv[1]
 	domains = sys.argv[2:]
 	concat_domains(inSeq=inSeq, domains=domains, outSeq=sys.stdout)

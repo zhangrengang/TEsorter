@@ -44,7 +44,7 @@ DB = {
 	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
 	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
 #	'rexdb-tir': bindir + '/database/REXdb_v3_TIR.hmm',
-#	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.TIR.hmm',
+	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.TIR.hmm',
 	'rexdb-line': bindir + '/database/Kapitonov_et_al.GENE.LINE.hmm',
 	'sine': bindir + '/database/AnnoSINE.hmm',
 	}
@@ -95,7 +95,11 @@ def Args():
 	parser.add_argument("-nocln", "--no-cleanup", action="store_true",
 					default=False,
 					help="do not clean up the temporary directory [default=%(default)s]")
-	group_element = parser.add_argument_group('ElEMENT mode (default)', 
+	parser.add_argument("-cite", "--citation", action="store_true",
+                    default=False,
+                    help="print the citation and exit [default=%(default)s]")
+
+	group_element = parser.add_argument_group('ELEMENT mode (default)', 
 					'Input TE/LTR sequences to classify them into clade-level.')
 	group_element.add_argument("-dp2", "--disable-pass2", action="store_true",
 					default=False,
@@ -109,6 +113,7 @@ def Args():
 	group_element.add_argument("-norc", "--no-reverse", action="store_true",
 					default=False,
 					help="do not reverse complement sequences if they are detected in minus strand [default=%(default)s]")
+
 	group_genome = parser.add_argument_group('GENOME mode', 
 					'Input genome sequences to detect TE protein domains throughout whole genome.')
 	group_genome.add_argument("-genome", action="store_true",
@@ -125,6 +130,10 @@ def Args():
 #	if args.prefix is None:
 #		args.prefix = '{}.{}'.format(os.path.basename(args.sequence), args.hmm_database)
 
+	if args.citation:
+		print_citation()
+		sys.exit()
+
 	if args.seq_type == 'prot':
 		args.disable_pass2 = True
 		args.no_reverse = True
@@ -134,6 +143,26 @@ def Args():
 #	if args.hmm_database:
 #		args.seq_type = 'prot'
 	return args
+
+def print_citation():
+	print('''If you use the TEsorter tool, please cite:
+Zhang RG, Li GL, Wang XL et. al. TEsorter: an accurate and fast method to classify LTR retrotransposons in plant genomes [J]. Horticulture Research, 2022, 9: uhac017 [https://doi.org/10.1093/hr/uhac017]
+
+If you use the REXdb database ('-db rexdb/rexdb-plant/rexdb-metazoa'), please cite:
+Neumann P, Novák P, Hoštáková N et. al. Systematic survey of plant LTR-retrotransposons elucidates phylogenetic relationships of their polyprotein domains and provides a reference for element classification [J]. Mobile DNA, 2019, 10: 1 https://doi.org/10.1186/s13100-018-0144-1
+
+If you use the GyDB database ('-db gydb'), please cite:
+Llorens C, Futami R, Covelli L et. al. The Gypsy Database (GyDB) of mobile genetic elements: release 2.0 [J]. Nucleic Acids Research, 2011, 39: 70–74 [https://doi.org/10.1093/nar/gkq1061]
+
+If you use the AnnoSINE database ('-db sine'), please cite:
+Li Y, Jiang N, Sun Y. AnnoSINE: a short interspersed nuclear elements annotation tool for plant genomes [J]. Plant Physiology, 2022, 188: 955–970 [http://doi.org/10.1093/plphys/kiab524]
+
+If you use the LINE/RT database ('-db rexdb-line'), please cite:
+Kapitonov VV, Tempel S, Jurka J. Simple and fast classification of non-LTR retrotransposons based on phylogeny of their RT domain protein sequences [J]. Gene, 2009, 448: 207–213 [http://doi.org/10.1016/j.gene.2009.07.019]
+
+If you use the DNA/TIR database ('-db rexdb-pnas'), please cite:
+Yuan YW, Wessler SR. The catalytic domain of all eukaryotic cut-and-paste transposase superfamilies [J]. Proceedings of the National Academy of Sciences, 2011, 108: 7884–7889 [http://doi.org/10.1073/pnas.1104208108]
+''')
 
 def check_db(full_path):
 #	folder_path = os.path.dirname(full_path)
@@ -159,6 +188,9 @@ def check_db(full_path):
 			logger.info(stdout.decode('utf-8'))
 
 def pipeline(args):
+	logger.info('Command: {}'.format(' '.join(sys.argv)))
+	logger.info('Version: {}'.format(__version__))
+
 	logger.info( 'VARS: {}'.format(vars(args)))
 	logger.info( 'checking dependencies:' )
 	db_name = args.hmm_database
@@ -1213,8 +1245,6 @@ class Dependency(object):
 		return version
 
 def main():
-	logger.info('Command: {}'.format(' '.join(sys.argv)))
-	logger.info('Version: {}'.format(' '.join(__version__)))
 	pipeline(Args())
 
 if __name__ == '__main__':
