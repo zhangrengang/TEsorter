@@ -13,7 +13,7 @@ For more details of methods and benchmarking results in classifying TEs, please 
        * [Using bioconda](using-bioconda)
        * [Old school](#old-school)
    * [Quick Start](#quick-start)
-   * [Citation](#Citation)
+   * [Citations](#Citations)
    * [Outputs](#outputs)
    * [Usage](#usage)
    * [Limitations](#limitations)
@@ -84,7 +84,7 @@ Since version v1.4, a GENOME mode is supported to identify TE protein domains th
 ```
 TEsorter genome.fasta -genome -p 20 -prob 0.9
 ```
-## Citation
+## Citations
 If you use the `TEsorter` tool, please cite:
 > Zhang RG, Li GL, Wang XL et. al. TEsorter: an accurate and fast method to classify LTR retrotransposons in plant genomes [J]. *Horticulture Research*, 2022, 9: uhac017 [https://doi.org/10.1093/hr/uhac017](https://doi.org/10.1093/hr/uhac017)
 
