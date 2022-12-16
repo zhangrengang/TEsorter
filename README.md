@@ -125,66 +125,57 @@ Note: the GENOME mode (`-genome`) will not output `*.cls.*` files.
 ## Usage  
 ```
 $ TEsorter  -h
-usage: TEsorter [-h] [-v] [-db {gydb,rexdb,rexdb-plant,rexdb-metazoa,sine}]
-                [-st {nucl,prot}] [-pre PREFIX] [-fw] [-p PROCESSORS]
-                [-tmp TMP_DIR] [-cov MIN_COVERAGE] [-eval MAX_EVALUE] [-nocln]
-                [-dp2] [-rule PASS2_RULE] [-nolib] [-norc] [-genome]
+usage: TEsorter [-h] [-v] [-db {gydb,rexdb,rexdb-plant,rexdb-metazoa,rexdb-pnas,rexdb-line,sine}] [--db-hmm DB_HMM]
+                [-st {nucl,prot}] [-pre PREFIX] [-fw] [-p PROCESSORS] [-tmp TMP_DIR] [-cov MIN_COVERAGE] [-eval MAX_EVALUE]
+                [-prob MIN_PROBABILITY] [-nocln] [-cite] [-dp2] [-rule PASS2_RULE] [-nolib] [-norc] [-genome]
+                [-win_size WIN_SIZE] [-win_ovl WIN_OVL]
                 sequence
 
-lineage-level classification of transposable elements using conserved protein
-domains.
+lineage-level classification of transposable elements using conserved protein domains.
 
 positional arguments:
-  sequence              input TE/LTR or genome sequences in fasta format
-                        [required]
+  sequence              input TE/LTR or genome sequences in fasta format [required]
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
-  -db {gydb,rexdb,rexdb-plant,rexdb-metazoa,sine}, --hmm-database {gydb,rexdb,rexdb-plant,rexdb-metazoa,sine}
-                        the database used [default=rexdb]
+  -db {gydb,rexdb,rexdb-plant,rexdb-metazoa,rexdb-pnas,rexdb-line,sine}, --hmm-database {gydb,rexdb,rexdb-plant,rexdb-metazoa,rexdb-pnas,rexdb-line,sine}
+                        the database name used [default=rexdb]
+  --db-hmm DB_HMM       the database HMM file used (prior to `-db`) [default=None]
   -st {nucl,prot}, --seq-type {nucl,prot}
                         'nucl' for DNA or 'prot' for protein [default=nucl]
   -pre PREFIX, --prefix PREFIX
                         output prefix [default='{-s}.{-db}']
   -fw, --force-write-hmmscan
-                        if False, will use the existed hmmscan outfile and
-                        skip hmmscan [default=False]
+                        if False, will use the existed hmmscan outfile and skip hmmscan [default=False]
   -p PROCESSORS, --processors PROCESSORS
                         processors to use [default=4]
   -tmp TMP_DIR, --tmp-dir TMP_DIR
-                        directory for temporary files
-                        [default=./tmp-073acf8a-a062-11ec-a3ba-a0369fc22fb8]
+                        directory for temporary files [default=./tmp-e104611e-7ce3-11ed-90b7-0b7f57d69b28]
   -cov MIN_COVERAGE, --min-coverage MIN_COVERAGE
-                        mininum coverage for protein domains in HMMScan output
-                        [default=20]
+                        mininum coverage for protein domains in HMMScan output [default=20]
   -eval MAX_EVALUE, --max-evalue MAX_EVALUE
-                        maxinum E-value for protein domains in HMMScan output
-                        [default=0.001]
-  -nocln, --no-cleanup  do not clean up the temporary directory
-                        [default=False]
+                        maxinum E-value for protein domains in HMMScan output [default=0.001]
+  -prob MIN_PROBABILITY, --min-probability MIN_PROBABILITY
+                        mininum posterior probability for protein domains in HMMScan output [default=0.5]
+  -nocln, --no-cleanup  do not clean up the temporary directory [default=False]
+  -cite, --citation     print the citation and exit [default=False]
 
-ElEMENT mode (default):
+ELEMENT mode (default):
   Input TE/LTR sequences to classify them into clade-level.
 
   -dp2, --disable-pass2
-                        do not further classify the unclassified sequences
-                        [default=False for `nucl`, True for `prot`]
+                        do not further classify the unclassified sequences [default=False for `nucl`, True for `prot`]
   -rule PASS2_RULE, --pass2-rule PASS2_RULE
-                        classifying rule [identity-coverage-length] in pass-2
-                        based on similarity [default=80-80-80]
-  -nolib, --no-library  do not generate a library file for RepeatMasker
-                        [default=False]
-  -norc, --no-reverse   do not reverse complement sequences if they are
-                        detected in minus strand [default=False]
+                        classifying rule [identity-coverage-length] in pass-2 based on similarity [default=80-80-80]
+  -nolib, --no-library  do not generate a library file for RepeatMasker [default=False]
+  -norc, --no-reverse   do not reverse complement sequences if they are detected in minus strand [default=False]
 
 GENOME mode:
-  Input genome sequences to detect TE protein domains throughout whole
-  genome.
+  Input genome sequences to detect TE protein domains throughout whole genome.
 
   -genome               input is genome sequences [default=False]
-  -win_size WIN_SIZE    window size of chunking genome sequences
-                        [default=270000]
+  -win_size WIN_SIZE    window size of chunking genome sequences [default=270000]
   -win_ovl WIN_OVL      overlap size of windows [default=30000]
 ```
 
