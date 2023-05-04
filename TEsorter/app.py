@@ -944,7 +944,7 @@ def hmm2best(inSeqs, inHmmouts, nucl_len=None, prefix=None, db='rexdb', seqtype=
 		#gid = '{}|{}'.format(qid, rc.tname)
 		try: gseq = d_seqs[rc.qname].seq[rc.envstart-1:rc.envend]
 		except KeyError as e:
-			raise KeyError('{}\nIt seems that the HMM domtbl file is not consist with the sequence file. Please try with `-fw`.')
+			raise KeyError('{}\nIt seems that the HMM domtbl file is not consistent with the sequence file. Please retry with `-fw`.')
 		gseq = str(gseq)
 		if seqtype == 'nucl':
 			strand, frame = parse_frame(rc.qname.split('|')[-1])

@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 #coding: utf-8
+
 import sys, getopt
 from io import IOBase
 from Bio import SeqIO
-from TEsorter.modules.small_tools import open_file as open
+from .small_tools import open_file as open
 
 def usage():
 	print('usage: %s [options] -i RECORD -a LIST -o SUBRECORD' %sys.argv[0])
