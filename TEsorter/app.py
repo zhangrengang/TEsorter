@@ -92,6 +92,9 @@ def Args():
 	parser.add_argument("-prob", "--min-probability", action="store",
 					default=0.5, type=float,
 					help="mininum posterior probability for protein domains in HMMScan output [default=%(default)s]")	
+	parser.add_argument("-mask", action="store", type=str, nargs='+',
+					default=None, choices=['soft', 'hard'],
+					help="output masked sequences (soft: masking with lowercase; hard: masking with N) [default=%(default)s]")
 	parser.add_argument("-nocln", "--no-cleanup", action="store_true",
 					default=False,
 					help="do not clean up the temporary directory [default=%(default)s]")
@@ -216,7 +219,7 @@ def pipeline(args):
 		#print(open(args.sequence))
 		#print([(rc.id, len(rc.seq)) for rc in SeqIO.parse(open(args.sequence), 'fasta')])
 		seq_type = 'nucl'
-		genomeAnn(genome=args.sequence, 
+		gff, geneSeq = genomeAnn(genome=args.sequence, 
 			window_size=args.win_size, window_ovl=args.win_ovl, 
 			hmmdb = db_file,
 			db_name = db_name,
@@ -229,9 +232,10 @@ def pipeline(args):
 			maxeval = args.max_evalue,
 			minprob = args.min_probability,
 			)
+		mask_gff3(args.sequence, gff, args.prefix, types=args.mask)
 		cleanup(args)
 		logger.info( 'Pipeline done.' )
-		return
+		return	# genome mode stop at here
 	logger.info( 'Start classifying pipeline (ELEMENT mode)' )
 	lens = [len(rc.seq) for rc in SeqIO.parse(open(args.sequence), 'fasta')]
 	if max(lens) > 1e6:
@@ -332,7 +336,16 @@ please switch to the GENOME mode by specifiy `-genome`')
 	summary(d_class)
 	cleanup(args)
 	logger.info( 'Pipeline done.' )
-
+def mask_gff3(inSeq, inRM, outPrefix, types=['hard'], **kargs):
+	if not types:
+		return
+	from .modules.RepeatMasker import mask
+	for type in types:
+		outSeqfile = '{}.{}masked'.format(outPrefix, type)
+		soft = True if type == 'soft' else False
+		logger.info( '{}-masking `{}`; output `{}`'.format(type, inSeq, outSeqfile) )
+		with open(outSeqfile, 'w') as outSeq:
+			mask(inSeq, inRM, outSeq, soft=soft, **kargs)
 def cleanup(args):
 	# clean up
 	if not args.no_cleanup:
@@ -1129,6 +1142,7 @@ def genomeAnn(genome, tmpdir='./tmp', seqfmt='fasta',window_size=1e6, window_ovl
 	gff, geneSeq = LTRlibAnn(ltrlib=cutSeq, genome=True, tmpdir=tmpdir, **kargs)
 	logger.info('Summary of classifications:')
 	summary_genome(gff, fout=sys.stdout)
+	return gff, geneSeq
 	
 def LTRlibAnn(ltrlib, hmmdb='rexdb', db_name='rexdb',  seqtype='nucl', prefix=None,
 			force_write_hmmscan=False, genome=False, 

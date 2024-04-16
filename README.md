@@ -51,36 +51,36 @@ TEsorter TEsorter/test/rice6.9.5.liban
 ```
 By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v3.0 + metazoa_v3](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended.
 
-For plants ([an example](https://raw.githubusercontent.com/oushujun/EDTA/master/database/rice6.9.5.liban)), it might be better to use only the plant database (Note that the input file is TE or LTR sequences but not genome sequences):
+For plants ([an example](https://raw.githubusercontent.com/oushujun/EDTA/master/database/rice6.9.5.liban)), it might be better to use only the plant database (**Note that the input file is TE or LTR sequences but not genome sequences: ELEMENT mode**):
 ```
-TEsorter input_file -db rexdb-plant
+TEsorter TE.fasta -db rexdb-plant
 ```
 
 Classical [GyDB](http://gydb.org/) can also be used:
 ```
-TEsorter input_file -db gydb
+TEsorter TE.fasta -db gydb
 ```
 To speed up, use more processors [default=4]:
 ```
-TEsorter input_file -p 20
+TEsorter TE.fasta -p 20
 ```
 To improve sensitivity, reduce the criteria (coverage and E-value):
 ```
-TEsorter input_file -p 20 -cov 10 -eval 1e-2
+TEsorter TE.fasta -p 20 -cov 10 -eval 1e-2
 ```
 To improve specificity, increase the criteria and disable the pass2 mode:
 ```
-TEsorter input_file -p 20 -cov 30 -eval 1e-5 -dp2
+TEsorter TE.fasta -p 20 -cov 30 -eval 1e-5 -dp2
 ```
 To improve sensitivity of pass-2, reduce the [80–80–80 rule](http://doi.org/10.1038/nrg2165-c3) which may be too strict for superfamily-level classification:
 ```
-TEsorter input_file -p 20 -rule 70-30-80
+TEsorter TE.fasta -p 20 -rule 70-30-80
 ```
 To classify TE polyprotein sequences ([an example](http://www.repeatmasker.org/RMDownload.html)) or gene protein seqeunces:
 ```
 TEsorter RepeatPeps.lib -st prot -p 20
 ```
-Since version v1.4, a GENOME mode is supported to identify TE protein domains throughout whole genome:
+Since version v1.4, a **GENOME mode (input genome sequences)** is supported to identify TE protein domains throughout whole genome:
 ```
 TEsorter genome.fasta -genome -p 20 -prob 0.9
 ```
@@ -119,6 +119,7 @@ rice6.9.5.liban.rexdb.cls.tsv       TEs/LTR-RTs classifications
     Column 7: Domains, e.g. GAG|SIRE PROT|SIRE INT|SIRE RT|SIRE RH|SIRE; `none` for pass-2 classifications
 rice6.9.5.liban.rexdb.cls.lib       fasta library for RepeatMasker
 rice6.9.5.liban.rexdb.cls.pep       the same sequences as `rice6.9.5.liban.rexdb.dom.faa`, but id is changed with classifications.
+rice6.9.5.liban.rexdb.*masked		sequences masking the TE domains
 ```
 Note: the GENOME mode (`-genome`) will not output `*.cls.*` files.
 
@@ -158,6 +159,9 @@ options:
                         maxinum E-value for protein domains in HMMScan output [default=0.001]
   -prob MIN_PROBABILITY, --min-probability MIN_PROBABILITY
                         mininum posterior probability for protein domains in HMMScan output [default=0.5]
+  -mask {soft,hard} [{soft,hard} ...]
+                        output masked sequences (soft: masking with lowercase;
+                        hard: masking with N) [default=None]
   -nocln, --no-cleanup  do not clean up the temporary directory [default=False]
   -cite, --citation     print the citation and exit [default=False]
 

@@ -161,20 +161,20 @@ def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=False, exclu
 		regions2 = d_simple.get(rc.id, [])
 		for start, end in sorted(regions2):
 			seq[start:end] = list(map(lower, seq[start:end]))
-		print('total {}, exclude {}, hard {}, soft {}.'.format(len(set(d_mask[rc.id])), len(set(d_exclude.get(rc.id, []))), len(regions), len(regions2)), file=sys.stderr)
+	#	print('total {}, exclude {}, hard {}, soft {}.'.format(len(set(d_mask[rc.id])), len(set(d_exclude.get(rc.id, []))), len(regions), len(regions2)), file=sys.stderr)
 		d_counter = Counter(list(seq))
 		num_N = d_counter['n'] + d_counter['N']
 		seq = ''.join(seq)
 		seq = Seq(seq)
 		if not len(seq) == len(rc.seq):
 			print('\tERROR', rc.id, len(seq), len(rc.seq), len(regions), file=sys.stderr)
-		print(rc.id, len(seq), num_N, 100.0*(len(seq)-num_N)/len(seq), file=sys.stderr)
+	#	print(rc.id, len(seq), num_N, 100.0*(len(seq)-num_N)/len(seq), file=sys.stderr)
 		if len(seq) == num_N:
 			all_n += 1
 		assert len(seq) == len(rc.seq)
 		rc.seq = seq
 		SeqIO.write(rc, outSeq, 'fasta')
-	print(all_n, 'all N', file=sys.stderr)
+	#print(all_n, 'all N', file=sys.stderr)
 def update(dt, dq):
 	for key, value in dq.items():
 		dt[key] = set(dt.get(key, [])) | set(value)
