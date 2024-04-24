@@ -3,6 +3,8 @@ import re
 from Bio import SeqIO
 from Bio.Seq import Seq
 from collections import Counter
+#from .small_tools import open_file as open
+from xopen import xopen as open 
 
 class RMOutRecord():
 	def __init__(self, line):
@@ -93,7 +95,7 @@ class RMOutParser():
 			yield RMOutRecord(line)
 	def get_seqs(self, genome, fout=sys.stdout):
 		from Bio import SeqIO
-		d_seqs = SeqIO.to_dict(SeqIO.parse(genome, 'fasta'))
+		d_seqs = SeqIO.to_dict(SeqIO.parse(open(genome), 'fasta'))
 		for rc in self._parse():
 			seqRecord = d_seqs[rc.query_id]
 			SeqIO.write(rc.get_seq(seqRecord), fout, 'fasta')
@@ -112,7 +114,7 @@ def get_region(inRM, suffix=None):
 def exclude_mask(inSeq, inRM, outSeq):
 	'''mask genome except spcified regions'''
 	d_mask = get_region(inRM)
-	for rc in SeqIO.parse(inSeq, 'fasta'):
+	for rc in SeqIO.parse(open(inSeq), 'fasta'):
 		regions = d_mask.get(rc.id, [])
 		seq = list(rc.seq)
 		last_end = 0
@@ -133,7 +135,7 @@ def exclude_mask(inSeq, inRM, outSeq):
 		rc.seq = seq
 		SeqIO.write(rc, outSeq, 'fasta')
 
-def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=False, excludeSoft=True, soft=False,):
+def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=False, excludeSoft=True, soft=False, gap='N'):
 	d_exclude = {}
 	if exclude is not None:
 		d_exclude = blast2dict(exclude, based=1)
@@ -147,17 +149,20 @@ def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=False, exclu
 			update(d_simple, d_exclude)
 	d_mask = get_region(inRM, suffix=suffix)
 	all_n = 0
-	for rc in SeqIO.parse(inSeq, 'fasta'):
+	masked, total = 0, 0
+	for rc in SeqIO.parse(open(inSeq), 'fasta'):
+		total += len(rc.seq)
 		if rc.id not in d_mask:
 			SeqIO.write(rc, outSeq, 'fasta')
 			continue
 		regions = list(set(d_mask[rc.id]) - set(d_exclude.get(rc.id, [])))
 		seq = list(rc.seq)
 		for start, end in sorted(regions):
+			masked += end-start
 			if soft:
 				seq[start:end] = list(map(lower, seq[start:end]))
 			else:
-				seq[start:end] = ['N'] * (end-start)
+				seq[start:end] = [gap] * (end-start)
 		regions2 = d_simple.get(rc.id, [])
 		for start, end in sorted(regions2):
 			seq[start:end] = list(map(lower, seq[start:end]))
@@ -175,6 +180,7 @@ def mask(inSeq, inRM, outSeq, exclude=None, suffix=None, simpleSoft=False, exclu
 		rc.seq = seq
 		SeqIO.write(rc, outSeq, 'fasta')
 	#print(all_n, 'all N', file=sys.stderr)
+	return masked, total
 def update(dt, dq):
 	for key, value in dq.items():
 		dt[key] = set(dt.get(key, [])) | set(value)

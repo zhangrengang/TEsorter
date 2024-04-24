@@ -214,6 +214,7 @@ def pipeline(args):
 	logger.info( 'check database '+ db_file)
 	check_db(db_file)
 
+	gap = 'X' if args.seq_type == 'prot' else 'N' 
 	if args.genome:
 		logger.info( 'Start identifying pipeline (GENOME mode)' )
 		#print(open(args.sequence))
@@ -232,7 +233,7 @@ def pipeline(args):
 			maxeval = args.max_evalue,
 			minprob = args.min_probability,
 			)
-		mask_gff3(args.sequence, gff, args.prefix, types=args.mask)
+		mask_gff3(args.sequence, gff, args.prefix, types=args.mask, gap=gap)
 		cleanup(args)
 		logger.info( 'Pipeline done.' )
 		return	# genome mode stop at here
@@ -259,6 +260,7 @@ please switch to the GENOME mode by specifiy `-genome`')
 			minprob = args.min_probability,
 			)
 
+	mask_gff3(args.sequence, gff, args.prefix, types=args.mask, gap=gap)
 	# classify
 	classify_out = args.prefix + '.cls.tsv'
 	fc = open(classify_out, 'w')
@@ -345,7 +347,8 @@ def mask_gff3(inSeq, inRM, outPrefix, types=['hard'], **kargs):
 		soft = True if type == 'soft' else False
 		logger.info( '{}-masking `{}`; output `{}`'.format(type, inSeq, outSeqfile) )
 		with open(outSeqfile, 'w') as outSeq:
-			mask(inSeq, inRM, outSeq, soft=soft, **kargs)
+			masked, total = mask(inSeq, inRM, outSeq, soft=soft, **kargs)
+	logger.info('{} / {} ({:.2%}) masked'.format(masked, total, masked/total))
 def cleanup(args):
 	# clean up
 	if not args.no_cleanup:
