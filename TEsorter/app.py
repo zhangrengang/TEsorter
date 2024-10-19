@@ -85,16 +85,16 @@ def Args():
 					help="directory for temporary files [default=%(default)s]")
 	parser.add_argument("-cov", "--min-coverage", action="store",
 					default=20, type=float,
-					help="mininum coverage for protein domains in HMMScan output [default=%(default)s]")
+					help="mininum coverage for protein domains in HMMScan output (ranging: 0-100) [default=%(default)s]")
 	parser.add_argument("-eval", "--max-evalue", action="store",
 					default=1e-3, type=float,
-					help="maxinum E-value for protein domains in HMMScan output [default=%(default)s]")
+					help="maxinum E-value for protein domains in HMMScan output (ranging: 0-10) [default=%(default)s]")
 	parser.add_argument("-prob", "--min-probability", action="store",
 					default=0.5, type=float,
-					help="mininum posterior probability for protein domains in HMMScan output [default=%(default)s]")	
+					help="mininum posterior probability for protein domains in HMMScan output (ranging: 0-1) [default=%(default)s]")	
 	parser.add_argument("-score", "--min-score", action="store",
                     default=0.1, type=float,
-                    help="mininum score for protein domains in HMMScan output [default=%(default)s]")
+                    help="mininum score for protein domains in HMMScan output (ranging: 0-2) [default=%(default)s]")
 
 	parser.add_argument("-mask", action="store", type=str, nargs='+',
 					default=None, choices=['soft', 'hard'],
@@ -876,7 +876,7 @@ def resolve_overlaps(lines, max_ovl=20, ):
 
 		if not last_line or discard != line:
 			last_line = line
-	logger.info('discard {} equal and {} overlapped hits; {} in total'.format(ie, io, ie+io))
+#	logger.info('discard {} equal and {} overlapped hits; {} in total'.format(ie, io, ie+io))
 	return sorted(set(lines) - set(discards), key=lambda x:x[3])
 
 def _hmm2best(inHmmouts, db='rexdb', seqtype='nucl', genome=False):

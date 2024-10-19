@@ -82,7 +82,18 @@ TEsorter RepeatPeps.lib -st prot -p 20
 ```
 Since version v1.4, a **GENOME mode (input genome sequences)** is supported to identify TE protein domains throughout whole genome:
 ```
-TEsorter genome.fasta -genome -p 20 -prob 0.9
+TEsorter genome.fasta -genome -p 20 -prob 0.9 -cov 30 -eval 1e-5 -score 1
+```
+TE domain regions can be masked by:
+```
+# hard mask
+TEsorter genome.fasta -genome -p 20 -prob 0.9 -mask hard
+# soft mask
+TEsorter genome.fasta -genome -p 20 -prob 0.9 -mask soft
+# both output
+TEsorter genome.fasta -genome -p 20 -prob 0.9 -mask soft hard
+# mask proteins of plant genes
+TEsorter pep.faa -st prot -p 20 -prob 0.9 -score 1 -mask hard
 ```
 ## Citations
 If you use the `TEsorter` tool, please cite:
@@ -159,6 +170,9 @@ options:
                         maxinum E-value for protein domains in HMMScan output [default=0.001]
   -prob MIN_PROBABILITY, --min-probability MIN_PROBABILITY
                         mininum posterior probability for protein domains in HMMScan output [default=0.5]
+  -score MIN_SCORE, --min-score MIN_SCORE
+                        mininum score for protein domains in HMMScan output
+                        [default=0.1]
   -mask {soft,hard} [{soft,hard} ...]
                         output masked sequences (soft: masking with lowercase;
                         hard: masking with N) [default=None]
