@@ -21,6 +21,7 @@ format_id <- function(x1, x2, x3, x4) {
 	x1 = sapply(x1, split_id)	
 	x1 = gsub('\\W+', '_', x1)
 	x = paste(x1, x2, x3, x4, sep='_')
+	x = gsub('\\W+', '_', x)
 	return(x)
 }
 
@@ -35,8 +36,10 @@ if (branch_color == 'Clade') {
 			labels = map[which(map$Clade==clade), ]
 			clade = paste(labels$Superfamily, labels$Clade, sep='/')[1]
 			labels = format_id(labels$X.TE, labels$Order, labels$Superfamily, labels$Clade)
-			if (! any(labels %in% tree$tip.label)) {next}
-	#		print(clade)
+			if (! any(labels %in% tree$tip.label)) {
+				#print(labels); 
+				next}
+			#print(clade)
 			grp[[clade]] = labels
 	}
 	clades = sort(names(grp))

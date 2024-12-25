@@ -496,9 +496,10 @@ class Classifier(object):
 			('LTR', 'Bel-Pao'): ['GAG', 'PROT', 'RT', 'RH', 'INT'],
 			}
 		clade_count = Counter(clades)
+		counts = list(clade_count.values())
 		max_clade = max(clade_count, key=lambda x: clade_count[x])
 		order, superfamily = self._parse_rexdb(max_clade)
-		if len(clade_count) == 1 or clade_count[max_clade] > 1:
+		if len(clade_count) == 1 or (clade_count[max_clade] > 1 and counts[0] > counts[1]):
 			max_clade = max_clade.split('/')[-1]
 		elif len(clade_count) > 1:
 			max_clade = 'mixture'
