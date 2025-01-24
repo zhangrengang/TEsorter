@@ -49,13 +49,16 @@ TEsorter-test
 # or
 TEsorter TEsorter/test/rice6.9.5.liban
 ```
-By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v3.0 + metazoa_v3](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended.
+By default, the newly released [REXdb](http://repeatexplorer.org/?page_id=918) ([viridiplantae_v4.0 + metazoa_v3.1](https://bitbucket.org/petrnovak/re_databases)) database is used, which is more sensitive and more common and thus is recommended.
 
 For plants ([an example](https://raw.githubusercontent.com/oushujun/EDTA/master/database/rice6.9.5.liban)), it might be better to use only the plant database (**Note that the input file is TE or LTR sequences but not genome sequences: ELEMENT mode**):
 ```
 TEsorter TE.fasta -db rexdb-plant
 ```
-
+To repeat the results by the old version of REXdb database:
+```
+TEsorter TE.fasta -db rexdb-v3/rexdb-plantv3/rexdb-metazoav3 
+```
 Classical [GyDB](http://gydb.org/) can also be used:
 ```
 TEsorter TE.fasta -db gydb
