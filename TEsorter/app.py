@@ -40,9 +40,13 @@ from .version import __version__
 
 DB = {
 	'gydb' : bindir + '/database/GyDB2.hmm',
-	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0_plus_metazoa_v3.hmm',
-	'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
-	'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
+	'rexdb': bindir + '/database/REXdb_protein_database_viridiplantae_v4.0_plus_metazoa_v3.1.hmm',
+    'rexdb-plant': bindir + '/database/REXdb_protein_database_viridiplantae_v4.0.hmm',
+    'rexdb-metazoa': bindir + '/database/REXdb_protein_database_metazoa_v3.1.hmm',
+
+	'rexdb-v3': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0_plus_metazoa_v3.hmm',
+	'rexdb-plantv3': bindir + '/database/REXdb_protein_database_viridiplantae_v3.0.hmm',
+	'rexdb-metazoav3': bindir + '/database/REXdb_protein_database_metazoa_v3.hmm',
 #	'rexdb-tir': bindir + '/database/REXdb_v3_TIR.hmm',
 	'rexdb-pnas': bindir + '/database/Yuan_and_Wessler.PNAS.TIR.hmm',
 	'rexdb-line': bindir + '/database/Kapitonov_et_al.GENE.LINE.hmm',
