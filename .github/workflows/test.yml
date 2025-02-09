@@ -23,6 +23,7 @@ jobs:
     # set up conda
       uses: s-weigand/setup-conda@v1.0.5
       with:
+        python-version: '3.8'
         conda-channels: bioconda
     # install dependencies
     - run: conda install biopython
